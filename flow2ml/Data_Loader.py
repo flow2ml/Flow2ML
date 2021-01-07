@@ -116,9 +116,10 @@ class Data_Loader:
 
     # Resize Image
     img = cv2.resize(img,img_resize_shape)
+
+    # saving the image.
+    cv2.imwrite(image_path, img)
     
-    # return resized image
-    return img
 
 
   def prepare_dataset(self,img_resize_shape,train_val_split,img_label_dict):
@@ -134,7 +135,7 @@ class Data_Loader:
                                       label as value  
 
     '''
-
+    print("Creating train val splits")
     self.img_label = img_label_dict
     
     # differentiating the complete dataset into training and validating datasets.
@@ -154,19 +155,33 @@ class Data_Loader:
     val_images = np.ndarray(shape=(len(img_name_val), Height, Width, channels), dtype=np.float32)
     val_labels = np.ndarray(shape=(len(output_label_val), self.num_classes ), dtype=np.float32)
 
+    print()
+    print("Creating training dataset")
+
     # Adding Values to the numpy datasets
     i=0
+
     for image in list(img_name_train):
-      x = self.resize_image(img_resize_shape,image)
-      train_images[i] = x
+      self.resize_image(img_resize_shape,image)
+      image_path = os.path.join(self.final_data_folder,image)
+      # Read Image
+      img = cv2.imread(image_path) 
+      train_images[i] = img
       train_labels[i] = np.asarray(output_label_train[i])
       i += 1
 
 
+    print()
+    print("Creating validating dataset")
+
     i=0
+
     for image in list(img_name_val):
-      x = self.resize_image(img_resize_shape,image)
-      val_images[i] = x
+      self.resize_image(img_resize_shape,image)
+      image_path = os.path.join(self.final_data_folder,image)
+      # Read Image
+      img = cv2.imread(image_path) 
+      val_images[i] = img
       val_labels[i] = np.asarray(output_label_val[i])
       i += 1
 

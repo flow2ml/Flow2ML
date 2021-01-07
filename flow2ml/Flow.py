@@ -71,12 +71,15 @@ class Flow(Data_Loader,Filters):
                             (trainData, trainLabels, valData, valLabels).
     '''
 
+    print()
+    
     # creates processedData folder in self.dataset_dir and
     # moves all the images to that folder
     for folder in self.classes:
       path = os.path.join(self.dataset_dir ,self.data_dir, folder)
       self.img_label = self.create_dataset(path)
 
+    print()
     # Prepare Numpy dataset
     self.dataset = self.prepare_dataset(img_dimensions,train_val_split,self.img_label)
 
