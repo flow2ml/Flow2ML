@@ -54,7 +54,7 @@ Install Flow2ML python files via pip.
     flow = Flow( 'dataset_dir' , 'data_dir' )
 
     # Define The Filers to be used
-    filters = ["median", "laplacian", "gaussian"]
+    filters = ["median", "laplacian", "gaussian", "sobelx", "sobely"]
 
     # Apply The Filters
     flow.applyFilters( filters )
@@ -62,6 +62,24 @@ Install Flow2ML python files via pip.
     # Obtain Train, Validation data splits
     (train_x, train_y, val_x, val_y) = flow.getDataset( img_dimensions, test_val_split )
 ```
+
+Please try to maintain the dataset in the following manner in order to run the code easily.
+```text
+
+dataset_dir
+├──data_dir/
+|       ├──Label 1 Folder
+|       ├──Label 2 Folder
+|       ├──Label 3 Folder  
+|               .
+|               .
+|               .        
+|       └──Label n Folder 
+| 
+└────Other Files
+
+```
+
 
 ## Contributing
 If you want to contribute to Flow2Ml, Please look into issues and propose your solutions to them.
