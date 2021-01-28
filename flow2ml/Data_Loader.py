@@ -23,6 +23,7 @@ class Data_Loader:
     self.img_label = {}
     self.final_data_folder = os.path.join(self.dataset_dir,'processedData')
     self.num_classes = 0
+    self.classes = []
   
   def getClasses(self):
     '''
@@ -35,12 +36,13 @@ class Data_Loader:
     data_folder = os.path.join(self.dataset_dir,self.data_dir)
     training_classes = [f.name for f in os.scandir(data_folder) if f.is_dir()]
     self.num_classes = len(training_classes)
+    self.classes = training_classes
     return training_classes
 
 
   def create_dataset(self,classPath):
     '''
-      moves all the processed images to a single folder and 
+      copies all the processed images to a single folder and 
       creates a dictonary with image and its ground truth value.
 
       Args :
@@ -62,41 +64,44 @@ class Data_Loader:
 
     for image in list(os.listdir(classPath)):
 
-        if (image.find("Images") == -1):
-          pass
-          # path is a image
+        # if (image.find("Images") == -1):
+        #   pass
+        #   # path is a image
 
-          shutil.move(classPath+"/"+image,final_data_folder)
+        #   shutil.move(classPath+"/"+image,final_data_folder)
 
-          folderName = list(classPath.split("/"))[2]
-
-
-          if (folderName == 'Bacterial leaf blight'):
-            self.img_label[image] = np.asarray([1,0,0], dtype=np.float32)
-          elif (folderName == 'Brown spot'):
-            self.img_label[image] = np.asarray([0,0,1], dtype=np.float32)
-          else:
-            self.img_label[image] = np.asarray([0,1,0], dtype=np.float32)
+        #   folderName = list(classPath.split("/"))[2]
 
 
-        else:
+        #   if (folderName == 'Bacterial leaf blight'):
+        #     self.img_label[image] = np.asarray([1,0,0], dtype=np.float32)
+        #   elif (folderName == 'Brown spot'):
+        #     self.img_label[image] = np.asarray([0,0,1], dtype=np.float32)
+        #   else:
+        #     self.img_label[image] = np.asarray([0,1,0], dtype=np.float32)
+
+
+        # else:
+        if (image.find("Images") != -1):
           # path is a folder
 
             for image_in_folder in (list(os.listdir(os.path.join(classPath,image)))):
               
 
               filtered_image = os.path.join(classPath,image,image_in_folder)
-              shutil.move(filtered_image,final_data_folder)
+              shutil.copy(filtered_image,final_data_folder)
 
               folderName = list(classPath.split("/"))[2]
 
+              ind = self.classes.index(folderName)
+              self.img_label[image_in_folder] = np.squeeze(np.eye(len(self.classes))[ind])
 
-              if (folderName == 'Bacterial leaf blight'):
-                self.img_label[image_in_folder] = np.asarray([1,0,0], dtype=np.float32)
-              elif (folderName == 'Brown spot'):
-                self.img_label[image_in_folder] = np.asarray([0,0,1], dtype=np.float32)
-              else:
-                self.img_label[image_in_folder] = np.asarray([0,1,0], dtype=np.float32)
+              # if (folderName == 'Bacterial leaf blight'):
+              #   self.img_label[image_in_folder] = np.asarray([1,0,0], dtype=np.float32)
+              # elif (folderName == 'Brown spot'):
+              #   self.img_label[image_in_folder] = np.asarray([0,0,1], dtype=np.float32)
+              # else:
+              #   self.img_label[image_in_folder] = np.asarray([0,1,0], dtype=np.float32)
 
     return self.img_label
 
@@ -116,10 +121,9 @@ class Data_Loader:
 
     # Resize Image
     img = cv2.resize(img,img_resize_shape)
-
-    # saving the image.
-    cv2.imwrite(image_path, img)
     
+    # return resized image
+    return img
 
 
   def prepare_dataset(self,img_resize_shape,train_val_split,img_label_dict):
@@ -135,7 +139,7 @@ class Data_Loader:
                                       label as value  
 
     '''
-    print("Creating train val splits")
+
     self.img_label = img_label_dict
     
     # differentiating the complete dataset into training and validating datasets.
@@ -148,41 +152,28 @@ class Data_Loader:
 
 
     # Creating Numpy Dataset
-    ( Height, Width ) = img_resize_shape
-    channels = 3
+    ( Height, Width, channels ) = img_resize_shape
+    img_height_width = (Height, Width)
+    
     train_images = np.ndarray(shape=(len(img_name_train), Height, Width, channels), dtype=np.float32)
     train_labels = np.ndarray(shape=(len(output_label_train), self.num_classes ), dtype=np.float32)
     val_images = np.ndarray(shape=(len(img_name_val), Height, Width, channels), dtype=np.float32)
     val_labels = np.ndarray(shape=(len(output_label_val), self.num_classes ), dtype=np.float32)
 
-    print()
-    print("Creating training dataset")
-
     # Adding Values to the numpy datasets
     i=0
-
     for image in list(img_name_train):
-      self.resize_image(img_resize_shape,image)
-      image_path = os.path.join(self.final_data_folder,image)
-      # Read Image
-      img = cv2.imread(image_path) 
-      train_images[i] = img
+      x = self.resize_image(img_height_width,image)
+      train_images[i] = x
       train_labels[i] = np.asarray(output_label_train[i])
       i += 1
 
 
-    print()
-    print("Creating validating dataset")
-
     i=0
-
     for image in list(img_name_val):
-      self.resize_image(img_resize_shape,image)
-      image_path = os.path.join(self.final_data_folder,image)
-      # Read Image
-      img = cv2.imread(image_path) 
-      val_images[i] = img
+      x = self.resize_image(img_height_width,image)
+      val_images[i] = x
       val_labels[i] = np.asarray(output_label_val[i])
       i += 1
 
-    return (train_images,train_labels,val_images,val_labels)
+      return (train_images,train_labels,val_images,val_labels)
