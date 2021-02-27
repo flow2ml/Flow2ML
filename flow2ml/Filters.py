@@ -26,7 +26,6 @@ class Filters:
     '''
     try:
       os.mkdir(classPath+"/MedianImages")    
-      print("Creating MedianImages Folder")
     except:
       pass
 
@@ -49,8 +48,7 @@ class Filters:
     '''
     
     try:
-      os.mkdir(classPath+"/LaplacianImages")    
-      print("Creating LaplacianImages Folder")
+      os.mkdir(classPath+"/LaplacianImages")  
     except:
       pass
 
@@ -74,7 +72,6 @@ class Filters:
 
     try:
       os.mkdir(classPath+"/SobelxImages")    
-      print("Creating SobelxImages Folder")
     except:
       pass
 
@@ -97,7 +94,6 @@ class Filters:
     '''
     try:
       os.mkdir(classPath+"/SobelyImages")    
-      print("Creating SobelyImages Folder")
     except:
       pass
 
@@ -122,7 +118,6 @@ class Filters:
 
     try:
       os.mkdir(classPath+"/GaussianImages")    
-      print("Creating GaussianImages Folder")
     except:
       pass
 
