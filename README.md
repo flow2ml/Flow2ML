@@ -37,7 +37,7 @@ Before Running the code you need to have certain packages to be installed. They 
 Install Flow2ML python files via pip.
 
 ```sh
-    $ pip install flow2ml
+    $ pip install flow2ml==1.0.3
 ```
 
 
