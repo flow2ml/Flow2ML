@@ -24,39 +24,42 @@ For all these steps it just take 3 lines of code. It mostly helps beginners in t
 
 ## Dependencies
 Before Running the code you need to have certain packages to be installed. They are listed out here
-        
-        <li>cv2</li>
-    
-    ```    
-        $ pip install opencv-python
-    ```
-        
-        <li>os</li>
-    ```   
-        $ pip install os-sys
-    ```
-    
-        <li>shutil</li>
-    ```
-        $ pip install pytest-shutil
-    ```
-    
-        <li>sklearn</li>
-    ```
-        $ pip install scikit-learn
-    ```
-    
-        <li>numpy</li>
-    ```
-        $ pip install scikit-learn
-    ```
-        
-        <li>matplotlib</li>
-    ```
-        $ pip install matplotlib
-    ```
- 
+<li>cv2</li>
 
+```   
+$ pip install opencv-python
+```
+        
+<li>os</li>
+
+```   
+$ pip install os-sys
+```
+    
+<li>shutil</li>
+
+```
+$ pip install pytest-shutil
+```
+    
+<li>sklearn</li>
+
+```
+$ pip install scikit-learn
+```
+    
+<li>numpy</li>
+
+```
+$ pip install scikit-learn
+```
+        
+<li>matplotlib</li>
+
+```
+$ pip install matplotlib
+```
+ 
 <b>Note:</b> The above mentioned package installations consist of the latest version. 
 
 ## Installation
