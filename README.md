@@ -16,7 +16,7 @@ Flow2Ml</p>
 
 <p>Quickly design and customize pre-processing workflow in machine learning.
 Obtain training, validating samples with only 3 lines of code using Flow2ML toolkit
-Check Installation and sample code to flow into your ml model fastly.</p>
+Check Installation and sample code to flow into your ML model much faster and efficiently.</p>
 
 ## Why Flow2Ml
 <p>Flow2ML is an open source library to make machine learning process much simpler. It loads the image data and applies the given filters and returns train data, train labels, validation data and validation labels.
@@ -24,14 +24,40 @@ For all these steps it just take 3 lines of code. It mostly helps beginners in t
 
 ## Dependencies
 Before Running the code you need to have certain packages to be installed. They are listed out here
-    <ol>
+        
         <li>cv2</li>
+    
+    ```    
+        $ pip install opencv-python
+    ```
+        
         <li>os</li>
+    ```   
+        $ pip install os-sys
+    ```
+    
         <li>shutil</li>
+    ```
+        $ pip install pytest-shutil
+    ```
+    
         <li>sklearn</li>
+    ```
+        $ pip install scikit-learn
+    ```
+    
         <li>numpy</li>
+    ```
+        $ pip install scikit-learn
+    ```
+        
         <li>matplotlib</li>
-    </ol> 
+    ```
+        $ pip install matplotlib
+    ```
+ 
+
+<b>Note:</b> The above mentioned package installations consist of the latest version. 
 
 ## Installation
 Install Flow2ML python files via pip.
@@ -82,4 +108,4 @@ dataset_dir
 
 
 ## Contributing
-If you want to contribute to Flow2Ml, Please look into issues and propose your solutions to them.
+If you want to contribute to Flow2ML, please look into issues and propose your solutions to them.
