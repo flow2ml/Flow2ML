@@ -18,45 +18,48 @@ Flow2Ml</p>
 Obtain training, validating samples with only 3 lines of code using Flow2ML toolkit
 Check Installation and sample code to flow into your ML model much faster and efficiently.</p>
 
-## Why Flow2Ml
+## Why Flow2ML
 <p>Flow2ML is an open source library to make machine learning process much simpler. It loads the image data and applies the given filters and returns train data, train labels, validation data and validation labels.
 For all these steps it just take 3 lines of code. It mostly helps beginners in the field of machine learning and deep learning where the user would deal with image related data.</p>
 
 ## Dependencies
 Before Running the code you need to have certain packages to be installed. They are listed out here
-        
-        <li>cv2</li>
-    
-    ```    
-        $ pip install opencv-python
-    ```
-        
-        <li>os</li>
-    ```   
-        $ pip install os-sys
-    ```
-    
-        <li>shutil</li>
-    ```
-        $ pip install pytest-shutil
-    ```
-    
-        <li>sklearn</li>
-    ```
-        $ pip install scikit-learn
-    ```
-    
-        <li>numpy</li>
-    ```
-        $ pip install scikit-learn
-    ```
-        
-        <li>matplotlib</li>
-    ```
-        $ pip install matplotlib
-    ```
- 
+<li>cv2</li>
 
+```   
+$ pip install opencv-python
+```
+        
+<li>os</li>
+
+```   
+$ pip install os-sys
+```
+    
+<li>shutil</li>
+
+```
+$ pip install pytest-shutil
+```
+    
+<li>sklearn</li>
+
+```
+$ pip install scikit-learn
+```
+    
+<li>numpy</li>
+
+```
+$ pip install scikit-learn
+```
+        
+<li>matplotlib</li>
+
+```
+$ pip install matplotlib
+```
+ 
 <b>Note:</b> The above mentioned package installations consist of the latest version. 
 
 ## Installation
