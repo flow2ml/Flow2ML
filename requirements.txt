@@ -2,3 +2,4 @@ numpy==1.19.2
 matplotlib==3.3.4
 scikit_learn==0.24.1
 opencv==4.5.1
+pytest-shutil==1.7.0
