@@ -90,8 +90,10 @@ class Data_Loader:
 
               filtered_image = os.path.join(classPath,image,image_in_folder)
               shutil.copy(filtered_image,final_data_folder)
-
-              folderName = list(classPath.split("/"))[2]
+              if '/' in classPath:
+                folderName = list(classPath.split("/"))[2]
+              else:
+                folderName = os.path.split(classPath)[1]              
 
               ind = self.classes.index(folderName)
               self.img_label[image_in_folder] = np.squeeze(np.eye(len(self.classes))[ind])
@@ -109,7 +111,7 @@ class Data_Loader:
     '''
       method to resize the image to the given arguments.
       Args:
-        img_resize_shape: (tulpe). The images are
+        img_resize_shape: (tuple). The images are
                            resized to the given size.
         image_path : (string). image name
     '''
@@ -130,7 +132,7 @@ class Data_Loader:
     '''
       Resizes the dataset and Prepares train, validation sets.
       Args :
-         img_resize_shape: (tulpe). The images are resized to the given size.
+         img_resize_shape: (tuple). The images are resized to the given size.
 
          train_val_split: (float). value used to split the entire dataset
                                    to train and validation sets.
