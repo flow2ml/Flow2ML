@@ -87,6 +87,10 @@ dataset_dir
 
 ## Contributing
 If you want to contribute to Flow2Ml, Please look into issues and propose your solutions to them.
+We promote contributions from all developers regardless of them being a beginner or a pro. 
+We go by the moto 
+<code><strong>Caffeinate☕|| Collaborate🤝🏼|| Celebrate🎊</strong></code>
+before that, please read <a href="https://github.com/flow2ml/Flow2ML/blob/main/CONTRIBUTING.md">contributing guidelines</a>
 
 ## Contributors👩🏽‍💻👨‍💻
 
