@@ -83,3 +83,17 @@ dataset_dir
 
 ## Contributing
 If you want to contribute to Flow2Ml, Please look into issues and propose your solutions to them.
+
+## Contributors👩🏽‍💻👨‍💻
+
+### Credits goes to these wonderful people:✨
+
+<table>
+	<tr>
+		<td>
+   <a href="https://github.com/flow2ml/Flow2ML/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=flow2ml/Flow2ML" />
+</a>
+		</td>
+	</tr>
+</table>
