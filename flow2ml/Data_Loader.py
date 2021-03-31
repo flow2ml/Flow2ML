@@ -161,12 +161,14 @@ class Data_Loader:
     train_labels = np.ndarray(shape=(len(output_label_train), self.num_classes ), dtype=np.float32)
     val_images = np.ndarray(shape=(len(img_name_val), Height, Width, channels), dtype=np.float32)
     val_labels = np.ndarray(shape=(len(output_label_val), self.num_classes ), dtype=np.float32)
-
     # Adding Values to the numpy datasets
     i=0
     for image in list(img_name_train):
       x = self.resize_image(img_height_width,image)
-      train_images[i] = x
+      temp = np.zeros(img_resize_shape)
+      for j in range(channels):
+        temp[:,:,j] = x[:,:,j]
+      train_images[i] = temp
       train_labels[i] = np.asarray(output_label_train[i])
       i += 1
 
@@ -174,7 +176,10 @@ class Data_Loader:
     i=0
     for image in list(img_name_val):
       x = self.resize_image(img_height_width,image)
-      val_images[i] = x
+      temp = np.zeros(img_resize_shape)
+      for j in range(channels):
+        temp[:,:,j] = x[:,:,j]
+      val_images[i] = temp
       val_labels[i] = np.asarray(output_label_val[i])
       i += 1
 
