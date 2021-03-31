@@ -32,6 +32,10 @@ Before Running the code you need to have certain packages to be installed. They 
         <li>numpy</li>
         <li>matplotlib</li>
     </ol> 
+    
+    
+## Download all Dependencies by :
+```pip install -r requirements.txt```
 
 ## Installation
 Install Flow2ML python files via pip.
