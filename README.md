@@ -44,7 +44,7 @@ Install Flow2ML python files via pip.
 ## Sample Code
 ```py
     # To be given input by the user.
-    img_dimensions = (150,150)
+    img_dimensions = (150,150,3)
     test_val_split = 0.1
 
     # Import flow2ml package
