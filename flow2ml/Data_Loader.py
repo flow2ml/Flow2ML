@@ -90,8 +90,11 @@ class Data_Loader:
 
               filtered_image = os.path.join(classPath,image,image_in_folder)
               shutil.copy(filtered_image,final_data_folder)
-
-              folderName = list(classPath.split("/"))[2]
+              # Handle path seperators for Linux and Windows
+              if '/' in classPath:
+                folderName = list(classPath.split("/"))[2]
+              else:
+                folderName = os.path.split(classPath)[1]              
 
               ind = self.classes.index(folderName)
               self.img_label[image_in_folder] = np.squeeze(np.eye(len(self.classes))[ind])
@@ -109,7 +112,7 @@ class Data_Loader:
     '''
       method to resize the image to the given arguments.
       Args:
-        img_resize_shape: (tulpe). The images are
+        img_resize_shape: (tuple). The images are
                            resized to the given size.
         image_path : (string). image name
     '''
@@ -130,7 +133,7 @@ class Data_Loader:
     '''
       Resizes the dataset and Prepares train, validation sets.
       Args :
-         img_resize_shape: (tulpe). The images are resized to the given size.
+         img_resize_shape: (tuple). The images are resized to the given size.
 
          train_val_split: (float). value used to split the entire dataset
                                    to train and validation sets.
@@ -159,12 +162,16 @@ class Data_Loader:
     train_labels = np.ndarray(shape=(len(output_label_train), self.num_classes ), dtype=np.float32)
     val_images = np.ndarray(shape=(len(img_name_val), Height, Width, channels), dtype=np.float32)
     val_labels = np.ndarray(shape=(len(output_label_val), self.num_classes ), dtype=np.float32)
-
     # Adding Values to the numpy datasets
     i=0
     for image in list(img_name_train):
       x = self.resize_image(img_height_width,image)
-      train_images[i] = x
+      # Create an empty array of required shape, then copy only the required number of channels from image
+      # Works for discarding alpha channel if image dimensions specify only 3 channels
+      temp = np.zeros(img_resize_shape)
+      for j in range(channels):
+        temp[:,:,j] = x[:,:,j]
+      train_images[i] = temp
       train_labels[i] = np.asarray(output_label_train[i])
       i += 1
 
@@ -172,7 +179,12 @@ class Data_Loader:
     i=0
     for image in list(img_name_val):
       x = self.resize_image(img_height_width,image)
-      val_images[i] = x
+      # Create an empty array of required shape, then copy only the required number of channels from image
+      # Works for discarding alpha channel if image dimensions specify only 3 channels
+      temp = np.zeros(img_resize_shape)
+      for j in range(channels):
+        temp[:,:,j] = x[:,:,j]
+      val_images[i] = temp
       val_labels[i] = np.asarray(output_label_val[i])
       i += 1
 
