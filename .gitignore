@@ -1,2 +1,4 @@
 /dist
 /flow2ml.egg-info
+*.egg-info
+__pycache__/
