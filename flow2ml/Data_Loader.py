@@ -90,6 +90,7 @@ class Data_Loader:
 
               filtered_image = os.path.join(classPath,image,image_in_folder)
               shutil.copy(filtered_image,final_data_folder)
+              # Handle path seperators for Linux and Windows
               if '/' in classPath:
                 folderName = list(classPath.split("/"))[2]
               else:
@@ -165,6 +166,8 @@ class Data_Loader:
     i=0
     for image in list(img_name_train):
       x = self.resize_image(img_height_width,image)
+      # Create an empty array of required shape, then copy only the required number of channels from image
+      # Works for discarding alpha channel if image dimensions specify only 3 channels
       temp = np.zeros(img_resize_shape)
       for j in range(channels):
         temp[:,:,j] = x[:,:,j]
@@ -176,6 +179,8 @@ class Data_Loader:
     i=0
     for image in list(img_name_val):
       x = self.resize_image(img_height_width,image)
+      # Create an empty array of required shape, then copy only the required number of channels from image
+      # Works for discarding alpha channel if image dimensions specify only 3 channels
       temp = np.zeros(img_resize_shape)
       for j in range(channels):
         temp[:,:,j] = x[:,:,j]
