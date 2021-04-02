@@ -1,4 +1,11 @@
 # Flow2ML
+
+[![Issues](https://img.shields.io/github/issues/flow2ml/Flow2ML)](https://github.com/flow2ml/Flow2ML/issues)
+[![PRs](https://img.shields.io/github/issues-pr-raw/flow2ml/Flow2ML)](https://github.com/flow2ml/Flow2ML/pulls)
+[![Forks](https://img.shields.io/github/forks/flow2ml/Flow2ML?)](https://github.com/flow2ml/Flow2ML/network/members) 
+[![Stars](https://img.shields.io/github/stars/flow2ml/Flow2ML?)](https://github.com/flow2ml/Flow2ML/stargazers)
+[![Contributors](https://img.shields.io/github/contributors/flow2ml/Flow2ML)](https://github.com/flow2ml/Flow2ML/graphs/contributors)
+![PyPi Version](https://img.shields.io/pypi/v/pypi-download-stats.svg)
 --- 
 
 ## Table Of Contents
