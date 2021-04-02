@@ -13,54 +13,30 @@
 <p>Write only a Few Lines of
 Machine learning code using
 Flow2Ml</p>
-
+ 
 <p>Quickly design and customize pre-processing workflow in machine learning.
 Obtain training, validating samples with only 3 lines of code using Flow2ML toolkit
-Check Installation and sample code to flow into your ML model much faster and efficiently.</p>
 
-## Why Flow2ML
-<p>Flow2ML is an open source library to make machine learning process much simpler. It loads the image data and applies the given filters and returns train data, train labels, validation data and validation labels.
-For all these steps it just take 3 lines of code. It mostly helps beginners in the field of machine learning and deep learning where the user would deal with image related data.</p>
+Check Installation and sample code to flow into your ml model fastly.</p>
+ 
+## Why Flow2Ml
+<p>Flow2ML is an open-source library to make the machine learning process much simpler. It loads the image data and applies the given filters and returns train data, train labels, validation data, and validation labels.
+For all these steps it just takes 3 lines of code. It mostly helps beginners in the field of machine learning and deep learning where the user would deal with image-related data.</p>
 
 ## Dependencies
 Before Running the code you need to have certain packages to be installed. They are listed out here
-<li>cv2</li>
-
-```   
-$ pip install opencv-python
-```
-        
-<li>os</li>
-
-```   
-$ pip install os-sys
-```
+    <ol>
+        <li>cv2</li>
+        <li>os</li>
+        <li>shutil</li>
+        <li>sklearn</li>
+        <li>numpy</li>
+        <li>matplotlib</li>
+    </ol> 
     
-<li>shutil</li>
-
-```
-$ pip install pytest-shutil
-```
     
-<li>sklearn</li>
-
-```
-$ pip install scikit-learn
-```
-    
-<li>numpy</li>
-
-```
-$ pip install scikit-learn
-```
-        
-<li>matplotlib</li>
-
-```
-$ pip install matplotlib
-```
- 
-<b>Note:</b> The above mentioned package installations consist of the latest version. 
+## Download all Dependencies by :
+```pip install -r requirements.txt```
 
 ## Installation
 Install Flow2ML python files via pip.
@@ -73,7 +49,7 @@ Install Flow2ML python files via pip.
 ## Sample Code
 ```py
     # To be given input by the user.
-    img_dimensions = (150,150)
+    img_dimensions = (150,150,3)
     test_val_split = 0.1
 
     # Import flow2ml package
@@ -111,4 +87,23 @@ dataset_dir
 
 
 ## Contributing
-If you want to contribute to Flow2ML, please look into issues and propose your solutions to them.
+
+If you want to contribute to Flow2Ml, Please look into issues and propose your solutions to them.
+We promote contributions from all developers regardless of them being a beginner or a pro. 
+We go by the moto 
+<code><strong>Caffeinate☕|| Collaborate🤝🏼|| Celebrate🎊</strong></code>
+before that, please read <a href="https://github.com/flow2ml/Flow2ML/blob/main/CONTRIBUTING.md">contributing guidelines</a>
+
+## Contributors👩🏽‍💻👨‍💻
+
+### Credits goes to these wonderful people:✨
+
+<table>
+	<tr>
+		<td>
+   <a href="https://github.com/flow2ml/Flow2ML/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=flow2ml/Flow2ML" />
+</a>
+		</td>
+	</tr>
+</table>

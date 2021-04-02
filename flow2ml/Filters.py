@@ -38,7 +38,7 @@ class Filters:
         median = cv2.medianBlur(img, 5)
         
         # saving the image by
-        plt.imsave(classPath+"/MedianImages/Median"+image, median)
+        plt.imsave(classPath+"/MedianImages/Median"+image, cv2.cvtColor(median, cv2.COLOR_RGB2BGR))
   
   def applylaplacian(self,classPath):
     ''' 
@@ -130,7 +130,7 @@ class Filters:
         gaussian = cv2.GaussianBlur(img,(5,5),0)
         
         # saving the image.
-        plt.imsave(classPath+"/GaussianImages/gaussian"+image, gaussian)
+        plt.imsave(classPath+"/GaussianImages/gaussian"+image, cv2.cvtColor(gaussian, cv2.COLOR_RGB2BGR))
 
   def visualizeFilters(self):
     ''' filtered_image
