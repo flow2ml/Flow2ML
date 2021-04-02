@@ -17,9 +17,9 @@ Flow2Ml</p>
 <p>Quickly design and customize pre-processing workflow in machine learning.
 Obtain training, validating samples with only 3 lines of code using Flow2ML toolkit
 
-Check Installation and sample code to flow into your ml model fastly.</p>
+Check Installation and sample code to flow into your ML model much faster and efficiently.</p>
  
-## Why Flow2Ml
+## Why Flow2ML
 <p>Flow2ML is an open-source library to make the machine learning process much simpler. It loads the image data and applies the given filters and returns train data, train labels, validation data, and validation labels.
 For all these steps it just takes 3 lines of code. It mostly helps beginners in the field of machine learning and deep learning where the user would deal with image-related data.</p>
 
