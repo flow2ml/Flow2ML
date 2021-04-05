@@ -30,6 +30,14 @@ Check Installation and sample code to flow into your ML model much faster and ef
 <p>Flow2ML is an open-source library to make the machine learning process much simpler. It loads the image data and applies the given filters and returns train data, train labels, validation data, and validation labels.
 For all these steps it just takes 3 lines of code. It mostly helps beginners in the field of machine learning and deep learning where the user would deal with image-related data.</p>
 
+
+## Programming languages and technologies used:
+1. Python
+2. HTML
+3. Numpy library
+4. OpenCV
+5. Machine Learning
+
 ## Dependencies
 Before Running the code you need to have certain packages to be installed. They are listed out here
     <ol>
@@ -100,6 +108,13 @@ We promote contributions from all developers regardless of them being a beginner
 We go by the moto 
 <code><strong>Caffeinate☕|| Collaborate🤝🏼|| Celebrate🎊</strong></code>
 before that, please read <a href="https://github.com/flow2ml/Flow2ML/blob/main/CONTRIBUTING.md">contributing guidelines</a>
+
+## Open Source programs that Flow2ML is a part of:
+
+<p align="center">
+ <a>
+ <img  width="50%" height="20%" src="https://raw.githubusercontent.com/GirlScriptSummerOfCode/MentorshipProgram/master/GSsoc%20Type%20Logo%20Black.png">
+
 
 ## Contributors👩🏽‍💻👨‍💻
 
