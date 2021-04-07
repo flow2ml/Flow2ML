@@ -49,6 +49,13 @@ Before Running the code you need to have certain packages to be installed. They 
         <li>matplotlib</li>
     </ol> 
     
+## Open Source programs that Flow2ML is a part of:
+
+<p align="center">
+ <a>
+ <img  width="50%" height="20%" src="https://raw.githubusercontent.com/GirlScriptSummerOfCode/MentorshipProgram/master/GSsoc%20Type%20Logo%20Black.png">
+
+
     
 ## Download all Dependencies by :
 ```pip install -r requirements.txt```
@@ -108,13 +115,6 @@ We promote contributions from all developers regardless of them being a beginner
 We go by the moto 
 <code><strong>Caffeinate☕|| Collaborate🤝🏼|| Celebrate🎊</strong></code>
 before that, please read <a href="https://github.com/flow2ml/Flow2ML/blob/main/CONTRIBUTING.md">contributing guidelines</a>
-
-## Open Source programs that Flow2ML is a part of:
-
-<p align="center">
- <a>
- <img  width="50%" height="20%" src="https://raw.githubusercontent.com/GirlScriptSummerOfCode/MentorshipProgram/master/GSsoc%20Type%20Logo%20Black.png">
-
 
 ## Contributors👩🏽‍💻👨‍💻
 
