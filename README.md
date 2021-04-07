@@ -11,9 +11,8 @@
 ## Table Of Contents
 - [Introduction](#Introduction)
 - [Why Flow2Ml](#Why-Flow2Ml)
-- [Programming languages and technologies used](#Programming languages  and technologies used)  
+- [Programming-languages-and technologies used](#Programming-languages-and-technologies-used)  
 - [Dependencies](#dependencies)
-- [Open Source programs](#Open Source programs)
 - [Installation](#Installation)
 - [Sample Code](#Sample-Code)
 - [Contributing](#Sample-Code)
