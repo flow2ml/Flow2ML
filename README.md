@@ -11,10 +11,13 @@
 ## Table Of Contents
 - [Introduction](#Introduction)
 - [Why Flow2Ml](#Why-Flow2Ml)
+- [Programming-languages-and technologies used](#Programming-languages-and-technologies-used)  
 - [Dependencies](#dependencies)
+- [Open Source Programs that Flow2ML is a part of](#Open-Source-Programs)
 - [Installation](#Installation)
 - [Sample Code](#Sample-Code)
 - [Contributing](#Sample-Code)
+- [Contributors](#Contributors)
 
 ## Introduction 
 <p>Write only a Few Lines of
@@ -30,6 +33,14 @@ Check Installation and sample code to flow into your ML model much faster and ef
 <p>Flow2ML is an open-source library to make the machine learning process much simpler. It loads the image data and applies the given filters and returns train data, train labels, validation data, and validation labels.
 For all these steps it just takes 3 lines of code. It mostly helps beginners in the field of machine learning and deep learning where the user would deal with image-related data.</p>
 
+
+## Programming languages and technologies used:
+1. Python
+2. HTML
+3. Numpy library
+4. OpenCV
+5. Machine Learning
+
 ## Dependencies
 Before Running the code you need to have certain packages to be installed. They are listed out here
     <ol>
@@ -41,6 +52,13 @@ Before Running the code you need to have certain packages to be installed. They 
         <li>matplotlib</li>
     </ol> 
     
+## Open Source programs that Flow2ML is a part of:
+
+<p align="center">
+ <a>
+ <img  width="50%" height="20%" src="https://raw.githubusercontent.com/GirlScriptSummerOfCode/MentorshipProgram/master/GSsoc%20Type%20Logo%20Black.png">
+
+
     
 ## Download all Dependencies by :
 ```pip install -r requirements.txt```
