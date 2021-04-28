@@ -2,3 +2,4 @@
 /flow2ml.egg-info
 *.egg-info
 __pycache__/
+.vscode
