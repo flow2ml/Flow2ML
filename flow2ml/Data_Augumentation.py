@@ -20,7 +20,7 @@ class Data_Augumentation:
 
   def applyFlip(self,classPath):
     ''' 
-      Applies flipping augmentation to all the images in the given folder. 
+      Applies flipping augmentation to all the images in the given folder. Flip: 1 flips it on y axis, 0 flips it on x axis and -1 flips it on both axis
       Args : 
         classPath : (string) directory containing images for a particular class.
     '''
