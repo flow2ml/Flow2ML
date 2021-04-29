@@ -13,8 +13,8 @@ class Data_Augumentation:
     '''
       Initializes various attributes regarding to the object.
       Args : 
-        operations : (dictonary) python dictionary containing key value pairs
-                      of operations and values to be applied to the image data.
+        operations : (dictionary) python dictionary containing key value pairs
+                      of operations (flip, shear, zoom etc.) and values (integer) to be applied to the image data.
     '''
     self.operations = operations
 
