@@ -5,18 +5,18 @@ import matplotlib.pyplot as plt
 
 class Data_Augumentation:
   '''
-    Class containing methods to apply Data Augumentation techniques
+    Class containing methods to apply Data Augumentation operations
     to images in the data folder  
   '''
 
-  def __init__(self,techniques):
+  def __init__(self,operations):
     '''
       Initializes various attributes regarding to the object.
       Args : 
-        techniques : (dictonary) python dictonary containing key value pairs
-                      of techniques and values to be applied to the image data.
+        operations : (dictonary) python dictionary containing key value pairs
+                      of operations and values to be applied to the image data.
     '''
-    self.techniques = techniques
+    self.operations = operations
 
   def applyFlip(self,classPath):
     ''' 
@@ -27,15 +27,15 @@ class Data_Augumentation:
     try:
       os.mkdir(classPath+"/FlippedImages")    
     except:
-      pass
+      raise Exception("Unable to create directory for flipped images.")
 
     for image in list(os.listdir(classPath)):
       # Read image
       img = cv2.imread(classPath+"/"+image)
-      technique = self.techniques['flip']
+      operation = self.operations['flip']
       if img is not None:
         # applies Flip augmentation to the image.
-        Flipped = cv2.flip(img, technique)
+        Flipped = cv2.flip(img, operation)
         
         # saving the image by
         plt.imsave(classPath+"/FlippedImages/Flipped"+image, cv2.cvtColor(Flipped, cv2.COLOR_RGB2BGR))

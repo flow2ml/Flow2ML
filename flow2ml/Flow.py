@@ -94,29 +94,28 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
       progress_i = 0
     print()
 
-  def applyAugmentation(self,techniques):
+  def applyAugmentation(self,operations):
     ''' 
-      Applies given data augmentation techniques 
+      Applies given data augmentation operations 
       Args : 
-        techniques : (dictonary) python dictionary containing key value pairs of techniques and values to be applied to the image data.
+        operations : (dictonary) python dictionary containing key value pairs of operations and values to be applied to the image data.
     '''
-    self.techniques = techniques
-    print(1, self.techniques)
-    progress = [(100/len(techniques))*i for i in range(0,len(techniques)) ]
+    self.operations = operations
+    progress = [(100/len(operations))*i for i in range(0,len(operations)) ]
     progress_i = 0
 
     for folder in self.classes:
-      for technique in techniques:
+      for operation in self.operations:
         path = os.path.join(self.dataset_dir ,self.data_dir, folder)
         
-        if technique == "flip":
+        if operation == "flip":
           self.applyFlip(path)
       
         time.sleep(0.1)
         self.update_progress( progress[progress_i]/100.0, f"Augmented all images in {folder}" )
         progress_i += 1
 
-      status1 = f"Applied all techniques to {folder} ...\r\n"
+      status1 = f"Applied all operations to {folder} ...\r\n"
       self.update_progress( 100/100.0, f"Augmented all images in {folder}"  )
       progress_i = 0
     print()
