@@ -2,8 +2,9 @@ import os
 import sys ,time
 from .Data_Loader import Data_Loader
 from .Filters import Filters
+from .Data_Augumentation import Data_Augumentation
 
-class Flow(Data_Loader,Filters):
+class Flow(Data_Loader,Filters,Data_Augumentation):
   '''
     This class connects the work flow. It calls various methods from 
     the inherited classes whenever required and completes the workflow.
@@ -90,6 +91,33 @@ class Flow(Data_Loader,Filters):
 
       status1 = f"Applied all filters to {folder} ...\r\n"
       self.update_progress( 100/100.0, f"Filtered all images in {folder}"  )
+      progress_i = 0
+    print()
+
+  def applyAugmentation(self,techniques):
+    ''' 
+      Applies given data augmentation techniques 
+      Args : 
+        techniques : (dictonary) python dictionary containing key value pairs of techniques and values to be applied to the image data.
+    '''
+    self.techniques = techniques
+    print(1, self.techniques)
+    progress = [(100/len(techniques))*i for i in range(0,len(techniques)) ]
+    progress_i = 0
+
+    for folder in self.classes:
+      for technique in techniques:
+        path = os.path.join(self.dataset_dir ,self.data_dir, folder)
+        
+        if technique == "flip":
+          self.applyFlip(path)
+      
+        time.sleep(0.1)
+        self.update_progress( progress[progress_i]/100.0, f"Augmented all images in {folder}" )
+        progress_i += 1
+
+      status1 = f"Applied all techniques to {folder} ...\r\n"
+      self.update_progress( 100/100.0, f"Augmented all images in {folder}"  )
       progress_i = 0
     print()
 
