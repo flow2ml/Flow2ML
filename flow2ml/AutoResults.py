@@ -82,7 +82,7 @@ The Precision Recall Curve for the Input Model is a s shown:
         doc.add_picture('prc.jpeg',width=Inches(5.0))
         doc.save(file_name)
 #testing codes
-
+'''
 df = pd.read_csv('winequality-white.csv', sep=';')
 df['quality'] = ['Good' if quality >= 7 else 'Bad' for quality in df['quality']]
 
@@ -103,3 +103,4 @@ print(y_test_int)
 model_lr = LogisticRegression(max_iter=5000).fit(X_train, y_train_int)
 auto_res = Auto_Results(model_lr,X_test,y_test_int)
 auto_res.get_results_pdf()
+'''
