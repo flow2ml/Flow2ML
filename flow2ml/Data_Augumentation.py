@@ -32,13 +32,22 @@ class Data_Augumentation:
     for image in list(os.listdir(classPath)):
       # Read image
       img = cv2.imread(classPath+"/"+image)
-      operation = self.operations['flip']
-      if img is not None:
-        try:
-          # applies Flip augmentation to the image.
-          Flipped = cv2.flip(img, operation)
-          
-          # saving the image by
-          plt.imsave(classPath+"/FlippedImages/Flipped"+image, cv2.cvtColor(Flipped, cv2.COLOR_RGB2BGR))
-        except:
-          print("Unable to perform the flip operation.")
+      if self.operations['flip'] not in ['horizontal', 'vertical', 'cross']:
+        raise Exception("Invalid flip operation.")
+      else:
+        if self.operations['flip'] == 'horizontal':
+          operation = 1
+        elif self.operations['flip'] == 'vertical':
+          operation = 0
+        elif self.operations['flip'] == 'cross':
+          operation = -1
+        print(operation)
+        if img is not None:
+          try:
+            # applies Flip augmentation to the image.
+            Flipped = cv2.flip(img, operation)
+            
+            # saving the image by
+            plt.imsave(classPath+"/FlippedImages/Flipped"+image, cv2.cvtColor(Flipped, cv2.COLOR_RGB2BGR))
+          except:
+            print("Unable to perform the flip operation.")
