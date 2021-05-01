@@ -34,8 +34,11 @@ class Data_Augumentation:
       img = cv2.imread(classPath+"/"+image)
       operation = self.operations['flip']
       if img is not None:
-        # applies Flip augmentation to the image.
-        Flipped = cv2.flip(img, operation)
-        
-        # saving the image by
-        plt.imsave(classPath+"/FlippedImages/Flipped"+image, cv2.cvtColor(Flipped, cv2.COLOR_RGB2BGR))
+        try:
+          # applies Flip augmentation to the image.
+          Flipped = cv2.flip(img, operation)
+          
+          # saving the image by
+          plt.imsave(classPath+"/FlippedImages/Flipped"+image, cv2.cvtColor(Flipped, cv2.COLOR_RGB2BGR))
+        except:
+          print("Unable to perform the flip operation.")
