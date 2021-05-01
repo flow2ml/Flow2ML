@@ -41,7 +41,6 @@ class Data_Augumentation:
           operation = 0
         elif self.operations['flip'] == 'cross':
           operation = -1
-        print(operation)
         if img is not None:
           try:
             # applies Flip augmentation to the image.
@@ -49,5 +48,5 @@ class Data_Augumentation:
             
             # saving the image by
             plt.imsave(classPath+"/FlippedImages/Flipped"+image, cv2.cvtColor(Flipped, cv2.COLOR_RGB2BGR))
-          except:
-            print("Unable to perform the flip operation.")
+          except Exception as e:
+            print(f"Flip operation failed due to {e}")
