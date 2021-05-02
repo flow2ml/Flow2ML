@@ -90,7 +90,7 @@ Install Flow2ML python files via pip.
     flow.applyFilters( filters )
 
     # Define The augmentation operations to be used
-    operations = {'flip': 1}
+    operations = {'flip': 'horizontal', 'rotate': 90}
 
     # Apply The Augmentation
     flow.applyAugmentation( operations )

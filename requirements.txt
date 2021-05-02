@@ -1,4 +1,5 @@
 numpy==1.19.2
+imutils==0.5.4
 matplotlib==3.3.4
 scikit_learn==0.24.1
 opencv-python==4.5.1
