@@ -63,25 +63,7 @@ class Data_Loader:
       pass
 
     for image in list(os.listdir(classPath)):
-
-        # if (image.find("Images") == -1):
-        #   pass
-        #   # path is a image
-
-        #   shutil.move(classPath+"/"+image,final_data_folder)
-
-        #   folderName = list(classPath.split("/"))[2]
-
-
-        #   if (folderName == 'Bacterial leaf blight'):
-        #     self.img_label[image] = np.asarray([1,0,0], dtype=np.float32)
-        #   elif (folderName == 'Brown spot'):
-        #     self.img_label[image] = np.asarray([0,0,1], dtype=np.float32)
-        #   else:
-        #     self.img_label[image] = np.asarray([0,1,0], dtype=np.float32)
-
-
-        # else:
+      
         if (image.find("Images") != -1):
           # path is a folder
 
@@ -90,6 +72,7 @@ class Data_Loader:
 
               filtered_image = os.path.join(classPath,image,image_in_folder)
               shutil.copy(filtered_image,final_data_folder)
+              
               # Handle path seperators for Linux and Windows
               if '/' in classPath:
                 folderName = list(classPath.split("/"))[2]
@@ -98,13 +81,6 @@ class Data_Loader:
 
               ind = self.classes.index(folderName)
               self.img_label[image_in_folder] = np.squeeze(np.eye(len(self.classes))[ind])
-
-              # if (folderName == 'Bacterial leaf blight'):
-              #   self.img_label[image_in_folder] = np.asarray([1,0,0], dtype=np.float32)
-              # elif (folderName == 'Brown spot'):
-              #   self.img_label[image_in_folder] = np.asarray([0,0,1], dtype=np.float32)
-              # else:
-              #   self.img_label[image_in_folder] = np.asarray([0,1,0], dtype=np.float32)
 
     return self.img_label
 
