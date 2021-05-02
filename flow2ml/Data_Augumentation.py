@@ -66,10 +66,10 @@ class Data_Augumentation:
     for image in list(os.listdir(classPath)):
       # Read image
       img = cv2.imread(classPath+"/"+image)
-      if not isinstance(self.operations['rotate'], int):
-        raise Exception("Rotation angle must be an integer.")
+      if isinstance(self.operations['rotate'], str):
+        raise Exception("Rotation angle cannot be a string.")
       else:
-        angle = self.operations['rotate'] % 360
+        angle = round(self.operations['rotate']) % 360
         if img is not None:
           try:
             # applies Rotate augmentation to the image.
