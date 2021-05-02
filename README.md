@@ -89,6 +89,12 @@ Install Flow2ML python files via pip.
     # Apply The Filters
     flow.applyFilters( filters )
 
+    # Define The augmentation operations to be used
+    operations = {'flip': 1}
+
+    # Apply The Augmentation
+    flow.applyAugmentation( operations )
+
     # Obtain Train, Validation data splits
     (train_x, train_y, val_x, val_y) = flow.getDataset( img_dimensions, test_val_split )
 ```
