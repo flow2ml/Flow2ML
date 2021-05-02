@@ -70,7 +70,6 @@ class Data_Augumentation:
         raise Exception("Rotation angle must be an integer.")
       else:
         angle = self.operations['rotate'] % 360
-        print(angle)
         if img is not None:
           try:
             # applies Rotate augmentation to the image.
