@@ -14,6 +14,7 @@ Flow2Ml
         ├──Data_Loader.py
         ├──Filters.py  
         ├──Data_Augumentation.py
+        ├──Auto_Results.py
         ├──Flow.py 
         ├──setup.cfg
         ├──README.md
