@@ -64,7 +64,7 @@ class Auto_Results:
         plt.title('Precision Recall Curve', size = 35)
         plt.savefig(self.results_path+'/'+figure_name)
 
-    def get_results_pdf(self,file_name="report"):
+    def get_results_docx(self,file_name="report"):
         '''
         Saves all the plots with their default name and 
         creates a report.docx file in the Results Folder
