@@ -1,6 +1,5 @@
 README.md
 setup.py
-flow2ml/Auto_Results.py
 flow2ml/Data_Augumentation.py
 flow2ml/Data_Loader.py
 flow2ml/Filters.py
