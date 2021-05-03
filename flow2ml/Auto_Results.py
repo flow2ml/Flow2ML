@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from sklearn.metrics import plot_confusion_matrix
+from sklearn.metrics import plot_confusion_matrix, plot_roc_curve
 from sklearn.metrics import plot_precision_recall_curve
 from docx import Document
 from docx.shared import Inches
@@ -17,7 +17,6 @@ class Auto_Results:
         '''
         self.model = model          #stores the model
         self.x_test = X_test        #stores the X_test (test data) 
-        self.prediction = self.model.predict_proba(X_test)     #stores the probabilities for roc
         self.y_test = Y_test    #stores the Y_test (labels)
         try:                        #try creating a Results directory and show excpetion if it already exists 
             p = os.getcwd()
@@ -31,19 +30,17 @@ class Auto_Results:
         '''
         Plotting the Roc curve for the Input model
         '''
-        i= self.prediction.shape
-        try:
-            if (i[1]>1):
-                self.prediction = self.prediction[:, 1]
-        except:
-            print("Predictions vector doesn't need slicing")
-        auc_lr = roc_auc_score(self.y_test, self.prediction)  
-        fpr_lr, tpr_lr, thresholds_lr = roc_curve(self.y_test, self.prediction)
+        #i= self.prediction.shape
+        #try:
+            #if (i[1]>1):
+                #self.prediction = self.prediction[:, 1]
+        #except:
+            #print("Predictions vector doesn't need slicing")
+        #auc_lr = roc_auc_score(self.y_test, self.prediction)  
+        #fpr_lr, tpr_lr, thresholds_lr = roc_curve(self.y_test, self.prediction, multi_class="ovr",average=None)
         plt.figure(figsize=(50, 20))
-        plt.plot(fpr_lr, tpr_lr)
-        plt.title('ROC Curve', fontsize=70)
-        plt.xlabel('False Positive Rate', fontsize=65)
-        plt.ylabel('True Positive Rate', fontsize=65)
+        plot_roc_curve(self.model, self.x_test, self.y_test) 
+        plt.title('ROC Curve')
         plt.savefig(self.results_path+'/'+figure_name)
     
     def confusion_matrix(self):
@@ -64,7 +61,7 @@ class Auto_Results:
         plt.title('Precision Recall Curve', size = 35)
         plt.savefig(self.results_path+'/'+figure_name)
 
-    def get_results_docx(self,file_name="report"):
+    def get_results_docx(self,file_name="report.docx"):
         '''
         Saves all the plots with their default name and 
         creates a report.docx file in the Results Folder
@@ -105,6 +102,6 @@ The Precision Recall Curve for the Input Model is a s shown:
 
         ''')
         doc.add_picture(self.results_path+'/prc.jpeg',width=Inches(5.0))
-        doc.save(self.results_path+"/"+file_name+".docx")
+        doc.save(self.results_path+"/"+file_name)
 
 
