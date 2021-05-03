@@ -30,14 +30,6 @@ class Auto_Results:
         '''
         Plotting the Roc curve for the Input model
         '''
-        #i= self.prediction.shape
-        #try:
-            #if (i[1]>1):
-                #self.prediction = self.prediction[:, 1]
-        #except:
-            #print("Predictions vector doesn't need slicing")
-        #auc_lr = roc_auc_score(self.y_test, self.prediction)  
-        #fpr_lr, tpr_lr, thresholds_lr = roc_curve(self.y_test, self.prediction, multi_class="ovr",average=None)
         plt.figure(figsize=(50, 20))
         plot_roc_curve(self.model, self.x_test, self.y_test) 
         plt.title('ROC Curve')
