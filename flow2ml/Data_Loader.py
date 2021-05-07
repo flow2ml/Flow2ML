@@ -10,6 +10,7 @@ class Data_Loader:
   '''
     Class containing methods to load datsets.  
   '''
+  
   def __init__(self,dataset_dir,data_dir):
     '''
       Initializes various attributes regarding to the object.
@@ -44,10 +45,8 @@ class Data_Loader:
     '''
       copies all the processed images to a single folder and 
       creates a dictonary with image and its ground truth value.
-
       Args :
         classPath : (string) directory containing images for a particular class.
-
       Returns :
         dictonary. A python dictonary containing imageName as key
                    and one hot encoded class name as value

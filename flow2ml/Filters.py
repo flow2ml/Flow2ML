@@ -30,6 +30,7 @@ class Filters:
       pass
 
     for image in list(os.listdir(classPath)):
+      
       # Read image
       img = cv2.imread(classPath+"/"+image)
 
@@ -53,6 +54,7 @@ class Filters:
       pass
 
     for image in list(os.listdir(classPath)):
+      
       # Read image
       img = cv2.imread(classPath+"/"+image)
 
@@ -87,6 +89,7 @@ class Filters:
         cv2.imwrite(classPath+"/SobelxImages/sobelx"+image, sobelx)
 
   def applysobely(self,classPath):
+    
     ''' 
       Applies Sobel-y Filter to all the images in the given folder. 
       Args : 
@@ -110,6 +113,7 @@ class Filters:
 
 
   def applygaussian(self,classPath):
+    
     ''' 
       Applies gaussian Filter to all the images in the given folder. 
       Args : 
