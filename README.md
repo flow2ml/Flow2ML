@@ -97,6 +97,14 @@ Install Flow2ML python files via pip.
 
     # Obtain Train, Validation data splits
     (train_x, train_y, val_x, val_y) = flow.getDataset( img_dimensions, test_val_split )
+
+    from flow2ml import Auto_Results
+    
+    # Set the Input Model by replacing None
+    model = None
+    x = Auto_Results(model,val_x,val_y)
+    # Call the get_results_docx() function to get the results in a Results folder 
+    x.get_results_docx()
 ```
 
 Please try to maintain the dataset in the following manner in order to run the code easily.

@@ -4,3 +4,4 @@ matplotlib==3.3.4
 scikit_learn==0.24.1
 opencv-python==4.5.1
 pytest-shutil==1.7.0
+python-docx==0.8.10

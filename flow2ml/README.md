@@ -14,13 +14,15 @@ Flow2Ml
         ├──Data_Loader.py
         ├──Filters.py  
         ├──Data_Augumentation.py
+        ├──Auto_Results.py
         ├──Flow.py 
         ├──setup.cfg
         ├──README.md
         └──license.txt
 ```
 <hr>
-Data_Loader.py, Filters.py, Data_Augumentation.py contains respective classes which holds various methods to deal with image data. 
+Data_Loader.py, Filters.py, Data_Augumentation.py contains respective classes which holds various methods to deal with image data.<br> 
+Auto_Results.py contains the class to deal with automated analysis of a trained model.
 
 <h3>Data_Loader.py</h3>
 It contains the following methods to handle data<br>
@@ -56,4 +58,14 @@ It contains the following methods to connect various dots<br>
     <li>applyFilters. <br> It takes a list of filters and applies all of them and stores inside the data directory.</li>
     <li>applyAugmentation. <br> It takes a dictionary of augmentation operations and applies all of them and stores inside the data directory.</li>
     <li>getDataset. <br> It moves all the processed images into a new folder located in the root folder and creates training and validating numpy datasets.</li>
+</ol>
+<br><hr><br>
+<h3>Auto_Results.py</h3>
+It contains the following methods to get an automated analysis of a trained model<br>
+<ol>
+    <li>__init__ <br> It takes a trained model, test_x (test data) and test_y (test data labels) and creates a Results directory.</li>
+    <li>roc_curve <br> It takes a filename and stores the roc curve plot inside the Results directory.</li>
+    <li>confusion_matrix <br> Plots and saves the confusion matrix figure in the Results directory</li>
+    <li>precision_recall_curve <br> It takes a filename and stores the precision recall curve plot inside the Results directory.</li>
+    <li>get_results_docx <br> It calls all of the above functions with their deafult filenames and stores the figures along with a results.docx inside the Results directory.</li>
 </ol>
