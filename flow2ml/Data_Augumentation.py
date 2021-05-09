@@ -3,6 +3,8 @@ import os
 import imutils
 import numpy as np
 import matplotlib.pyplot as plt
+from skimage import transform as tf
+from matplotlib.transforms import Affine2D
 
 class Data_Augumentation:
   '''
@@ -79,3 +81,32 @@ class Data_Augumentation:
             plt.imsave(classPath+"/RotatedImages/Rotated"+image, cv2.cvtColor(Rotated, cv2.COLOR_RGB2BGR))
           except Exception as e:
             print(f"Rotation operation failed due to {e}")
+
+  def applyShear(self,classPath):
+    ''' 
+      Applies shear augmentation to all the images in the given folder. It shears the images by the given angles (in degrees) along the given axes
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/ShearedImages")    
+    except:
+      raise Exception("Unable to create directory for sheared images.")
+
+    for image in list(os.listdir(classPath)):
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      if isinstance(self.operations['shear']['x_axis'], str) or isinstance(self.operations['shear']['y_axis'], str):
+        raise Exception("Shearing angle cannot be a string.")
+      else:
+        angle_x = np.deg2rad(self.operations['shear']['x_axis'])
+        angle_y = np.deg2rad(self.operations['shear']['y_axis'])
+        if img is not None:
+          try:
+            # applies Rotate augmentation to the image.
+            Sheared = tf.warp(img, inverse_map = np.linalg.inv(Affine2D().skew(xShear = angle_y, yShear = angle_y).get_matrix()))
+            Sheared = (Sheared * 255).astype(np.uint8) 
+            # saving the image by
+            plt.imsave(classPath+"/ShearedImages/Sheared"+image, cv2.cvtColor(Sheared, cv2.COLOR_RGB2BGR))
+          except Exception as e:
+            print(f"Shearing operation failed due to {e}")
