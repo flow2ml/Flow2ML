@@ -83,8 +83,8 @@ Install Flow2ML python files via pip.
     # Give the Dataset and Data directories
     flow = Flow( 'dataset_dir' , 'data_dir' )
 
-    # Define The Filers to be used
-    filters = ["median", "laplacian", "gaussian", "sobelx", "sobely"]
+    # Define The Filters to be used
+    filters = ["median", "laplacian", "gaussian", "sobelx", "sobely","bilateral"]
 
     # Apply The Filters
     flow.applyFilters( filters )
