@@ -141,7 +141,9 @@ class Filters:
     '''
     try:
       os.mkdir(classPath+"/Bilaterally_FilteredImages")    
-    except:
+    
+    except Exception as e:
+      print(f"Cannot create directory with given name due to: {e}")
       pass
 
     for image in list(os.listdir(classPath)):
