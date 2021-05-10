@@ -131,6 +131,29 @@ class Filters:
         
         # saving the image.
         plt.imsave(classPath+"/GaussianImages/gaussian"+image, cv2.cvtColor(gaussian, cv2.COLOR_RGB2BGR))
+        
+        
+        def applybilateral(self,classPath):
+    ''' 
+      Applies Bilateral Filter to all the images in the given folder. 
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/Bilaterally_FilteredImages")    
+    except:
+      pass
+
+    for image in list(os.listdir(classPath)):
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+
+      if img is not None:
+        # applying Bilateral filter
+        bilateral = cv2.bilateralFilter(img,15,80,80)
+        
+        # saving the image.
+        cv2.imwrite(classPath+"/Bilaterally_FilteredImages/bilateral"+image, bilateral)
 
   def visualizeFilters(self):
     ''' filtered_image
