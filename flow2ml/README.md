@@ -41,6 +41,7 @@ Applies the following filters to the images in data directory<br>
     <li>gaussian</li>
     <li>sobel-x</li>
     <li>sobel-y</li>
+    <li>bilateral</li>
 </ol>
 
 <h3>Data_Augmentation.py</h3>
