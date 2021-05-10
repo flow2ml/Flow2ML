@@ -133,7 +133,7 @@ class Filters:
         plt.imsave(classPath+"/GaussianImages/gaussian"+image, cv2.cvtColor(gaussian, cv2.COLOR_RGB2BGR))
         
         
-        def applybilateral(self,classPath):
+  def applybilateral(self,classPath):
     ''' 
       Applies Bilateral Filter to all the images in the given folder. 
       Args : 
