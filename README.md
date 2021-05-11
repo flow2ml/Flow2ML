@@ -6,6 +6,8 @@
 [![Stars](https://img.shields.io/github/stars/flow2ml/Flow2ML?)](https://github.com/flow2ml/Flow2ML/stargazers)
 [![Contributors](https://img.shields.io/github/contributors/flow2ml/Flow2ML)](https://github.com/flow2ml/Flow2ML/graphs/contributors)
 ![PyPi Version](https://img.shields.io/pypi/v/pypi-download-stats.svg)
+<a href="https://github.com/flow2ml/Flow2ML/blob/main/LICENSE" target="_blank"><img src="https://img.shields.io/static/v1?label=LICENSE&message=MIT&color=<BrightGreen>" />
+
 --- 
 
 ## Table Of Contents
