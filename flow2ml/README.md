@@ -71,3 +71,12 @@ It contains the following methods to get an automated analysis of a trained mode
     <li>precision_recall_curve <br> It takes a filename and stores the precision recall curve plot inside the Results directory.</li>
     <li>get_results_docx <br> It calls all of the above functions with their deafult filenames and stores the figures along with a results.docx inside the Results directory.</li>
 </ol>
+<h3>Tf_Results.py</h3>
+It contains the following methods to get an automated analysis of a trained model<br>
+<ol>
+    <li>__init__ <br> It takes a trained model, validation generator and creates a Results directory.</li>
+    <li>roc_curve <br> It takes a filename and stores the roc curve plot inside the Results directory.</li>
+    <li>confusion_matrix <br> Plots and saves the confusion matrix figure in the Results directory</li>
+    <li>precision_recall_curve <br> It takes a filename and stores the precision recall curve plot inside the Results directory.</li>
+    <li>get_results_docx <br> It calls all of the above functions with their deafult filenames and stores the figures along with a results.docx inside the Results directory.</li>
+</ol>
