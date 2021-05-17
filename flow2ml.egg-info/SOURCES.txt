@@ -6,7 +6,6 @@ flow2ml/Data_Loader.py
 flow2ml/Filters.py
 flow2ml/Flow.py
 flow2ml/__init__.py
-flow2ml/test.py
 flow2ml.egg-info/PKG-INFO
 flow2ml.egg-info/SOURCES.txt
 flow2ml.egg-info/dependency_links.txt

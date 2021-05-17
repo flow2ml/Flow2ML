@@ -1,10 +1,8 @@
-from sklearn.metrics import roc_auc_score, roc_curve
-import numpy as np
-import pandas as pd
+from sklearn.metrics import roc_curve
 import matplotlib.pyplot as plt
 
-from sklearn.metrics import plot_confusion_matrix, roc_curve,auc
-from sklearn.metrics import plot_precision_recall_curve, precision_recall_curve
+from sklearn.metrics import roc_curve,auc
+from sklearn.metrics import precision_recall_curve
 from docx import Document
 from docx.shared import Inches
 import os
@@ -45,8 +43,6 @@ class Tf_Results:
         plt.ylabel('True Positive Rate')
         plt.title('Receiver operating characteristic')
         plt.legend(loc="lower right")
-        #plot_roc_curve(self.model, self.x_test, self.y_test) 
-        #plt.title('ROC Curve')
         plt.savefig(self.results_path+'/'+figure_name)
     
     def tf_confusion_matrix(self):
@@ -78,9 +74,6 @@ class Tf_Results:
         plt.xlabel('Recall')
         plt.ylabel('Precision')
         plt.title('Precision Recall Curve')
-        
-        # plot_precision_recall_curve(self.model,self.x_test,self.y_test)
-        # plt.title('Precision Recall Curve', size = 35)
         plt.savefig(self.results_path+'/'+figure_name)
 
     def tf_get_results_docx(self,file_name="report.docx"):

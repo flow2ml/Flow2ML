@@ -52,6 +52,7 @@ Before Running the code you need to have certain packages to be installed. They 
         <li>sklearn</li>
         <li>numpy</li>
         <li>matplotlib</li>
+        <li>tensorflow</li>
     </ol> 
     
 ## Open Source programs that Flow2ML is a part of:
