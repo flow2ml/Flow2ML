@@ -16,7 +16,7 @@ class Tf_Results:
         Initialises the class variables.
         '''
         self.model = model          #stores the model
-        self.validation_generator = validtion_generator    
+        self.validation_generator = validtion_generator  #stores the validation generator object   
         try:                        #try creating a Results directory and show excpetion if it already exists 
             p = os.getcwd()
             p = os.path.join(p,"Results")
