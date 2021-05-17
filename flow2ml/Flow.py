@@ -37,6 +37,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
 
 
   def update_progress(self,progress,subStatus):
+    
     '''
       Function used to update the progress bar in the console 
       Args :
@@ -95,11 +96,13 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
     print()
 
   def applyAugmentation(self,operations):
+    
     ''' 
       Applies given data augmentation operations 
       Args : 
         operations : (dictonary) python dictionary containing key value pairs of operations and values to be applied to the image data.
     '''
+    
     self.operations = operations
     progress = [(100/len(operations))*i for i in range(0,len(operations)) ]
     progress_i = 0
@@ -127,9 +130,11 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
       status1 = f"Applied all operations to {folder} ...\r\n"
       self.update_progress( 100/100.0, f"Augmented all images in {folder}"  )
       progress_i = 0
+    
     print()
 
   def getDataset(self,img_dimensions,train_val_split):
+    
     '''
       Generates the dataset.
       Moves all the images to a seperate folder and prepares a numpy dataset.

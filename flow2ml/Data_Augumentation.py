@@ -28,16 +28,20 @@ class Data_Augumentation:
       Args : 
         classPath : (string) directory containing images for a particular class.
     '''
+
     try:
       os.mkdir(classPath+"/FlippedImages")    
     except:
       raise Exception("Unable to create directory for flipped images.")
     for image in list(os.listdir(classPath)):
+      
       # Read image
       img = cv2.imread(classPath+"/"+image)
+      
       if self.operations['flip'] not in ['horizontal', 'vertical', 'cross']:
         raise Exception("Invalid flip operation.")
       else:
+        
         if self.operations['flip'] == 'horizontal':
           operation = 1
         elif self.operations['flip'] == 'vertical':
@@ -45,10 +49,10 @@ class Data_Augumentation:
         elif self.operations['flip'] == 'cross':
           operation = -1
         if img is not None:
+          
           try:
             # applies Flip augmentation to the image.
-            Flipped = cv2.flip(img, operation)
-            
+            Flipped = cv2.flip(img, operation)  
             # saving the image by
             plt.imsave(classPath+"/FlippedImages/Flipped"+image, cv2.cvtColor(Flipped, cv2.COLOR_RGB2BGR))
           except Exception as e:
@@ -66,17 +70,19 @@ class Data_Augumentation:
       raise Exception("Unable to create directory for rotated images.")
 
     for image in list(os.listdir(classPath)):
+      
       # Read image
       img = cv2.imread(classPath+"/"+image)
+      
       if isinstance(self.operations['rotate'], str):
         raise Exception("Rotation angle cannot be a string.")
       else:
+        
         angle = round(self.operations['rotate']) % 360
         if img is not None:
           try:
             # applies Rotate augmentation to the image.
-            Rotated = imutils.rotate(img, angle)
-            
+            Rotated = imutils.rotate(img, angle)            
             # saving the image by
             plt.imsave(classPath+"/RotatedImages/Rotated"+image, cv2.cvtColor(Rotated, cv2.COLOR_RGB2BGR))
           except Exception as e:
