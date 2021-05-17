@@ -92,7 +92,7 @@ Install Flow2ML python files via pip.
     flow.applyFilters( filters )
 
     # Define The augmentation operations to be used
-    operations = {'flip': 'horizontal', 'rotate': 90, 'shear': {'x_axis': 5, 'y_axis': 15}}
+    operations = {'flip': 'horizontal', 'rotate': 90, 'shear': {'x_axis': 5, 'y_axis': 15, 'crop': [50, 100, 50, 100]}}
 
     # Apply The Augmentation
     flow.applyAugmentation( operations )
