@@ -52,6 +52,7 @@ Before Running the code you need to have certain packages to be installed. They 
         <li>sklearn</li>
         <li>numpy</li>
         <li>matplotlib</li>
+        <li>tensorflow</li>
     </ol> 
     
 ## Open Source programs that Flow2ML is a part of:
@@ -107,6 +108,13 @@ Install Flow2ML python files via pip.
     x = Auto_Results(model,val_x,val_y)
     # Call the get_results_docx() function to get the results in a Results folder 
     x.get_results_docx()
+
+    #for tensorflow users 
+    from flow2ml import Tf_Results
+
+    model = None
+    x = Tf_Results(model,validation_generator)
+    x.tf_get_results_docx() 
 ```
 
 Please try to maintain the dataset in the following manner in order to run the code easily.
