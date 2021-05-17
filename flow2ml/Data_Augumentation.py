@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from skimage import transform as tf
 from matplotlib.transforms import Affine2D
+import random
 
 class Data_Augumentation:
   '''
@@ -27,17 +28,20 @@ class Data_Augumentation:
       Args : 
         classPath : (string) directory containing images for a particular class.
     '''
+
     try:
       os.mkdir(classPath+"/FlippedImages")    
     except:
       raise Exception("Unable to create directory for flipped images.")
-
     for image in list(os.listdir(classPath)):
+      
       # Read image
       img = cv2.imread(classPath+"/"+image)
+      
       if self.operations['flip'] not in ['horizontal', 'vertical', 'cross']:
         raise Exception("Invalid flip operation.")
       else:
+        
         if self.operations['flip'] == 'horizontal':
           operation = 1
         elif self.operations['flip'] == 'vertical':
@@ -45,10 +49,10 @@ class Data_Augumentation:
         elif self.operations['flip'] == 'cross':
           operation = -1
         if img is not None:
+          
           try:
             # applies Flip augmentation to the image.
-            Flipped = cv2.flip(img, operation)
-            
+            Flipped = cv2.flip(img, operation)  
             # saving the image by
             plt.imsave(classPath+"/FlippedImages/Flipped"+image, cv2.cvtColor(Flipped, cv2.COLOR_RGB2BGR))
           except Exception as e:
@@ -66,17 +70,19 @@ class Data_Augumentation:
       raise Exception("Unable to create directory for rotated images.")
 
     for image in list(os.listdir(classPath)):
+      
       # Read image
       img = cv2.imread(classPath+"/"+image)
+      
       if isinstance(self.operations['rotate'], str):
         raise Exception("Rotation angle cannot be a string.")
       else:
+        
         angle = round(self.operations['rotate']) % 360
         if img is not None:
           try:
             # applies Rotate augmentation to the image.
-            Rotated = imutils.rotate(img, angle)
-            
+            Rotated = imutils.rotate(img, angle)            
             # saving the image by
             plt.imsave(classPath+"/RotatedImages/Rotated"+image, cv2.cvtColor(Rotated, cv2.COLOR_RGB2BGR))
           except Exception as e:
@@ -110,3 +116,34 @@ class Data_Augumentation:
             plt.imsave(classPath+"/ShearedImages/Sheared"+image, cv2.cvtColor(Sheared, cv2.COLOR_RGB2BGR))
           except Exception as e:
             print(f"Shearing operation failed due to {e}")
+    
+  def applyCrop(self,classPath):
+    ''' 
+      Applies cropping augmentation to all the images in the given folder. Either the images are cropped randomly or cropped with fixed coordinates (y1, y2, x1, x2) given by the user
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/CroppedImages")    
+    except:
+      raise Exception("Unable to create directory for cropped images.")
+    for image in list(os.listdir(classPath)):
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      if img is not None:
+        try:
+          if isinstance(self.operations['crop'], str):
+            if self.operations['crop'] == 'random':
+              y1, y2, x1, x2 = random.randint(1, img.shape[0]), random.randint(1, img.shape[0]), random.randint(1, img.shape[1]), random.randint(1, img.shape[1]),
+              Cropped = img[min(y1, y2):max(y1, y2), min(x1, x2):max(x1, x2), :]
+              plt.imsave(classPath+"/CroppedImages/Cropped"+image, cv2.cvtColor(Cropped, cv2.COLOR_RGB2BGR))
+          elif isinstance(self.operations['crop'], list):
+            if len(self.operations['crop']) == 4:
+              Cropped = img[self.operations['crop'][0]:self.operations['crop'][1], self.operations['crop'][2]:self.operations['crop'][3], :]
+              plt.imsave(classPath+"/CroppedImages/Cropped"+image, cv2.cvtColor(Cropped, cv2.COLOR_RGB2BGR))
+            else:
+              raise Exception("Cropping needs exactly 4 coordinates for y1, y2, x1, x2.")
+          else:
+            raise Exception("Cropping needs random parameter or list of coordinates.")
+        except Exception as e:
+          print(f"Crop operation failed due to {e}")
