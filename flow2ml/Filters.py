@@ -37,6 +37,12 @@ class Filters:
       if img is not None:
         # applies median filter to the image.
         median = cv2.medianBlur(img, 5)
+
+        lt=[] #empty list
+
+        lt.append(median) # storing the images in the list
+
+        c=np.stack(lt) # converting the stored iamges in the list into a 3D array which is "c" here
         
         # saving the image by
         plt.imsave(classPath+"/MedianImages/Median"+image, cv2.cvtColor(median, cv2.COLOR_RGB2BGR))
