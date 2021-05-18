@@ -147,3 +147,35 @@ class Data_Augumentation:
             raise Exception("Cropping needs random parameter or list of coordinates.")
         except Exception as e:
           print(f"Crop operation failed due to {e}")
+  
+  def applyScale(self,classPath):
+    ''' 
+      Applies scaling augmentation to all the images in the given folder. Scales the image by the given ratio.
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    ratio = self.operations['scale']
+    try:
+      os.mkdir(classPath+"/ScaledImages")    
+    except:
+      raise Exception("Unable to create directory for scaled images.")
+    for image in list(os.listdir(classPath)):
+      
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+
+      if isinstance(self.operations['scale'], str):
+        raise Exception("Scaling ratio cannot be a string.")
+      else:
+        if img is not None:
+          try:
+            if ratio < 0:
+              raise Exception("Scale ratio cannot be negative.")
+            else:
+              # applies scale augmentation to the image.
+              Scaled = cv2.resize(img, (round(img.shape[0] * ratio), round(img.shape[1] * ratio)))
+              # # saving the image by
+              plt.imsave(classPath+"/ScaledImages/Scaled"+image, cv2.cvtColor(Scaled, cv2.COLOR_RGB2BGR))
+          except Exception as e:
+            print(f"Scale operation failed due to {e}")
+  

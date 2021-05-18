@@ -122,7 +122,10 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
         
         if operation == "crop":
           self.applyCrop(path)
-      
+
+        if operation == "scale":
+          self.applyScale(path)
+
         time.sleep(0.1)
         self.update_progress( progress[progress_i]/100.0, f"Augmented all images in {folder}" )
         progress_i += 1

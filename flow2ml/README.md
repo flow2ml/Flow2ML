@@ -51,6 +51,7 @@ Applies the following augmentation operations to the images in data directory<br
     <li>rotation</li>
     <li>shearing</li>
     <li>cropping</li>
+    <li>scaling</li>
 </ol>
 <br><hr><br>
 Flow.py contains Flow class which connects various other classes and maintains the work flow.
