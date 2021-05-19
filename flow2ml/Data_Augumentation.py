@@ -178,4 +178,43 @@ class Data_Augumentation:
               plt.imsave(classPath+"/ScaledImages/Scaled"+image, cv2.cvtColor(Scaled, cv2.COLOR_RGB2BGR))
           except Exception as e:
             print(f"Scale operation failed due to {e}")
-  
+
+  def applyZoom(self,classPath):
+    ''' 
+      Applies zooming augmentation to all the images in the given folder. It zooms the images by the given ratio
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/ZoomedImages")    
+    except:
+      raise Exception("Unable to create directory for zoomed images.")
+
+    for image in list(os.listdir(classPath)):
+      
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      
+      if isinstance(self.operations['zoom'], str):
+        raise Exception("Zoom factor cannot be a string.")
+      else:
+        
+        factor = self.operations['zoom']
+        if factor < 1:
+          raise Exception("Zoom factor cannot be lesser than 1.")
+        else:
+          if img is not None:
+            try:
+              # applies zooming augmentation to the image.
+              h, w = img.shape[0], img.shape[1]
+              Zoomed = cv2.resize(img, (round(img.shape[1] * factor), round(img.shape[0] * factor)))
+              w_zoomed, h_zoomed = Zoomed.shape[1], Zoomed.shape[0]
+              x1 = round((float(w_zoomed) / 2) - (float(w) / 2))
+              x2 = round((float(w_zoomed) / 2) + (float(w) / 2))
+              y1 = round((float(h_zoomed) / 2) - (float(h) / 2))
+              y2 = round((float(h_zoomed) / 2) + (float(h) / 2))
+              Zoomed = Zoomed[y1:y2, x1:x2]         
+              # saving the image by
+              plt.imsave(classPath+"/ZoomedImages/Zoomed"+image, cv2.cvtColor(Zoomed, cv2.COLOR_RGB2BGR))
+            except Exception as e:
+              print(f"Zooming operation failed due to {e}")
