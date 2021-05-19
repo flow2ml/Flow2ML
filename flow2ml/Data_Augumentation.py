@@ -199,7 +199,7 @@ class Data_Augumentation:
         raise Exception("Zoom factor cannot be a string.")
       else:
         
-        factor = round(self.operations['zoom'])
+        factor = self.operations['zoom']
         if factor < 1:
           raise Exception("Zoom factor cannot be lesser than 1.")
         else:
