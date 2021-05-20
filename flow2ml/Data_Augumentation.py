@@ -110,3 +110,17 @@ class Data_Augumentation:
             plt.imsave(classPath+"/ShearedImages/Sheared"+image, cv2.cvtColor(Sheared, cv2.COLOR_RGB2BGR))
           except Exception as e:
             print(f"Shearing operation failed due to {e}")
+
+class HistogramEqualisation:
+  '''class containing method to implement histogram equalization to a given image.'''
+  def hist_equalizer(image_file):
+    #read the image and flag is 0 here,to indicate image is loaded in grayscale mode.
+    img=cv2.imread(image_file,0) 
+    #Equalize the Histogram for contrast adjustment.
+    equalised_img=cv2.equalizeHist(img)
+    #stacking both the original and equalised images.
+    result=np.hstack((img,equalised_img))
+    #final image is in output.png file
+    cv2.imwrite("output.png",result)
+
+  
