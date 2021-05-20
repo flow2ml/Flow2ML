@@ -116,6 +116,9 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
         
         if operation == "shear":
           self.applyShear(path)
+
+        if operation == "CLAHE":
+          self.applyCLAHE(path)
       
         time.sleep(0.1)
         self.update_progress( progress[progress_i]/100.0, f"Augmented all images in {folder}" )

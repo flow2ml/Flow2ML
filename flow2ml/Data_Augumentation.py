@@ -110,3 +110,30 @@ class Data_Augumentation:
             plt.imsave(classPath+"/ShearedImages/Sheared"+image, cv2.cvtColor(Sheared, cv2.COLOR_RGB2BGR))
           except Exception as e:
             print(f"Shearing operation failed due to {e}")
+
+  def applyCLAHE(self,classPath):
+    '''
+      Applies contrast limited adaptive histogram equalization to all the images in the given folder.
+      Args:
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/CLAHEedImages")    
+    except:
+      raise Exception("Unable to create directory for CLAHEed images.")
+
+    for image in list(os.listdir(classPath)):
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      if self.operations['CLAHE']==True:
+        if img is not None:
+          try:
+            #convert BGR to GRAYSCALE
+            gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+            # applies CLAHE augmentation to the image.
+            clahe=cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+            CLAHEed=clahe.apply(gray)
+            # saving the image by
+            plt.imsave(classPath+"/CLAHEedImages/CLAHEed"+image, cv2.cvtColor(CLAHEed, cv2.COLOR_GRAY2BGR))
+          except Exception as e:
+            print(f"CLAHE operation failed due to {e}")
