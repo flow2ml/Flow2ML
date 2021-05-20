@@ -137,7 +137,3 @@ class Data_Augumentation:
             plt.imsave(classPath+"/HistogramEqualisedImages/HistogramEqualised"+image, cv2.cvtColor(HistogramEqualised, cv2.COLOR_RGB2BGR))
           except Exception as e:
             print(f"Histogram Equalisation operation failed due to {e}")
-
-      
-
-  
