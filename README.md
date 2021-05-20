@@ -52,6 +52,7 @@ Before Running the code you need to have certain packages to be installed. They 
         <li>sklearn</li>
         <li>numpy</li>
         <li>matplotlib</li>
+        <li>tensorflow</li>
     </ol> 
     
 ## Open Source programs that Flow2ML is a part of:
@@ -77,6 +78,7 @@ Install Flow2ML python files via pip.
 ```py
     # To be given input by the user.
     img_dimensions = (150,150,3)
+    # If working with greyscale image, change the number of channels from 3 to 1.
     test_val_split = 0.1
 
     # Import flow2ml package
@@ -92,7 +94,7 @@ Install Flow2ML python files via pip.
     flow.applyFilters( filters )
 
     # Define The augmentation operations to be used
-    operations = {'flip': 'horizontal', 'rotate': 90, 'shear': {'x_axis': 5, 'y_axis': 15} , 'Hist_Equal':False}
+    operations = {'flip': 'horizontal', 'rotate': 90, 'shear': {'x_axis': 5, 'y_axis': 15}, 'crop': [50, 100, 50, 100], 'scale': 0.1, 'zoom': 2, 'Hist_Equal':False}
 
     # Apply The Augmentation
     flow.applyAugmentation( operations )
@@ -107,6 +109,13 @@ Install Flow2ML python files via pip.
     x = Auto_Results(model,val_x,val_y)
     # Call the get_results_docx() function to get the results in a Results folder 
     x.get_results_docx()
+
+    #for tensorflow users 
+    from flow2ml import Tf_Results
+
+    model = None
+    x = Tf_Results(model,validation_generator)
+    x.tf_get_results_docx() 
 ```
 
 Please try to maintain the dataset in the following manner in order to run the code easily.
