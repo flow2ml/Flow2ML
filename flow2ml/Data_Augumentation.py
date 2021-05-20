@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from skimage import transform as tf
 from matplotlib.transforms import Affine2D
+import random
 
 class Data_Augumentation:
   '''
@@ -27,17 +28,20 @@ class Data_Augumentation:
       Args : 
         classPath : (string) directory containing images for a particular class.
     '''
+
     try:
       os.mkdir(classPath+"/FlippedImages")    
     except:
       raise Exception("Unable to create directory for flipped images.")
-
     for image in list(os.listdir(classPath)):
+      
       # Read image
       img = cv2.imread(classPath+"/"+image)
+      
       if self.operations['flip'] not in ['horizontal', 'vertical', 'cross']:
         raise Exception("Invalid flip operation.")
       else:
+        
         if self.operations['flip'] == 'horizontal':
           operation = 1
         elif self.operations['flip'] == 'vertical':
@@ -45,10 +49,10 @@ class Data_Augumentation:
         elif self.operations['flip'] == 'cross':
           operation = -1
         if img is not None:
+          
           try:
             # applies Flip augmentation to the image.
-            Flipped = cv2.flip(img, operation)
-            
+            Flipped = cv2.flip(img, operation)  
             # saving the image by
             plt.imsave(classPath+"/FlippedImages/Flipped"+image, cv2.cvtColor(Flipped, cv2.COLOR_RGB2BGR))
           except Exception as e:
@@ -66,17 +70,19 @@ class Data_Augumentation:
       raise Exception("Unable to create directory for rotated images.")
 
     for image in list(os.listdir(classPath)):
+      
       # Read image
       img = cv2.imread(classPath+"/"+image)
+      
       if isinstance(self.operations['rotate'], str):
         raise Exception("Rotation angle cannot be a string.")
       else:
+        
         angle = round(self.operations['rotate']) % 360
         if img is not None:
           try:
             # applies Rotate augmentation to the image.
-            Rotated = imutils.rotate(img, angle)
-            
+            Rotated = imutils.rotate(img, angle)            
             # saving the image by
             plt.imsave(classPath+"/RotatedImages/Rotated"+image, cv2.cvtColor(Rotated, cv2.COLOR_RGB2BGR))
           except Exception as e:
@@ -135,28 +141,190 @@ class Data_Augumentation:
           except Exception as e:
             print(f"Inverting operation failed due to {e}")
 
-  def HistogramEqualization(self,classPath):
+  def applyCLAHE(self,classPath):
     '''
-      Applies Histogram Equalization augmentation to all the images in the given folder.
+      Applies contrast limited adaptive histogram equalization to all the images in the given folder.
       Args:
         classPath : (string) directory containing images for a particular class.
     '''
     try:
-      os.mkdir(classPath+"/HistogramEqualizedImages")    
+      os.mkdir(classPath+"/CLAHEedImages")    
     except:
-      raise Exception("Unable to create directory for histogram equalized images.")
+      raise Exception("Unable to create directory for CLAHEed images.")
+
+    for image in list(os.listdir(classPath)):
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      if self.operations['CLAHE']==True:
+        if img is not None:
+          try:
+            #convert BGR to GRAYSCALE
+            gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+            # applies CLAHE augmentation to the image.
+            clahe=cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+            CLAHEed=clahe.apply(gray)
+            # saving the image by
+            plt.imsave(classPath+"/CLAHEedImages/CLAHEed"+image, cv2.cvtColor(CLAHEed, cv2.COLOR_GRAY2BGR))
+          except Exception as e:
+            print(f"CLAHE operation failed due to {e}")
+
+  def HistogramEqualisation(self,classPath):
+    '''
+    Applies histogram equilisation to all the images in the given folder.It adjusts the contrast of image using the image's histogram.
+    Args : 
+      classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/HistogramEqualisedImages")    
+    except:
+      raise Exception("Unable to create directory for Histogram Equalised images.")
     
     for image in list(os.listdir(classPath)):
       # Read image
       img = cv2.imread(classPath+"/"+image)
-      if (self.operations['HistogramEqualization']==True):
+      
+      if(self.operations['Hist_Equal']==True):
         if img is not None:
           try:
-            #convert the image from BGR to GRAY.
+            #convert image from BGR to GRAYSCALE.
             gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-            # applies Histogram Equalization to the image.
-            HistogramEqualized = cv2.equalizeHist(gray)
+            # applies histogram equalisation to the image.
+            equalised_img=cv2.equalizeHist(gray)
+            HistogramEqualised=np.hstack((img,equalised_img))
             # saving the image by
-            plt.imsave(classPath+"/HistogramEqualizedImages/HistogramEqualized"+image,cv2.cvtColor(HistogramEqualized,cv2.COLOR_GRAY2BGR))
+            plt.imsave(classPath+"/HistogramEqualisedImages/HistogramEqualised"+image, cv2.cvtColor(HistogramEqualised, cv2.COLOR_RGB2BGR))
           except Exception as e:
-            print(f"Histogram Equalization operation failed due to {e}")
+            print(f"Histogram Equalisation operation failed due to {e}")
+    
+  def applyCrop(self,classPath):
+    ''' 
+      Applies cropping augmentation to all the images in the given folder. Either the images are cropped randomly or cropped with fixed coordinates (y1, y2, x1, x2) given by the user
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/CroppedImages")    
+    except:
+      raise Exception("Unable to create directory for cropped images.")
+    for image in list(os.listdir(classPath)):
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      if img is not None:
+        try:
+          if isinstance(self.operations['crop'], str):
+            if self.operations['crop'] == 'random':
+              y1, y2, x1, x2 = random.randint(1, img.shape[0]), random.randint(1, img.shape[0]), random.randint(1, img.shape[1]), random.randint(1, img.shape[1]),
+              Cropped = img[min(y1, y2):max(y1, y2), min(x1, x2):max(x1, x2), :]
+              plt.imsave(classPath+"/CroppedImages/Cropped"+image, cv2.cvtColor(Cropped, cv2.COLOR_RGB2BGR))
+          elif isinstance(self.operations['crop'], list):
+            if len(self.operations['crop']) == 4:
+              Cropped = img[self.operations['crop'][0]:self.operations['crop'][1], self.operations['crop'][2]:self.operations['crop'][3], :]
+              plt.imsave(classPath+"/CroppedImages/Cropped"+image, cv2.cvtColor(Cropped, cv2.COLOR_RGB2BGR))
+            else:
+              raise Exception("Cropping needs exactly 4 coordinates for y1, y2, x1, x2.")
+          else:
+            raise Exception("Cropping needs random parameter or list of coordinates.")
+        except Exception as e:
+          print(f"Crop operation failed due to {e}")
+  
+  def applyScale(self,classPath):
+    ''' 
+      Applies scaling augmentation to all the images in the given folder. Scales the image by the given ratio.
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    ratio = self.operations['scale']
+    try:
+      os.mkdir(classPath+"/ScaledImages")    
+    except:
+      raise Exception("Unable to create directory for scaled images.")
+    for image in list(os.listdir(classPath)):
+      
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+
+      if isinstance(self.operations['scale'], str):
+        raise Exception("Scaling ratio cannot be a string.")
+      else:
+        if img is not None:
+          try:
+            if ratio < 0:
+              raise Exception("Scale ratio cannot be negative.")
+            else:
+              # applies scale augmentation to the image.
+              Scaled = cv2.resize(img, (round(img.shape[0] * ratio), round(img.shape[1] * ratio)))
+              # # saving the image by
+              plt.imsave(classPath+"/ScaledImages/Scaled"+image, cv2.cvtColor(Scaled, cv2.COLOR_RGB2BGR))
+          except Exception as e:
+            print(f"Scale operation failed due to {e}")
+
+  def applyZoom(self,classPath):
+    ''' 
+      Applies zooming augmentation to all the images in the given folder. It zooms the images by the given ratio
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/ZoomedImages")    
+    except:
+      raise Exception("Unable to create directory for zoomed images.")
+
+    for image in list(os.listdir(classPath)):
+      
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      
+      if isinstance(self.operations['zoom'], str):
+        raise Exception("Zoom factor cannot be a string.")
+      else:
+        
+        factor = self.operations['zoom']
+        if factor < 1:
+          raise Exception("Zoom factor cannot be lesser than 1.")
+        else:
+          if img is not None:
+            try:
+              # applies zooming augmentation to the image.
+              h, w = img.shape[0], img.shape[1]
+              Zoomed = cv2.resize(img, (round(img.shape[1] * factor), round(img.shape[0] * factor)))
+              w_zoomed, h_zoomed = Zoomed.shape[1], Zoomed.shape[0]
+              x1 = round((float(w_zoomed) / 2) - (float(w) / 2))
+              x2 = round((float(w_zoomed) / 2) + (float(w) / 2))
+              y1 = round((float(h_zoomed) / 2) - (float(h) / 2))
+              y2 = round((float(h_zoomed) / 2) + (float(h) / 2))
+              Zoomed = Zoomed[y1:y2, x1:x2]         
+              # saving the image by
+              plt.imsave(classPath+"/ZoomedImages/Zoomed"+image, cv2.cvtColor(Zoomed, cv2.COLOR_RGB2BGR))
+            except Exception as e:
+              print(f"Zooming operation failed due to {e}")
+
+  def applyGreyscale(self,classPath):
+    ''' 
+      Applies greyscale augmentation to all the images in the given folder.
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/GreyscaleImages")    
+    except:
+      raise Exception("Unable to create directory for greyscale images.")
+
+    for image in list(os.listdir(classPath)):
+      
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      
+      if not isinstance(self.operations['greyscale'], bool):
+        raise Exception("Greyscale parameter must be a boolean value.")
+      else:
+        
+        if self.operations['greyscale']:
+          if img is not None:
+            try:
+              # applies greyscale augmentation to the image.
+              Greyscale = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+              # saving the image by
+              cv2.imwrite(classPath+"/GreyscaleImages/Greyscale"+image, Greyscale)
+            except Exception as e:
+              print(f"Greyscale operation failed due to {e}")
+
