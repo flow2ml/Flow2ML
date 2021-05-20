@@ -111,16 +111,30 @@ class Data_Augumentation:
           except Exception as e:
             print(f"Shearing operation failed due to {e}")
 
-  
-  def HistogramEqualisation(image_file):
-    '''class containing method to implement histogram equalization to a given image.'''
-    #read the image and flag is 0 here,to indicate image is loaded in grayscale mode.
-    img=cv2.imread(image_file,0) 
-    #Equalize the Histogram for contrast adjustment.
-    equalised_img=cv2.equalizeHist(img)
-    #stacking both the original and equalised images.
-    result=np.hstack((img,equalised_img))
-    #final image is in output.png file
-    cv2.imwrite("output.png",result)
+  def HistogramEqualisation(self,classPath):
+    '''
+    Applies histogram equilisation to all the images in the given folder.It adjusts the contrast of image using the image's histogram.
+    Args : 
+      classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/HistogramEqualisedImages")    
+    except:
+      raise Exception("Unable to create directory for Histogram Equalised images.")
+    
+    for image in list(os.listdir(classPath)):
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      if img is not None:
+        try:
+          #convert image from BGR to GRAYSCALE.
+          gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+          # applies histogram equalisation to the image.
+          equalised_img=cv2.equalizeHist(gray)
+          HistogramEqualised=np.hstack((img,equalised_img))
+          # saving the image by
+          plt.imsave(classPath+"/HistogramEqualisedImages/HistogramEqualised"+image, cv2.cvtColor(HistogramEqualised, cv2.COLOR_RGB2BGR))
+        except Exception as e:
+          print(f"Histogram Equalisation operation failed due to {e}")
 
   
