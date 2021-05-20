@@ -131,7 +131,32 @@ class Data_Augumentation:
             # applies Invert augmentation to the image.
             Inverted=abs(255-img)
             # saving the image by
-            plt.imsave(classPath+"/InvertedImages/Inverted"+image, cv2.cvtColor(Inverted, cv2.COLOR_RGB2BGR))
+            plt.imsave(classPath+"/InvertedImages/Inverted"+image, Inverted)
           except Exception as e:
             print(f"Inverting operation failed due to {e}")
 
+  def HistogramEqualization(self,classPath):
+    '''
+      Applies Histogram Equalization augmentation to all the images in the given folder.
+      Args:
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/HistogramEqualizedImages")    
+    except:
+      raise Exception("Unable to create directory for histogram equalized images.")
+    
+    for image in list(os.listdir(classPath)):
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      if (self.operations['HistogramEqualization']==True):
+        if img is not None:
+          try:
+            #convert the image from BGR to GRAY.
+            gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+            # applies Histogram Equalization to the image.
+            HistogramEqualized = cv2.equalizeHist(gray)
+            # saving the image by
+            plt.imsave(classPath+"/HistogramEqualizedImages/HistogramEqualized"+image,cv2.cvtColor(HistogramEqualized,cv2.COLOR_GRAY2BGR))
+          except Exception as e:
+            print(f"Histogram Equalization operation failed due to {e}")

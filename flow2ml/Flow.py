@@ -119,6 +119,9 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
 
         if operation == "invert":
           self.applyInvert(path)
+
+        if operation == "HistogramEqualization":
+          self.HistogramEqualization(path)
           
         time.sleep(0.1)
         self.update_progress( progress[progress_i]/100.0, f"Augmented all images in {folder}" )
