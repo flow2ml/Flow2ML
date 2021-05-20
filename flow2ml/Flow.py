@@ -1,7 +1,5 @@
 import os
 import sys ,time
-import tensorflow as tf
-import tensorflowjs as tfjs
 from .Data_Loader import Data_Loader
 from .Filters import Filters
 from .Data_Augumentation import Data_Augumentation
@@ -127,22 +125,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
       self.update_progress( 100/100.0, f"Augmented all images in {folder}"  )
       progress_i = 0
     print()
-  
-  def deploy_tensorflow_model(model,js=False,lite=False):
-    '''this function will convert the given tensorflow model into tflite or tfjs model 
-    according to user input.
-    '''
-    if js==True:
-      tfjs.converters.save_keras_model(model,"models") #the final converted tfjs model will be created in "models" folder and the provided input tensorflow model is model.
-
-    if lite==True:
-      TF_LITE_MODEL_FILE_NAME="tf_lite_model.tflite"
-      tf_lite_converter=tf.lite.TFLiteConverter.from_keras_model(model) #defining the tflite converter
-      tflite_model=tf_lite_converter.convert() #calling the convert function
-      tflite_model_name=TF_LITE_MODEL_FILE_NAME #location of converted tflite model
-      open(tflite_model_name,"wb").write(tflite_model)
-
-
+    
   def getDataset(self,img_dimensions,train_val_split):
     '''
       Generates the dataset.
