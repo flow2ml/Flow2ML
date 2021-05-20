@@ -125,9 +125,7 @@ class Data_Augumentation:
     for image in list(os.listdir(classPath)):
       # Read image
       img = cv2.imread(classPath+"/"+image)
-      if(self.operations['Hist_Equal']==False):
-        raise Exception("Histogram Equalisation should not be done.")
-      else:
+      if(self.operations['Hist_Equal']==True):
         if img is not None:
           try:
             #convert image from BGR to GRAYSCALE.
