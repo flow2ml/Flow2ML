@@ -51,6 +51,11 @@ Applies the following augmentation operations to the images in data directory<br
     <li>rotation</li>
     <li>shearing</li>
     <li>CLAHE<li>
+    <li>Histogram Equalisation</li>
+    <li>cropping</li>
+    <li>scaling</li>
+    <li>zooming</li>
+    <li>greyscale</li>
 </ol>
 <br><hr><br>
 Flow.py contains Flow class which connects various other classes and maintains the work flow.
@@ -67,6 +72,15 @@ It contains the following methods to connect various dots<br>
 It contains the following methods to get an automated analysis of a trained model<br>
 <ol>
     <li>__init__ <br> It takes a trained model, test_x (test data) and test_y (test data labels) and creates a Results directory.</li>
+    <li>roc_curve <br> It takes a filename and stores the roc curve plot inside the Results directory.</li>
+    <li>confusion_matrix <br> Plots and saves the confusion matrix figure in the Results directory</li>
+    <li>precision_recall_curve <br> It takes a filename and stores the precision recall curve plot inside the Results directory.</li>
+    <li>get_results_docx <br> It calls all of the above functions with their deafult filenames and stores the figures along with a results.docx inside the Results directory.</li>
+</ol>
+<h3>Tf_Results.py</h3>
+It contains the following methods to get an automated analysis of a trained model<br>
+<ol>
+    <li>__init__ <br> It takes a trained model, validation generator and creates a Results directory.</li>
     <li>roc_curve <br> It takes a filename and stores the roc curve plot inside the Results directory.</li>
     <li>confusion_matrix <br> Plots and saves the confusion matrix figure in the Results directory</li>
     <li>precision_recall_curve <br> It takes a filename and stores the precision recall curve plot inside the Results directory.</li>
