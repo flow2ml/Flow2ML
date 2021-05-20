@@ -78,6 +78,7 @@ Install Flow2ML python files via pip.
 ```py
     # To be given input by the user.
     img_dimensions = (150,150,3)
+    # If working with greyscale image, change the number of channels from 3 to 1.
     test_val_split = 0.1
 
     # Import flow2ml package
