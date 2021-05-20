@@ -110,3 +110,28 @@ class Data_Augumentation:
             plt.imsave(classPath+"/ShearedImages/Sheared"+image, cv2.cvtColor(Sheared, cv2.COLOR_RGB2BGR))
           except Exception as e:
             print(f"Shearing operation failed due to {e}")
+
+  def applyInvert(self,classPath):
+    '''
+      Applies invert augmentation to all the images in the given folder. It negates the images by reversing the pixel value.
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/InvertedImages")    
+    except:
+      raise Exception("Unable to create directory for inverted images.")
+    
+    for image in list(os.listdir(classPath)):
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      if (self.operations['invert']==True):
+        if img is not None:
+          try:
+            # applies Invert augmentation to the image.
+            Inverted=abs(255-img)
+            # saving the image by
+            plt.imsave(classPath+"/InvertedImages/Inverted"+image, cv2.cvtColor(Inverted, cv2.COLOR_RGB2BGR))
+          except Exception as e:
+            print(f"Inverting operation failed due to {e}")
+
