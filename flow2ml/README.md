@@ -50,8 +50,9 @@ Applies the following augmentation operations to the images in data directory<br
     <li>flipping</li>
     <li>rotation</li>
     <li>shearing</li>
+    <li>inverting</li>
+    <li>HistogramEqualisation</li>
     <li>CLAHE<li>
-    <li>Histogram Equalisation</li>
     <li>cropping</li>
     <li>scaling</li>
     <li>zooming</li>

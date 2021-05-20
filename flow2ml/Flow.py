@@ -120,6 +120,12 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
         if operation == "shear":
           self.applyShear(path)
 
+        if operation == "invert":
+          self.applyInvert(path)
+
+        if operation == "HistogramEqualisation":
+          self.HistogramEqualization(path)
+          
         if operation == "CLAHE":
           self.applyCLAHE(path)
         

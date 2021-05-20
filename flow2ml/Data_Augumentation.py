@@ -117,6 +117,30 @@ class Data_Augumentation:
           except Exception as e:
             print(f"Shearing operation failed due to {e}")
 
+  def applyInvert(self,classPath):
+    '''
+      Applies invert augmentation to all the images in the given folder. It negates the images by reversing the pixel value.
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/InvertedImages")    
+    except:
+      raise Exception("Unable to create directory for inverted images.")
+    
+    for image in list(os.listdir(classPath)):
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      if (self.operations['invert']==True):
+        if img is not None:
+          try:
+            # applies Invert augmentation to the image.
+            Inverted=abs(255-img)
+            # saving the image by
+            plt.imsave(classPath+"/InvertedImages/Inverted"+image, Inverted)
+          except Exception as e:
+            print(f"Inverting operation failed due to {e}")
+
   def applyCLAHE(self,classPath):
     '''
       Applies contrast limited adaptive histogram equalization to all the images in the given folder.
@@ -158,6 +182,7 @@ class Data_Augumentation:
     for image in list(os.listdir(classPath)):
       # Read image
       img = cv2.imread(classPath+"/"+image)
+      
       if(self.operations['Hist_Equal']==True):
         if img is not None:
           try:
@@ -302,3 +327,4 @@ class Data_Augumentation:
               cv2.imwrite(classPath+"/GreyscaleImages/Greyscale"+image, Greyscale)
             except Exception as e:
               print(f"Greyscale operation failed due to {e}")
+
