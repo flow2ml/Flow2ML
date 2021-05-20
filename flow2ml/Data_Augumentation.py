@@ -125,16 +125,21 @@ class Data_Augumentation:
     for image in list(os.listdir(classPath)):
       # Read image
       img = cv2.imread(classPath+"/"+image)
-      if img is not None:
-        try:
-          #convert image from BGR to GRAYSCALE.
-          gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-          # applies histogram equalisation to the image.
-          equalised_img=cv2.equalizeHist(gray)
-          HistogramEqualised=np.hstack((img,equalised_img))
-          # saving the image by
-          plt.imsave(classPath+"/HistogramEqualisedImages/HistogramEqualised"+image, cv2.cvtColor(HistogramEqualised, cv2.COLOR_RGB2BGR))
-        except Exception as e:
-          print(f"Histogram Equalisation operation failed due to {e}")
+      if(self.operations['Hist_Equal']==False):
+        raise Exception("Histogram Equalisation should not be done.")
+      else:
+        if img is not None:
+          try:
+            #convert image from BGR to GRAYSCALE.
+            gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+            # applies histogram equalisation to the image.
+            equalised_img=cv2.equalizeHist(gray)
+            HistogramEqualised=np.hstack((img,equalised_img))
+            # saving the image by
+            plt.imsave(classPath+"/HistogramEqualisedImages/HistogramEqualised"+image, cv2.cvtColor(HistogramEqualised, cv2.COLOR_RGB2BGR))
+          except Exception as e:
+            print(f"Histogram Equalisation operation failed due to {e}")
+
+      
 
   
