@@ -111,9 +111,9 @@ class Data_Augumentation:
           except Exception as e:
             print(f"Shearing operation failed due to {e}")
 
-class HistogramEqualisation:
-  '''class containing method to implement histogram equalization to a given image.'''
-  def hist_equalizer(image_file):
+  
+  def HistogramEqualisation(image_file):
+    '''class containing method to implement histogram equalization to a given image.'''
     #read the image and flag is 0 here,to indicate image is loaded in grayscale mode.
     img=cv2.imread(image_file,0) 
     #Equalize the Histogram for contrast adjustment.
