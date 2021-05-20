@@ -245,3 +245,33 @@ class Data_Augumentation:
               plt.imsave(classPath+"/ZoomedImages/Zoomed"+image, cv2.cvtColor(Zoomed, cv2.COLOR_RGB2BGR))
             except Exception as e:
               print(f"Zooming operation failed due to {e}")
+
+  def applyGreyscale(self,classPath):
+    ''' 
+      Applies greyscale augmentation to all the images in the given folder.
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/GreyscaleImages")    
+    except:
+      raise Exception("Unable to create directory for greyscale images.")
+
+    for image in list(os.listdir(classPath)):
+      
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      
+      if not isinstance(self.operations['greyscale'], bool):
+        raise Exception("Greyscale parameter must be a boolean value.")
+      else:
+        
+        if self.operations['greyscale']:
+          if img is not None:
+            try:
+              # applies greyscale augmentation to the image.
+              Greyscale = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+              # saving the image by
+              cv2.imwrite(classPath+"/GreyscaleImages/Greyscale"+image, Greyscale)
+            except Exception as e:
+              print(f"Greyscale operation failed due to {e}")
