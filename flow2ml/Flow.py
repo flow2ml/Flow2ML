@@ -138,7 +138,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
       progress_i = 0
     
     print()
-
+    
   def getDataset(self,img_dimensions,train_val_split):
     
     '''

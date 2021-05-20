@@ -116,6 +116,33 @@ class Data_Augumentation:
             plt.imsave(classPath+"/ShearedImages/Sheared"+image, cv2.cvtColor(Sheared, cv2.COLOR_RGB2BGR))
           except Exception as e:
             print(f"Shearing operation failed due to {e}")
+
+  def HistogramEqualisation(self,classPath):
+    '''
+    Applies histogram equilisation to all the images in the given folder.It adjusts the contrast of image using the image's histogram.
+    Args : 
+      classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/HistogramEqualisedImages")    
+    except:
+      raise Exception("Unable to create directory for Histogram Equalised images.")
+    
+    for image in list(os.listdir(classPath)):
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      if(self.operations['Hist_Equal']==True):
+        if img is not None:
+          try:
+            #convert image from BGR to GRAYSCALE.
+            gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+            # applies histogram equalisation to the image.
+            equalised_img=cv2.equalizeHist(gray)
+            HistogramEqualised=np.hstack((img,equalised_img))
+            # saving the image by
+            plt.imsave(classPath+"/HistogramEqualisedImages/HistogramEqualised"+image, cv2.cvtColor(HistogramEqualised, cv2.COLOR_RGB2BGR))
+          except Exception as e:
+            print(f"Histogram Equalisation operation failed due to {e}")
     
   def applyCrop(self,classPath):
     ''' 
