@@ -94,6 +94,7 @@ class Data_Loader:
               filtered_image = os.path.join(classPath,image,image_in_folder)
               self.process_images(filtered_image, final_data_folder, image_in_folder, classPath)
     
+    # If no folders of preprocessed images are found, move original images to processedData
     if not any([i != -1 for i in [image.find("Images") for image in os.listdir(classPath)]]):
 
       for image in list(os.listdir(classPath)):
