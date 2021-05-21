@@ -40,6 +40,28 @@ class Data_Loader:
     self.classes = training_classes
     return training_classes
 
+  def process_images(self,img_source,img_dest,img_name,classPath):
+    '''
+      Copies the given image to the processedData folder and assigns the relevant label
+      Args :
+        img_source : (string) path to the image to be copied
+        img_dest : (string) path to where the image should be copied
+        img_name : (string) original image name
+        classPath : (string) directory containing images for a particular class.
+      Return :
+        None
+    '''
+    shutil.copy(img_source,img_dest)
+              
+    # Handle path seperators for Linux and Windows
+    if '/' in classPath:
+      folderName = list(classPath.split("/"))[2]
+    else:
+      folderName = os.path.split(classPath)[1]  
+                
+    # Assign relevant labels to the image
+    ind = self.classes.index(folderName)
+    self.img_label[img_name] = np.squeeze(np.eye(len(self.classes))[ind])
 
   def create_dataset(self,classPath):
     '''
@@ -64,41 +86,23 @@ class Data_Loader:
     for image in list(os.listdir(classPath)):
       
         if (image.find("Images") != -1):
-          # path is a folder
+          # path is a folder containing multiple preprocessed images
 
             for image_in_folder in (list(os.listdir(os.path.join(classPath,image)))):
               
 
               filtered_image = os.path.join(classPath,image,image_in_folder)
-              shutil.copy(filtered_image,final_data_folder)
-              
-              # Handle path seperators for Linux and Windows
-              if '/' in classPath:
-                folderName = list(classPath.split("/"))[2]
-              else:
-                folderName = os.path.split(classPath)[1]              
-
-              ind = self.classes.index(folderName)
-              self.img_label[image_in_folder] = np.squeeze(np.eye(len(self.classes))[ind])
+              self.process_images(filtered_image, final_data_folder, image_in_folder, classPath)
     
     if not any([i != -1 for i in [image.find("Images") for image in os.listdir(classPath)]]):
 
       for image in list(os.listdir(classPath)):
 
         if not(image.find("Images") != -1):
-        # path is image
+        # path is an image since folder could not be found
         
           original_image = os.path.join(classPath,image)
-          shutil.copy(original_image, final_data_folder)
-
-          # Handle path seperators for Linux and Windows
-          if '/' in classPath:
-            folderName = list(classPath.split("/"))[2]
-          else:
-            folderName = os.path.split(classPath)[1]              
-
-          ind = self.classes.index(folderName)
-          self.img_label[image] = np.squeeze(np.eye(len(self.classes))[ind])
+          self.process_images(original_image, final_data_folder, image, classPath)
 
     return self.img_label
 
