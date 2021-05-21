@@ -40,6 +40,28 @@ class Data_Loader:
     self.classes = training_classes
     return training_classes
 
+  def process_images(self,img_source,img_dest,img_name,classPath):
+    '''
+      Copies the given image to the processedData folder and assigns the relevant label
+      Args :
+        img_source : (string) path to the image to be copied
+        img_dest : (string) path to where the image should be copied
+        img_name : (string) original image name
+        classPath : (string) directory containing images for a particular class.
+      Return :
+        None
+    '''
+    shutil.copy(img_source,img_dest)
+              
+    # Handle path seperators for Linux and Windows
+    if '/' in classPath:
+      folderName = list(classPath.split("/"))[2]
+    else:
+      folderName = os.path.split(classPath)[1]  
+                
+    # Assign relevant labels to the image
+    ind = self.classes.index(folderName)
+    self.img_label[img_name] = np.squeeze(np.eye(len(self.classes))[ind])
 
   def create_dataset(self,classPath):
     '''
@@ -64,22 +86,24 @@ class Data_Loader:
     for image in list(os.listdir(classPath)):
       
         if (image.find("Images") != -1):
-          # path is a folder
+          # path is a folder containing multiple preprocessed images
 
             for image_in_folder in (list(os.listdir(os.path.join(classPath,image)))):
               
 
               filtered_image = os.path.join(classPath,image,image_in_folder)
-              shutil.copy(filtered_image,final_data_folder)
-              
-              # Handle path seperators for Linux and Windows
-              if '/' in classPath:
-                folderName = list(classPath.split("/"))[2]
-              else:
-                folderName = os.path.split(classPath)[1]              
+              self.process_images(filtered_image, final_data_folder, image_in_folder, classPath)
+    
+    # If no folders of preprocessed images are found, move original images to processedData
+    if not any([i != -1 for i in [image.find("Images") for image in os.listdir(classPath)]]):
 
-              ind = self.classes.index(folderName)
-              self.img_label[image_in_folder] = np.squeeze(np.eye(len(self.classes))[ind])
+      for image in list(os.listdir(classPath)):
+
+        if not(image.find("Images") != -1):
+        # path is an image since folder could not be found
+        
+          original_image = os.path.join(classPath,image)
+          self.process_images(original_image, final_data_folder, image, classPath)
 
     return self.img_label
 
@@ -119,7 +143,6 @@ class Data_Loader:
     '''
 
     self.img_label = img_label_dict
-    
     # differentiating the complete dataset into training and validating datasets.
     img_name_train, img_name_val, output_label_train, output_label_val = train_test_split(
                                                                     list(self.img_label.keys()),
