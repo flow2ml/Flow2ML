@@ -80,6 +80,25 @@ class Data_Loader:
 
               ind = self.classes.index(folderName)
               self.img_label[image_in_folder] = np.squeeze(np.eye(len(self.classes))[ind])
+    
+    if not any([i != -1 for i in [image.find("Images") for image in os.listdir(classPath)]]):
+
+      for image in list(os.listdir(classPath)):
+
+        if not(image.find("Images") != -1):
+        # path is image
+        
+          original_image = os.path.join(classPath,image)
+          shutil.copy(original_image, final_data_folder)
+
+          # Handle path seperators for Linux and Windows
+          if '/' in classPath:
+            folderName = list(classPath.split("/"))[2]
+          else:
+            folderName = os.path.split(classPath)[1]              
+
+          ind = self.classes.index(folderName)
+          self.img_label[image] = np.squeeze(np.eye(len(self.classes))[ind])
 
     return self.img_label
 
@@ -119,7 +138,6 @@ class Data_Loader:
     '''
 
     self.img_label = img_label_dict
-    
     # differentiating the complete dataset into training and validating datasets.
     img_name_train, img_name_val, output_label_train, output_label_val = train_test_split(
                                                                     list(self.img_label.keys()),
