@@ -328,3 +328,110 @@ class Data_Augumentation:
             except Exception as e:
               print(f"Greyscale operation failed due to {e}")
 
+  def applyErode(self,classPath):
+    ''' 
+      Applies Erosion augmentation to all the images in the given folder.
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/ErodedImages")    
+    except:
+      raise Exception("Unable to create directory for eroded images.")
+
+    for image in list(os.listdir(classPath)):
+      
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      
+      if self.operations['erode']==True:
+        if img is not None:
+          try:
+            # apply Erosion on the image.
+            kernel=np.ones((5,5),np.uint8)
+            Eroded=cv2.erode(img,kernel,iterations=1) 
+            # saving the image by
+            cv2.imwrite(classPath+"/ErodedImages/Eroded"+image, Eroded)
+          except Exception as e:
+            print(f"Erosion operation failed due to {e}")
+
+  def applyDilate(self,classPath):
+    ''' 
+      Applies Dilation augmentation to all the images in the given folder.
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/DilatedImages")    
+    except:
+      raise Exception("Unable to create directory for dilated images.")
+
+    for image in list(os.listdir(classPath)):
+      
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      
+      if self.operations['dilate']==True:
+        if img is not None:
+          try:
+            # apply Dilation on the image.
+            kernel=np.ones((5,5),np.uint8)
+            Dilated=cv2.dilate(img,kernel,iterations=1) 
+            # saving the image by
+            cv2.imwrite(classPath+"/DilatedImages/Dilated"+image, Dilated)
+          except Exception as e:
+            print(f"Dilation operation failed due to {e}")
+
+  def applyOpen(self,classPath):
+    ''' 
+      Applies Opening augmentation to all the images in the given folder.
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/OpenedImages")    
+    except:
+      raise Exception("Unable to create directory for Opened images.")
+
+    for image in list(os.listdir(classPath)):
+      
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      
+      if self.operations['open']==True:
+        if img is not None:
+          try:
+            # apply Opening on the image.
+            kernel=np.ones((5,5),np.uint8)
+            Opened=cv2.morphologyEx(img,cv2.MORPH_OPEN,kernel) 
+            # saving the image by
+            cv2.imwrite(classPath+"/OpenedImages/Opened"+image, Opened)
+          except Exception as e:
+            print(f"Opening operation failed due to {e}")
+
+  def applyClose(self,classPath):
+    ''' 
+      Applies Closing augmentation to all the images in the given folder.
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+    try:
+      os.mkdir(classPath+"/ClosedImages")    
+    except:
+      raise Exception("Unable to create directory for Closed images.")
+
+    for image in list(os.listdir(classPath)):
+      
+      # Read image
+      img = cv2.imread(classPath+"/"+image)
+      
+      if self.operations['close']==True:
+        if img is not None:
+          try:
+            # apply Closing on the image.
+            kernel=np.ones((5,5),np.uint8)
+            Closed=cv2.morphologyEx(img,cv2.MORPH_CLOSE,kernel) 
+            # saving the image by
+            cv2.imwrite(classPath+"/ClosedImages/Closed"+image, Closed)
+          except Exception as e:
+            print(f"Closing operation failed due to {e}")

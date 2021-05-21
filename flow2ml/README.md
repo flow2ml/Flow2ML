@@ -57,6 +57,10 @@ Applies the following augmentation operations to the images in data directory<br
     <li>scaling</li>
     <li>zooming</li>
     <li>greyscale</li>
+    <li>Erosion</li>
+    <li>Dilation</li>
+    <li>Opening</li>
+    <li>Closing</li>
 </ol>
 <br><hr><br>
 Flow.py contains Flow class which connects various other classes and maintains the work flow.
