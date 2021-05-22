@@ -65,14 +65,42 @@ Before Running the code you need to have certain packages to be installed. They 
     
 ## Download all Dependencies by :
 ```pip install -r requirements.txt```
+	
+## Getting Started 
 
-## Installation
-Install Flow2ML python files via pip.
+Flow2ML for Python can be installed from Source,Pypi and Docker container installation methods.
 
-```sh
-    $ pip install flow2ml==1.0.3
-```
+   ## From Source
 
+   $ git clone https://github.com/flow2ml/Flow2ML.git <br />
+   $ cd flow2ML <br />
+
+   Or using PIP:
+
+   $ git clone https://github.com/flow2ml/Flow2ML.git <br />
+   $ cd flow2ML <br /
+   $ pip install . <br />
+   
+   ## From Pypi
+   $ pip install flow2ml <br />
+   
+   ## From Docker Image / Container
+   Clone this repo and cd into it: <br />
+   $ git clone https://github.com/flow2ml/Flow2ML.git <br />
+   $ cd flow2ML <br /
+
+   Build the docker image: <br />
+   $ docker build -t flow2ml . <br />
+
+   Now you can run any of the code in this directory:
+
+   Run the container,  and specifying which code to run. <br />
+   -v : The volume on which repo code is mounted <br />
+   Replace "script.py" with the name of your code you'd like to run <br />
+   Replace "pwd" with the path of the example file you'd like to run. <br />
+
+   $ docker run -it --rm \ -v $(pwd)/:/root/flow2ml/ <br />
+   python script.py
 
 ## Sample Code
 ```py
