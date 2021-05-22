@@ -452,23 +452,11 @@ class Data_Augumentation:
       # Read image
       img = cv2.imread(classPath+"/"+image)
       
-      if self.operations['threshold'] not in ['simple', 'adaptive', 'OTSU']:
+      if self.operations['threshold']['type'] not in ['simple', 'adaptive', 'OTSU']:
         raise Exception("Invalid threshold operation.")
       else:
-        
-        if self.operations['threshold'] == 'simple':
-          if img is not None:
-            try:
-              #convert the image from BGR to GRAYSCALE
-              gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-              # applies simple thresholding augmentation to the image.
-              _,s_threshed=cv2.threshold(gray,120,255,cv2.THRESH_BINARY)  
-              # saving the image by
-              plt.imsave(classPath+"/ThresholdedImages/s_threshed"+image,s_threshed)
-            except Exception as e:
-              print(f"simple thresholding operation failed due to {e}")
 
-        elif self.operations['threshold'] == 'adaptive':
+        if self.operations['threshold']['type'] == 'adaptive':
           if img is not None:
             try:
               #convert the image from BGR to GRAYSCALE
@@ -480,14 +468,31 @@ class Data_Augumentation:
             except Exception as e:
               print(f"adaptive thresholding operation failed due to {e}")
 
-        elif self.operations['threshold'] == 'OTSU':
-          if img is not None:
-            try:
-              #convert the image from BGR to GRAYSCALE
-              gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-              # applies OTSU thresholding augmentation to the image.
-              _,o_threshed=cv2.threshold(gray,120,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU) 
-              # saving the image by
-              plt.imsave(classPath+"/ThresholdedImages/o_threshed"+image,o_threshed)
-            except Exception as e:
-              print(f"OTSU thresholding operation failed due to {e}")
+        elif isinstance(self.operations['threshold']['thresh_val'],str):
+          raise Exception("threshold value can't be a string.")
+        else:
+          Threshold=self.operations['threshold']['thresh_val']
+
+          if(self.operations['threshold']['type']== 'OTSU'):
+              if img is not None:
+                try:
+                  #convert the image from BGR to GRAYSCALE
+                  gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+                  # applies OTSU thresholding augmentation to the image.
+                  _,o_threshed=cv2.threshold(gray,Threshold,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU) 
+                  # saving the image by
+                  plt.imsave(classPath+"/ThresholdedImages/o_threshed"+image,o_threshed)
+                except Exception as e:
+                  print(f"OTSU thresholding operation failed due to {e}") 
+
+          elif(self.operations['threshold']['type']=='simple'):
+              if img is not None:
+                try:
+                  #convert the image from BGR to GRAYSCALE
+                  gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+                  # applies simple thresholding augmentation to the image.
+                  _,s_threshed=cv2.threshold(gray,Threshold,255,cv2.THRESH_BINARY)  
+                  # saving the image by
+                  plt.imsave(classPath+"/ThresholdedImages/s_threshed"+image,s_threshed)
+                except Exception as e:
+                  print(f"simple thresholding operation failed due to {e}")
