@@ -1,7 +1,5 @@
 # Unit Tests
 
-## Table Of Contents
-- [Introduction](#Introduction)
 
 ## Unit Tests
 <p>Unit testing refers to a method of testing where software is broken down into different components (units) and each unit is tested functionally and in isolation from the other units or modules.</p>
