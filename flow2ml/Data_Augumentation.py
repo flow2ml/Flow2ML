@@ -529,15 +529,6 @@ class Data_Augumentation:
               except Exception as e:
                 print(f"color-space operation failed due to {e}")
 
-            if (self.operations['color-space']['output']=='GRAY'):
-              try:
-                # changing color-space of the image from BGR to GRAY.
-                changed = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)  
-                # saving the image
-                plt.imsave(classPath+"/ChangedImages/Changed"+image, changed)
-              except Exception as e:
-                print(f"color-space operation failed due to {e}")
-
         elif(self.operations['color-space']['input']=='GRAY'):
 
           #Read image in grayscale mode.
