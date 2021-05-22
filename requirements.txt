@@ -7,3 +7,4 @@ opencv-python==4.5.1
 pytest-shutil==1.7.0
 python-docx==0.8.10
 tensorflow==2.5.0
+unittest2==1.1.0
