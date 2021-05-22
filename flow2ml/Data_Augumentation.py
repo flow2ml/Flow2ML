@@ -168,7 +168,7 @@ class Data_Augumentation:
           except Exception as e:
             print(f"CLAHE operation failed due to {e}")
 
-  def HistogramEqualisation(self,classPath):
+  def applyHistogramEqualization(self,classPath):
     '''
     Applies histogram equilisation to all the images in the given folder.It adjusts the contrast of image using the image's histogram.
     Args : 

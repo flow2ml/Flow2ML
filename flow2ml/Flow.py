@@ -35,7 +35,6 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
 
     self.num_classes =  len(self.classes)
 
-
   def update_progress(self,progress,subStatus):
     
     '''
@@ -55,7 +54,6 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
     sys.stdout.write(text)
     sys.stdout.flush()
     
-
   def applyFilters(self,filters):
     ''' 
       Applies given filters 
@@ -123,8 +121,8 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
         if operation == "invert":
           self.applyInvert(path)
 
-        if operation == "HistogramEqualisation":
-          self.HistogramEqualization(path)
+        if operation == "Hist_Equal":
+          self.applyHistogramEqualization(path)
           
         if operation == "CLAHE":
           self.applyCLAHE(path)
@@ -168,7 +166,14 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
 
     self.update_progress( 0/100.0, "Created Datasets" )  
 
-    # creates processedData folder in self.dataset_dir and
+    # creates processedData folder in self.dataset_dir
+    final_data_folder = os.path.join(self.dataset_dir,'processedData')
+    try:
+      os.mkdir(final_data_folder)    
+      print("Creating processedData Folder")
+    except Exception as e:
+      print(f"Unable to create processedData folder due to {e}")
+
     # moves all the images to that folder
     for folder in self.classes:
       path = os.path.join(self.dataset_dir ,self.data_dir, folder)

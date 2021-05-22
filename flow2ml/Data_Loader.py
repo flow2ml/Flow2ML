@@ -79,13 +79,6 @@ class Data_Loader:
     '''
 
     final_data_folder = os.path.join(self.dataset_dir,'processedData')
-    
-
-    try:
-      os.mkdir(final_data_folder)    
-      print("Creating processedData Folder")
-    except Exception as e:
-      print(f"Unable to create processedData folder due to {e}")
 
     for image in list(os.listdir(classPath)):
       
