@@ -99,8 +99,7 @@ Flow2ML for Python can be installed from Source,Pypi and Docker container instal
    Replace "script.py" with the name of your code you'd like to run <br />
    Replace "pwd" with the path of the example file you'd like to run. <br />
 
-   $ docker run -it --rm \ -v $(pwd)/:/root/flow2ml/ <br />
-   python script.py
+   $ docker run -it --rm \ -v $(pwd)/:/root/flow2ml/ python script.py
 
 ## Sample Code
 ```py
