@@ -51,9 +51,9 @@ class Data_Augumentation:
         if img is not None:
           
           try:
-            # applies Flip augmentation to the image.
+            # applying flip augmentation to the image.
             Flipped = cv2.flip(img, operation)  
-            # saving the image by
+            # saving the image
             plt.imsave(classPath+"/FlippedImages/Flipped"+image, cv2.cvtColor(Flipped, cv2.COLOR_RGB2BGR))
           except Exception as e:
             print(f"Flip operation failed due to {e}")
@@ -77,13 +77,13 @@ class Data_Augumentation:
       if isinstance(self.operations['rotate'], str):
         raise Exception("Rotation angle cannot be a string.")
       else:
-        
+        # get absolute value of the angle
         angle = round(self.operations['rotate']) % 360
         if img is not None:
           try:
-            # applies Rotate augmentation to the image.
+            # applying rotate augmentation to the image.
             Rotated = imutils.rotate(img, angle)            
-            # saving the image by
+            # saving the image
             plt.imsave(classPath+"/RotatedImages/Rotated"+image, cv2.cvtColor(Rotated, cv2.COLOR_RGB2BGR))
           except Exception as e:
             print(f"Rotation operation failed due to {e}")
@@ -109,10 +109,10 @@ class Data_Augumentation:
         angle_y = np.deg2rad(self.operations['shear']['y_axis'])
         if img is not None:
           try:
-            # applies Rotate augmentation to the image.
+            # applying shear augmentation to the image.
             Sheared = tf.warp(img, inverse_map = np.linalg.inv(Affine2D().skew(xShear = angle_y, yShear = angle_y).get_matrix()))
             Sheared = (Sheared * 255).astype(np.uint8) 
-            # saving the image by
+            # saving the image
             plt.imsave(classPath+"/ShearedImages/Sheared"+image, cv2.cvtColor(Sheared, cv2.COLOR_RGB2BGR))
           except Exception as e:
             print(f"Shearing operation failed due to {e}")
@@ -134,9 +134,9 @@ class Data_Augumentation:
       if (self.operations['invert']==True):
         if img is not None:
           try:
-            # applies Invert augmentation to the image.
+            # applying invert augmentation to the image.
             Inverted=abs(255-img)
-            # saving the image by
+            # saving the image
             plt.imsave(classPath+"/InvertedImages/Inverted"+image, Inverted)
           except Exception as e:
             print(f"Inverting operation failed due to {e}")
@@ -158,17 +158,17 @@ class Data_Augumentation:
       if self.operations['CLAHE']==True:
         if img is not None:
           try:
-            #convert BGR to GRAYSCALE
+            # convert BGR to GRAYSCALE
             gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-            # applies CLAHE augmentation to the image.
+            # applying CLAHE augmentation to the image.
             clahe=cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
             CLAHEed=clahe.apply(gray)
-            # saving the image by
+            # saving the image
             plt.imsave(classPath+"/CLAHEedImages/CLAHEed"+image, cv2.cvtColor(CLAHEed, cv2.COLOR_GRAY2BGR))
           except Exception as e:
             print(f"CLAHE operation failed due to {e}")
 
-  def HistogramEqualisation(self,classPath):
+  def applyHistogramEqualization(self,classPath):
     '''
     Applies histogram equilisation to all the images in the given folder.It adjusts the contrast of image using the image's histogram.
     Args : 
@@ -186,12 +186,12 @@ class Data_Augumentation:
       if(self.operations['Hist_Equal']==True):
         if img is not None:
           try:
-            #convert image from BGR to GRAYSCALE.
+            # convert image from BGR to GRAYSCALE.
             gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-            # applies histogram equalisation to the image.
+            # applying histogram equalisation to the image.
             equalised_img=cv2.equalizeHist(gray)
             HistogramEqualised=np.hstack((img,equalised_img))
-            # saving the image by
+            # saving the image
             plt.imsave(classPath+"/HistogramEqualisedImages/HistogramEqualised"+image, cv2.cvtColor(HistogramEqualised, cv2.COLOR_RGB2BGR))
           except Exception as e:
             print(f"Histogram Equalisation operation failed due to {e}")
@@ -212,13 +212,16 @@ class Data_Augumentation:
       if img is not None:
         try:
           if isinstance(self.operations['crop'], str):
+            # generate random coordinates and crop the image
             if self.operations['crop'] == 'random':
               y1, y2, x1, x2 = random.randint(1, img.shape[0]), random.randint(1, img.shape[0]), random.randint(1, img.shape[1]), random.randint(1, img.shape[1]),
               Cropped = img[min(y1, y2):max(y1, y2), min(x1, x2):max(x1, x2), :]
               plt.imsave(classPath+"/CroppedImages/Cropped"+image, cv2.cvtColor(Cropped, cv2.COLOR_RGB2BGR))
           elif isinstance(self.operations['crop'], list):
             if len(self.operations['crop']) == 4:
+              # crop image by given coordinates only
               Cropped = img[self.operations['crop'][0]:self.operations['crop'][1], self.operations['crop'][2]:self.operations['crop'][3], :]
+              # saving the image
               plt.imsave(classPath+"/CroppedImages/Cropped"+image, cv2.cvtColor(Cropped, cv2.COLOR_RGB2BGR))
             else:
               raise Exception("Cropping needs exactly 4 coordinates for y1, y2, x1, x2.")
@@ -251,9 +254,9 @@ class Data_Augumentation:
             if ratio < 0:
               raise Exception("Scale ratio cannot be negative.")
             else:
-              # applies scale augmentation to the image.
+              # applying scale augmentation to the image.
               Scaled = cv2.resize(img, (round(img.shape[0] * ratio), round(img.shape[1] * ratio)))
-              # # saving the image by
+              # saving the image
               plt.imsave(classPath+"/ScaledImages/Scaled"+image, cv2.cvtColor(Scaled, cv2.COLOR_RGB2BGR))
           except Exception as e:
             print(f"Scale operation failed due to {e}")
@@ -284,16 +287,18 @@ class Data_Augumentation:
         else:
           if img is not None:
             try:
-              # applies zooming augmentation to the image.
+              # applying zooming augmentation to the image.
               h, w = img.shape[0], img.shape[1]
+              # scale the image by the given factor
               Zoomed = cv2.resize(img, (round(img.shape[1] * factor), round(img.shape[0] * factor)))
               w_zoomed, h_zoomed = Zoomed.shape[1], Zoomed.shape[0]
+              # crop the middle of the image by original dimensions
               x1 = round((float(w_zoomed) / 2) - (float(w) / 2))
               x2 = round((float(w_zoomed) / 2) + (float(w) / 2))
               y1 = round((float(h_zoomed) / 2) - (float(h) / 2))
               y2 = round((float(h_zoomed) / 2) + (float(h) / 2))
               Zoomed = Zoomed[y1:y2, x1:x2]         
-              # saving the image by
+              # saving the image
               plt.imsave(classPath+"/ZoomedImages/Zoomed"+image, cv2.cvtColor(Zoomed, cv2.COLOR_RGB2BGR))
             except Exception as e:
               print(f"Zooming operation failed due to {e}")
@@ -321,9 +326,9 @@ class Data_Augumentation:
         if self.operations['greyscale']:
           if img is not None:
             try:
-              # applies greyscale augmentation to the image.
+              # applying greyscale augmentation to the image.
               Greyscale = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-              # saving the image by
+              # saving the image
               cv2.imwrite(classPath+"/GreyscaleImages/Greyscale"+image, Greyscale)
             except Exception as e:
               print(f"Greyscale operation failed due to {e}")

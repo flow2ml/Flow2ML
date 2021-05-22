@@ -54,10 +54,14 @@ class Data_Loader:
     shutil.copy(img_source,img_dest)
               
     # Handle path seperators for Linux and Windows
-    if '/' in classPath:
-      folderName = list(classPath.split("/"))[2]
-    else:
-      folderName = os.path.split(classPath)[1]  
+    try:
+      if '/' in classPath:
+        folderName = list(classPath.split("/"))[2]
+      else:
+        folderName = os.path.split(classPath)[1]
+    except Exception as e:
+      print(f"Unable to extract foldername due to {e}")
+      
                 
     # Assign relevant labels to the image
     ind = self.classes.index(folderName)
@@ -75,13 +79,6 @@ class Data_Loader:
     '''
 
     final_data_folder = os.path.join(self.dataset_dir,'processedData')
-    
-
-    try:
-      os.mkdir(final_data_folder)    
-      print("Creating processedData Folder")
-    except:
-      pass
 
     for image in list(os.listdir(classPath)):
       
@@ -126,7 +123,6 @@ class Data_Loader:
     
     # return resized image
     return img
-
 
   def prepare_dataset(self,img_resize_shape,train_val_split,img_label_dict):
     '''
