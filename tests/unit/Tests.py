@@ -3,7 +3,6 @@ import cv2
 import os
 import shutil
 import numpy as np
-import coverage
 from flow2ml import Flow
 
 # create mock data for 5 classes with 5 images each
