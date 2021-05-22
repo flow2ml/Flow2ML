@@ -1,5 +1,7 @@
 import os
 import sys ,time
+import tensorflowjs as tfjs
+import tensorflow as tf
 from .Data_Loader import Data_Loader
 from .Filters import Filters
 from .Data_Augumentation import Data_Augumentation
@@ -202,3 +204,15 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
     self.update_progress( 100/100.0,"Created Datasets" ) 
 
     return self.dataset
+
+  def deployTensorflowModels(self):
+    '''Deploy conversion from tensorflow model to tensorflowjs or tflite model'''
+
+    if(self.model['tfjs']==True):
+      tfjs.converters.save_keras_model(model, 'models')
+
+    elif self.model['tflite']==True:
+      TF_LITE_MODEL_FILE_NAME = "tf_lite_model.tflite"
+      tf_lite_converter = tf.lite.TFLiteConverter.from_keras_model(model)
+      tflite_model = tf_lite_converter.convert()
+      tflite_model_name = TF_LITE_MODEL_FILE_NAME

@@ -53,6 +53,7 @@ Before Running the code you need to have certain packages to be installed. They 
         <li>numpy</li>
         <li>matplotlib</li>
         <li>tensorflow</li>
+        <li>tensorflowjs</li>
     </ol> 
     
 ## Open Source programs that Flow2ML is a part of:
@@ -129,6 +130,12 @@ Flow2ML for Python can be installed from Source,Pypi and Docker container instal
 
     # Obtain Train, Validation data splits
     (train_x, train_y, val_x, val_y) = flow.getDataset( img_dimensions, test_val_split )
+
+    # Define The conversions to be used
+    model={'tfjs':False, 'tflite':False}
+    # convert tensorflow model to tfjs/tflite
+    flow.deployTensorflowModels( model )
+
 
     from flow2ml import Auto_Results
     
