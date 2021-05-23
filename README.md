@@ -53,6 +53,9 @@ Before Running the code you need to have certain packages to be installed. They 
         <li>numpy</li>
         <li>matplotlib</li>
         <li>tensorflow</li>
+
+
+        
         <li>tensorflowjs</li>
     </ol> 
     
@@ -135,7 +138,7 @@ Flow2ML for Python can be installed from Source,Pypi and Docker container instal
     conversions = ['tfjs':False, 'tflite':False]
 
     # convert tensorflow model to tfjs/tflite
-    flow.deployTensorflowModels( conversions )
+    flow.deployTensorflowModels( conversions ,model )
 
 
     from flow2ml import Auto_Results
