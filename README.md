@@ -54,6 +54,8 @@ Before Running the code you need to have certain packages to be installed. They 
         <li>matplotlib</li>
         <li>tensorflow</li>
         <li>unittest2</li>
+        <li>pandas</li>
+        <li>seaborn</li>
     </ol> 
     
 ## Open Source programs that Flow2ML is a part of:
@@ -116,17 +118,33 @@ Flow2ML for Python can be installed from Source,Pypi and Docker container instal
     flow = Flow( 'dataset_dir' , 'data_dir' )
 
     # Define The Filters to be used
-    filters = ["median", "laplacian", "gaussian", "sobelx", "sobely","bilateral"]
+    filters = ["median", "laplacian", "gaussian", "sobelx", "sobely", "bilateral"]
 
     # Apply The Filters
     flow.applyFilters( filters )
 
     # Define The augmentation operations to be used
    
-    operations = {'flip': 'horizontal', 'rotate': 90, 'shear': {'x_axis': 5, 'y_axis': 15}, 'crop': [50, 100, 50, 100], 'scale': 0.1, 'zoom': 2, 'Hist_Equal':False, 'greyscale': True, 'CLAHE':False, 'invert':False, 'erode':False, 'dilate':False, 'open':False, 'close':False,'threshold':{'type':adaptive,'thresh_val':0}}
+<<<<<<< HEAD
+    operations = {'flipped': 'horizontal', 'rotated': 90, 'sheared': {'x_axis': 5, 'y_axis': 15}, 'cropped': [50, 100, 50, 100], 'scaled': 0.1, 'zoomed': 2, 'histogramequalised':False, 'greyscale': True, 'CLAHE':False, 'inverted':False, 'eroded':False, 'dilated':False, 'opened':False, 'closed':False,'thresholded':{'type':adaptive,'thresh_val':0}}
+=======
+    operations = {'flip': 'horizontal', 'rotate': 90, 'shear': {'x_axis': 5, 'y_axis': 15}, 'crop': [50, 100, 50, 100], 'scale': 0.1, 'zoom': 2, 'Hist_Equal':False, 'greyscale': True, 'CLAHE':False, 'invert':False, 'erode':False, 'dilate':False, 'open':False, 'close':False,'threshold':{'type':'adaptive','thresh_val':0},'color-space':{'input':'BGR','output':'BGR'}}
+>>>>>>> d5cdc4416f1438fab2152d40a4977dad0a86a933
 
     # Apply The Augmentation
     flow.applyAugmentation( operations )
+
+    # To apply augmentations on filtered images, supply a list of filters to apply the augmentations to using the apply_on_filters key. The below code applies flipping and rotation augmentation on median filtered images.
+    filters = ["median", "laplacian"]
+    flow.applyFilters( filters )
+    operations = {'flipped': 'horizontal', 'rotated': 90, 'apply_on_filters': ['median']}
+    flow.applyAugmentation( operations )
+
+    # To apply filters on augmented images, supply a list of augmentations to apply the filters to using the apply_on_augmentation key. The below code applies median and laplacian filters on the flipped images.
+    operations = {'flipped': 'horizontal', 'rotated': 90}
+    flow.applyAugmentation( operations )
+    filters = ["median", "laplacian", {'apply_on_augmentation': ['flipped']}]
+    flow.applyFilters( filters )
 
     # Obtain Train, Validation data splits
     (train_x, train_y, val_x, val_y) = flow.getDataset( img_dimensions, test_val_split )
