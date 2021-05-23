@@ -3,7 +3,7 @@ import sys ,time
 from .Data_Loader import Data_Loader
 from .Filters import Filters
 from .Data_Augumentation import Data_Augumentation
-from .models.model import Apply_Models
+from .models.model import ApplyModels
 
 class Flow(Data_Loader,Filters,Data_Augumentation):
   '''
@@ -211,5 +211,5 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
 
     self.algorithms = algorithms
      
-    if algorithms == 'Logistic_Regression':
+    if self.algorithms == 'Logistic_Regression':
       self.applyLogisticRegression(model)

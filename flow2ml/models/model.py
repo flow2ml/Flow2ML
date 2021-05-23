@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 import os
 
-class Apply_Models:
+class ApplyModels:
 
     def __init__(self,algorithms) :
         self.algorithms = algorithms
@@ -23,7 +23,7 @@ class Apply_Models:
         # Apply GridSearchCV() to find the best params.
         grided=GridSearchCV(logmodel,param_grid=params_grid, cv=3, verbose=True, n_jobs=-1)
         #Build model using best params on test_data
-        best_fit=grided.fit(logmodel)
+        best_fit=grided.fit(train_data,train_labels)
         best_fit.best_estimator_
         # return the score 
-        return best_fit.score(logmodel)
+        return best_fit.score(train_data,train_labels)
