@@ -132,9 +132,10 @@ Flow2ML for Python can be installed from Source,Pypi and Docker container instal
     (train_x, train_y, val_x, val_y) = flow.getDataset( img_dimensions, test_val_split )
 
     # Define The conversions to be used
-    model={'tfjs':False, 'tflite':False}
+    conversions = ['tfjs':False, 'tflite':False]
+
     # convert tensorflow model to tfjs/tflite
-    flow.deployTensorflowModels( model )
+    flow.deployTensorflowModels( conversions )
 
 
     from flow2ml import Auto_Results
