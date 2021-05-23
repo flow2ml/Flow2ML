@@ -3,6 +3,7 @@ import sys ,time
 from .Data_Loader import Data_Loader
 from .Filters import Filters
 from .Data_Augumentation import Data_Augumentation
+from .models.model import Apply_Models
 
 class Flow(Data_Loader,Filters,Data_Augumentation):
   '''
@@ -205,3 +206,10 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
     self.update_progress( 100/100.0,"Created Datasets" ) 
 
     return self.dataset
+
+  def applyModels(self,algorithms):
+
+    self.algorithms = algorithms
+     
+    if algorithms == 'Logistic_Regression':
+      self.applyLogisticRegression(model)
