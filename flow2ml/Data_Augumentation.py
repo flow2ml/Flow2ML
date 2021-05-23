@@ -506,48 +506,48 @@ class Data_Augumentation:
         classPath : (string) directory containing images for a particular class.
     '''
     try:
-      os.mkdir(classPath+"/ChangedImages")    
+      os.mkdir(classPath+"/ColorspaceImages")    
     except:
       raise Exception("Unable to create directory for changed images.")
     for image in list(os.listdir(classPath)):
 
-      if((self.operations['color-space']['input'] not in ['BGR','GRAY']) or (self.operations['color-space']['output'] not in ['BGR','RGB','GRAY'])):
-        raise Exception("Invalid color-space operation.")
+      if((self.operations['colorspace']['input'] not in ['BGR','GRAY']) or (self.operations['colorspace']['output'] not in ['BGR','RGB','GRAY'])):
+        raise Exception("Invalid colorspace operation.")
       else:
 
-        if(self.operations['color-space']['input']=='BGR'):
+        if(self.operations['colorspace']['input']=='BGR'):
 
           #Read image in BGR mode.
           img=cv2.imread(classPath+"/"+image)
           if img is not None:
-            if (self.operations['color-space']['output']=='RGB'):
+            if (self.operations['colorspace']['output']=='RGB'):
               try:
                 # changing color-space of the image from BGR to RGB.
                 changed = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)  
                 # saving the image
-                plt.imsave(classPath+"/ChangedImages/Changed"+image, changed)
+                plt.imsave(classPath+"/ColorspaceImages/Colorspace"+image, changed)
               except Exception as e:
                 print(f"color-space operation failed due to {e}")
 
-        elif(self.operations['color-space']['input']=='GRAY'):
+        elif(self.operations['colorspace']['input']=='GRAY'):
 
           #Read image in grayscale mode.
           img=cv2.imread(classPath+"/"+image,0)
           if img is not None:
-            if (self.operations['color-space']['output']=='RGB'):
+            if (self.operations['colorspace']['output']=='RGB'):
               try:
                 # changing color-space of the image from GRAY to RGB.
                 changed = cv2.cvtColor(img,cv2.COLOR_GRAY2RGB)  
                 # saving the image
-                plt.imsave(classPath+"/ChangedImages/Changed"+image, changed)
+                plt.imsave(classPath+"/ColorspaceImages/Colorspace"+image, changed)
               except Exception as e:
                 print(f"color-space operation failed due to {e}")
 
-            if (self.operations['color-space']['output']=='BGR'):
+            if (self.operations['colorspace']['output']=='BGR'):
               try:
                 # changing color-space of the image from GRAY to BGR.
                 changed = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)  
                 # saving the image
-                plt.imsave(classPath+"/ChangedImages/Changed"+image, changed)
+                plt.imsave(classPath+"/ColorspaceImages/Colorspace"+image, changed)
               except Exception as e:
                 print(f"color-space operation failed due to {e}")
