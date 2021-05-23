@@ -205,14 +205,14 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
 
     return self.dataset
 
-  def deployTensorflowModels(self,model):
+  def deployTensorflowModels(self,conversions,model):
     '''Deploy conversion from tensorflow model to tensorflowjs or tflite model'''
 
-    if(self.conversions['tfjs']==self.conversions['tflite']):
+    if(conversions['tfjs'] == conversions['tflite']):
       raise Exception("Invalid conversion operation.")
     else:
 
-      if(self.conversions['tfjs']==True):
+      if(conversions['tfjs']==True):
         # Applying the conversion function to the input model and converted tfjs model will be stored in 'trained_models' folder.
         tfjs.converters.save_keras_model(model, 'trained_models') 
 
