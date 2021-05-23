@@ -125,11 +125,7 @@ Flow2ML for Python can be installed from Source,Pypi and Docker container instal
 
     # Define The augmentation operations to be used
    
-<<<<<<< HEAD
     operations = {'flipped': 'horizontal', 'rotated': 90, 'sheared': {'x_axis': 5, 'y_axis': 15}, 'cropped': [50, 100, 50, 100], 'scaled': 0.1, 'zoomed': 2, 'histogramequalised':False, 'greyscale': True, 'CLAHE':False, 'inverted':False, 'eroded':False, 'dilated':False, 'opened':False, 'closed':False,'thresholded':{'type':adaptive,'thresh_val':0}}
-=======
-    operations = {'flip': 'horizontal', 'rotate': 90, 'shear': {'x_axis': 5, 'y_axis': 15}, 'crop': [50, 100, 50, 100], 'scale': 0.1, 'zoom': 2, 'Hist_Equal':False, 'greyscale': True, 'CLAHE':False, 'invert':False, 'erode':False, 'dilate':False, 'open':False, 'close':False,'threshold':{'type':'adaptive','thresh_val':0},'color-space':{'input':'BGR','output':'BGR'}}
->>>>>>> d5cdc4416f1438fab2152d40a4977dad0a86a933
 
     # Apply The Augmentation
     flow.applyAugmentation( operations )
