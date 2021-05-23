@@ -10,3 +10,5 @@ tensorflow==2.5.0
 unittest2==1.1.0
 pandas==1.2.4
 seaborn==0.11.1
+tensorflow-hub==0.9.0 
+tensorflowjs==3.6.0
