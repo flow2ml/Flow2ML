@@ -38,15 +38,15 @@ class Data_Augumentation:
       # Read image
       img = cv2.imread(classPath+"/"+image)
       
-      if self.operations['flip'] not in ['horizontal', 'vertical', 'cross']:
+      if self.operations['flipped'] not in ['horizontal', 'vertical', 'cross']:
         raise Exception("Invalid flip operation.")
       else:
         
-        if self.operations['flip'] == 'horizontal':
+        if self.operations['flipped'] == 'horizontal':
           operation = 1
-        elif self.operations['flip'] == 'vertical':
+        elif self.operations['flipped'] == 'vertical':
           operation = 0
-        elif self.operations['flip'] == 'cross':
+        elif self.operations['flipped'] == 'cross':
           operation = -1
         if img is not None:
           
@@ -74,11 +74,11 @@ class Data_Augumentation:
       # Read image
       img = cv2.imread(classPath+"/"+image)
       
-      if isinstance(self.operations['rotate'], str):
+      if isinstance(self.operations['rotated'], str):
         raise Exception("Rotation angle cannot be a string.")
       else:
         # get absolute value of the angle
-        angle = round(self.operations['rotate']) % 360
+        angle = round(self.operations['rotated']) % 360
         if img is not None:
           try:
             # applying rotate augmentation to the image.
@@ -102,11 +102,11 @@ class Data_Augumentation:
     for image in list(os.listdir(classPath)):
       # Read image
       img = cv2.imread(classPath+"/"+image)
-      if isinstance(self.operations['shear']['x_axis'], str) or isinstance(self.operations['shear']['y_axis'], str):
+      if isinstance(self.operations['sheared']['x_axis'], str) or isinstance(self.operations['sheared']['y_axis'], str):
         raise Exception("Shearing angle cannot be a string.")
       else:
-        angle_x = np.deg2rad(self.operations['shear']['x_axis'])
-        angle_y = np.deg2rad(self.operations['shear']['y_axis'])
+        angle_x = np.deg2rad(self.operations['sheared']['x_axis'])
+        angle_y = np.deg2rad(self.operations['sheared']['y_axis'])
         if img is not None:
           try:
             # applying shear augmentation to the image.
@@ -131,7 +131,7 @@ class Data_Augumentation:
     for image in list(os.listdir(classPath)):
       # Read image
       img = cv2.imread(classPath+"/"+image)
-      if (self.operations['invert']==True):
+      if (self.operations['inverted']==True):
         if img is not None:
           try:
             # applying invert augmentation to the image.
@@ -148,9 +148,9 @@ class Data_Augumentation:
         classPath : (string) directory containing images for a particular class.
     '''
     try:
-      os.mkdir(classPath+"/CLAHEedImages")    
+      os.mkdir(classPath+"/CLAHEImages")    
     except:
-      raise Exception("Unable to create directory for CLAHEed images.")
+      raise Exception("Unable to create directory for CLAHE images.")
 
     for image in list(os.listdir(classPath)):
       # Read image
@@ -162,9 +162,9 @@ class Data_Augumentation:
             gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
             # applying CLAHE augmentation to the image.
             clahe=cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
-            CLAHEed=clahe.apply(gray)
+            CLAHE=clahe.apply(gray)
             # saving the image
-            plt.imsave(classPath+"/CLAHEedImages/CLAHEed"+image, cv2.cvtColor(CLAHEed, cv2.COLOR_GRAY2BGR))
+            plt.imsave(classPath+"/CLAHEImages/CLAHE"+image, cv2.cvtColor(CLAHE, cv2.COLOR_GRAY2BGR))
           except Exception as e:
             print(f"CLAHE operation failed due to {e}")
 
@@ -183,7 +183,7 @@ class Data_Augumentation:
       # Read image
       img = cv2.imread(classPath+"/"+image)
       
-      if(self.operations['Hist_Equal']==True):
+      if(self.operations['histogramequalised']==True):
         if img is not None:
           try:
             # convert image from BGR to GRAYSCALE.
@@ -211,16 +211,16 @@ class Data_Augumentation:
       img = cv2.imread(classPath+"/"+image)
       if img is not None:
         try:
-          if isinstance(self.operations['crop'], str):
+          if isinstance(self.operations['cropped'], str):
             # generate random coordinates and crop the image
-            if self.operations['crop'] == 'random':
+            if self.operations['cropped'] == 'random':
               y1, y2, x1, x2 = random.randint(1, img.shape[0]), random.randint(1, img.shape[0]), random.randint(1, img.shape[1]), random.randint(1, img.shape[1]),
               Cropped = img[min(y1, y2):max(y1, y2), min(x1, x2):max(x1, x2), :]
               plt.imsave(classPath+"/CroppedImages/Cropped"+image, cv2.cvtColor(Cropped, cv2.COLOR_RGB2BGR))
-          elif isinstance(self.operations['crop'], list):
-            if len(self.operations['crop']) == 4:
+          elif isinstance(self.operations['cropped'], list):
+            if len(self.operations['cropped']) == 4:
               # crop image by given coordinates only
-              Cropped = img[self.operations['crop'][0]:self.operations['crop'][1], self.operations['crop'][2]:self.operations['crop'][3], :]
+              Cropped = img[self.operations['cropped'][0]:self.operations['cropped'][1], self.operations['cropped'][2]:self.operations['cropped'][3], :]
               # saving the image
               plt.imsave(classPath+"/CroppedImages/Cropped"+image, cv2.cvtColor(Cropped, cv2.COLOR_RGB2BGR))
             else:
@@ -236,7 +236,7 @@ class Data_Augumentation:
       Args : 
         classPath : (string) directory containing images for a particular class.
     '''
-    ratio = self.operations['scale']
+    ratio = self.operations['scaled']
     try:
       os.mkdir(classPath+"/ScaledImages")    
     except:
@@ -246,7 +246,7 @@ class Data_Augumentation:
       # Read image
       img = cv2.imread(classPath+"/"+image)
 
-      if isinstance(self.operations['scale'], str):
+      if isinstance(self.operations['scaled'], str):
         raise Exception("Scaling ratio cannot be a string.")
       else:
         if img is not None:
@@ -277,11 +277,11 @@ class Data_Augumentation:
       # Read image
       img = cv2.imread(classPath+"/"+image)
       
-      if isinstance(self.operations['zoom'], str):
+      if isinstance(self.operations['zoomed'], str):
         raise Exception("Zoom factor cannot be a string.")
       else:
         
-        factor = self.operations['zoom']
+        factor = self.operations['zoomed']
         if factor < 1:
           raise Exception("Zoom factor cannot be lesser than 1.")
         else:
@@ -349,7 +349,7 @@ class Data_Augumentation:
       # Read image
       img = cv2.imread(classPath+"/"+image)
       
-      if self.operations['erode']==True:
+      if self.operations['eroded']==True:
         if img is not None:
           try:
             # apply Erosion on the image.
@@ -376,7 +376,7 @@ class Data_Augumentation:
       # Read image
       img = cv2.imread(classPath+"/"+image)
       
-      if self.operations['dilate']==True:
+      if self.operations['dilated']==True:
         if img is not None:
           try:
             # apply Dilation on the image.
@@ -403,7 +403,7 @@ class Data_Augumentation:
       # Read image
       img = cv2.imread(classPath+"/"+image)
       
-      if self.operations['open']==True:
+      if self.operations['opened']==True:
         if img is not None:
           try:
             # apply Opening on the image.
@@ -430,7 +430,7 @@ class Data_Augumentation:
       # Read image
       img = cv2.imread(classPath+"/"+image)
       
-      if self.operations['close']==True:
+      if self.operations['closed']==True:
         if img is not None:
           try:
             # apply Closing on the image.
@@ -457,11 +457,11 @@ class Data_Augumentation:
       # Read image
       img = cv2.imread(classPath+"/"+image)
       
-      if ((img is None) or (self.operations['threshold']['type'] not in ['simple', 'adaptive', 'OTSU'])):
+      if ((img is None) or (self.operations['thresholded']['type'] not in ['simple', 'adaptive', 'OTSU'])):
         raise Exception("Invalid threshold operation or Invalid image")
       else:
 
-        if self.operations['threshold']['type'] == 'adaptive':
+        if self.operations['thresholded']['type'] == 'adaptive':
           try:
             #convert the image from BGR to GRAYSCALE
             gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
@@ -472,12 +472,12 @@ class Data_Augumentation:
           except Exception as e:
             print(f"adaptive thresholding operation failed due to {e}")
 
-        elif isinstance(self.operations['threshold']['thresh_val'],str):
+        elif isinstance(self.operations['thresholded']['thresh_val'],str):
           raise Exception("threshold value can't be a string.")
         else:
-          Threshold=self.operations['threshold']['thresh_val']
+          Threshold=self.operations['thresholded']['thresh_val']
 
-          if(self.operations['threshold']['type']== 'OTSU'):
+          if(self.operations['thresholded']['type']== 'OTSU'):
               try:
                 #convert the image from BGR to GRAYSCALE
                 gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
@@ -488,7 +488,7 @@ class Data_Augumentation:
               except Exception as e:
                 print(f"OTSU thresholding operation failed due to {e}") 
 
-          elif(self.operations['threshold']['type']=='simple'):
+          elif(self.operations['thresholded']['type']=='simple'):
               try:
                 #convert the image from BGR to GRAYSCALE
                 gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)

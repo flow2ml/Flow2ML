@@ -157,7 +157,7 @@ class Filters:
         classPath : (string) directory containing images for a particular class.
     '''
     try:
-      os.mkdir(classPath+"/Bilaterally_FilteredImages")    
+      os.mkdir(classPath+"/BilateralImages")    
     
     except:
       raise Exception("Unable to create directory for bilateral images.")
@@ -173,7 +173,7 @@ class Filters:
           bilateral = cv2.bilateralFilter(img,15,80,80)
           
           # saving the image
-          cv2.imwrite(classPath+"/Bilaterally_FilteredImages/bilateral"+image, bilateral)
+          cv2.imwrite(classPath+"/BilateralImages/bilateral"+image, bilateral)
         except Exception as e:
           print(f"Bilateral filter operation failed due to {e}")
 
