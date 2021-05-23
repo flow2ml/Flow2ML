@@ -64,27 +64,42 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
                          be applied to the image data.
     '''
     self.filters = filters
+    # checks to see if the list contains a dictionary with apply_on_augmentation key
+    apply_on_augmentation = [i for i in filters if isinstance(i, dict) == True]
+    if apply_on_augmentation:
+      apply_on_augmentation = apply_on_augmentation[0].get('apply_on_augmentation', False)
+      print(apply_on_augmentation)
+    
     progress = [(100/len(filters))*i for i in range(0,len(filters)) ]
     progress_i = 0
 
     for folder in self.classes:
       for filter in filters:
-        path = os.path.join(self.dataset_dir ,self.data_dir, folder)
+        paths = [os.path.join(self.dataset_dir ,self.data_dir, folder)]
+        # if apply_on_augmentation is true, creates a list of folders of augmented images to apply the filters to
+        if apply_on_augmentation:
+          for operation in apply_on_augmentation:
+            paths = [os.path.join(self.dataset_dir ,self.data_dir, folder, operation.title() + "Images")]
         
-        if filter == "median":
-          self.applyMedian(path)
+        # applies filters to all folders in paths (single folder if no apply_on_augmentation)
+        for path in paths:
+          if filter == "median":
+            self.applyMedian(path)
 
-        elif filter == "laplacian":
-          self.applylaplacian(path)
+          elif filter == "laplacian":
+            self.applylaplacian(path)
 
-        elif filter == "sobelx":
-          self.applysobelx(path)
+          elif filter == "sobelx":
+            self.applysobelx(path)
 
-        elif filter == "sobely":
-          self.applysobely(path)
+          elif filter == "sobely":
+            self.applysobely(path)
 
-        elif filter == "gaussian":
-          self.applygaussian(path)
+          elif filter == "gaussian":
+            self.applygaussian(path)
+          
+          elif filter == "bilateral":
+            self.applybilateral(path)
       
         time.sleep(0.1)
         self.update_progress( progress[progress_i]/100.0, f"Filtered all images in {folder}" )
@@ -104,57 +119,69 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
     '''
     
     self.operations = operations
+    # checks to see if apply_on_filters key if present
+    apply_on_filters = self.operations.get('apply_on_filters', False)
+
     progress = [(100/len(operations))*i for i in range(0,len(operations)) ]
     progress_i = 0
 
     for folder in self.classes:
       for operation in self.operations:
-        path = os.path.join(self.dataset_dir ,self.data_dir, folder)
+        paths = [os.path.join(self.dataset_dir ,self.data_dir, folder)]
+        # if apply_on_filters is true, creates a list of folders of filtered images to apply the augmentations to
+        if apply_on_filters:
+          for filter in apply_on_filters:
+            paths = [os.path.join(self.dataset_dir ,self.data_dir, folder, filter.title() + "Images")]
         
-        if operation == "flip":
-          self.applyFlip(path)
+         # applies augmentations to all folders in paths (single folder if no apply_on_filters)
+        for path in paths:
+          if operation == "flipped":
+            self.applyFlip(path)
 
-        if operation == "rotate":
-          self.applyRotate(path)
-        
-        if operation == "shear":
-          self.applyShear(path)
-
-        if operation == "invert":
-          self.applyInvert(path)
-
-        if operation == "Hist_Equal":
-          self.applyHistogramEqualization(path)
+          if operation == "rotated":
+            self.applyRotate(path)
           
-        if operation == "CLAHE":
-          self.applyCLAHE(path)
-        
-        if operation == "crop":
-          self.applyCrop(path)
+          if operation == "sheared":
+            self.applyShear(path)
 
-        if operation == "scale":
-          self.applyScale(path)
+          if operation == "inverted":
+            self.applyInvert(path)
 
-        if operation == "zoom":
-          self.applyZoom(path)
+          if operation == "histogramequalised":
+            self.applyHistogramEqualization(path)
+            
+          if operation == "CLAHE":
+            self.applyCLAHE(path)
+          
+          if operation == "cropped":
+            self.applyCrop(path)
 
-        if operation == "greyscale":
-          self.applyGreyscale(path)
+          if operation == "scaled":
+            self.applyScale(path)
 
-        if operation == "erode":
-          self.applyErode(path)
+          if operation == "zoomed":
+            self.applyZoom(path)
 
-        if operation == "dilate":
-          self.applyDilate(path)
+          if operation == "greyscale":
+            self.applyGreyscale(path)
 
-        if operation == "open":
-          self.applyOpen(path)
+          if operation == "eroded":
+            self.applyErode(path)
 
-        if operation == "close":
-          self.applyClose(path)
+          if operation == "dilated":
+            self.applyDilate(path)
 
-        if operation == "threshold":
-          self.applyThreshold(path)
+          if operation == "opened":
+            self.applyOpen(path)
+
+          if operation == "closed":
+            self.applyClose(path)
+
+          if operation == "thresholded":
+            self.applyThreshold(path)
+
+          if operation == "colorspace":
+            self.changeColorSpace(path)
 
         time.sleep(0.1)
         self.update_progress( progress[progress_i]/100.0, f"Augmented all images in {folder}" )
