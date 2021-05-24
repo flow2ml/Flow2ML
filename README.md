@@ -72,7 +72,7 @@ Before Running the code you need to have certain packages to be installed. They 
 	
 ## Getting Started 
 
-Flow2ML for Python can be installed from Source,Pypi and Docker container installation methods.
+Flow2ML for Python can be installed from Source, Pypi, and Docker container installation methods.
 
    ## From Source
 
@@ -99,8 +99,8 @@ Flow2ML for Python can be installed from Source,Pypi and Docker container instal
    Now you can run any of the code in this directory:
 
    Run the container,  and specifying which code to run. <br />
-   -v : The volume on which repo code is mounted <br />
-   Replace "script.py" with the name of your code you'd like to run <br />
+   -v: The volume on which repo code is mounted <br />
+   Replace "script.py" with the name of the code you'd like to run <br />
    Replace "pwd" with the path of the example file you'd like to run. <br />
 
    $ docker run -it --rm \ -v $(pwd)/:/root/flow2ml/ python script.py
@@ -180,9 +180,9 @@ dataset_dir
 |       ├──Label 1 Folder
 |       ├──Label 2 Folder
 |       ├──Label 3 Folder  
-|               .
-|               .
-|               .        
+|.
+|.
+|.        
 |       └──Label n Folder 
 | 
 └────Other Files
