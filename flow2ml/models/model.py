@@ -27,9 +27,13 @@ class TrainModels:
         # Apply GridSearchCV() to find the best params.
         model_logistic_regression=GridSearchCV(logmodel,param_grid=params_grid, cv=5, verbose=True, n_jobs=-1, scoring=self.algorithms['logistic_regression']['metrics'])
         model_logistic_regression.fit(self.train_x, self.train_y)
+        pred = model_logistic_regression.predict(self.val_x)
+        model_logistic_regression_accuracy = accuracy_score(self.val_y, pred)
         
         print(f'Best parameters {model_logistic_regression.best_params_}')
-        print( f'Mean cross-validated ' + f'{self.algorithms['logistic_regression']['metrics']}' + score of the best_estimator: ' + f'{model_logistic_regression.best_score_:.3f}'
-              
+        print(f'Best score {model_logistic_regression.best_score_:.3f}')
+        print( f'Mean cross-validated ' + f'{self.algorithms['logistic_regression']['metrics']}' + score of the best_estimator: ' + f'{model_logistic_regression_accuracy}'
+        
+        
         # return the model
         return model_logistic_regression
