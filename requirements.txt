@@ -12,3 +12,5 @@ pandas==1.2.4
 seaborn==0.11.1
 tensorflow-hub==0.9.0 
 tensorflowjs==3.6.0
+libsvm==3.23.0.4
+image-quality==1.2.7

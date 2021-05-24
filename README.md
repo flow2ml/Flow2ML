@@ -146,6 +146,9 @@ Flow2ML for Python can be installed from Source,Pypi and Docker container instal
     # Obtain Train, Validation data splits
     (train_x, train_y, val_x, val_y) = flow.getDataset( img_dimensions, test_val_split )
 
+    # Create an image quality report using BRISQUE for all images
+    flow.calculateImageQuality()
+    
     # Define The conversions to be used
     conversions = ['tfjs':True, 'tflite':False]
 
