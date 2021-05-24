@@ -207,7 +207,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
 
     return self.dataset
 
-  def applyModels(self,algorithms):
+  def trainModels(self,algorithms, train_x, train_y, val_x, val_y):
 
     self.algorithms = algorithms
      
