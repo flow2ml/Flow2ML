@@ -138,7 +138,7 @@ Flow2ML for Python can be installed from Source,Pypi and Docker container instal
     algorithms = {'logistic_regression':{'metrics':None, 'activation_function':None}}
 
     # Apply training models
-    flow.applyModels ( algorithms )
+    flow.trainModels ( algorithms, train_x, train_y, val_x, val_y )
 
     from flow2ml import Auto_Results
     
