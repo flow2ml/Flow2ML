@@ -3,7 +3,7 @@ import sys ,time
 from .Data_Loader import Data_Loader
 from .Filters import Filters
 from .Data_Augumentation import Data_Augumentation
-from .models.model import ApplyModels
+from .models.model import TrainModels
 
 class Flow(Data_Loader,Filters,Data_Augumentation):
   '''
