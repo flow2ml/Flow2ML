@@ -212,4 +212,4 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
     self.algorithms = algorithms
      
     if self.algorithms == 'Logistic_Regression':
-      self.applyLogisticRegression(model)
+      self.applyLogisticRegression(train_x, train_y, val_x, val_y)
