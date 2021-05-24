@@ -20,7 +20,7 @@ class Auto_Results:
         self.y_test = Y_test    #stores the Y_test (labels)
         try:                        #try creating a Results directory and show excpetion if it already exists 
             p = os.getcwd()
-            p = os.path.join(p,"Results")
+            p = os.path.join(p,"GeneratedReports")
             self.results_path = p
             os.mkdir(self.results_path)
         except:

@@ -5,8 +5,9 @@ import tensorflow as tf
 from .Data_Loader import Data_Loader
 from .Filters import Filters
 from .Data_Augumentation import Data_Augumentation
+from .Image_Quality import Image_Quality
 
-class Flow(Data_Loader,Filters,Data_Augumentation):
+class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
   '''
     This class connects the work flow. It calls various methods from 
     the inherited classes whenever required and completes the workflow.
@@ -14,6 +15,8 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
     Inherits:
       Data_Loader: (Class) Contains various methods to handle data.
       Filters: (Class) Contains methods to apply filters to the given data.
+      Data_Augmentation: (Class) Contains various methods to apply augmentation to the given data.
+      Image_Quality: (Class) Calculates image quality for each image in the processedDataFolder.
   '''
 
   def __init__(self,dataset_dir,data_dir):
@@ -247,3 +250,16 @@ class Flow(Data_Loader,Filters,Data_Augumentation):
       tflite_model = tf_lite_converter.convert()
       trained_models=TF_LITE_MODEL_FILE_NAME
       open(trained_models,"wb").write(tflite_model)
+
+  def calculateImageQuality(self):
+    processed_data_folder = os.path.join(self.dataset_dir,'processedData')
+    self.image_scores = {}
+    p = os.getcwd()
+    p = os.path.join(p,"GeneratedReports")
+    self.results_path = p
+    try:
+      os.mkdir(self.results_path)
+      print("here")
+    except:
+      raise Exception("Unable to create directory for results.")
+    self.create_scores_doc(processed_data_folder)
