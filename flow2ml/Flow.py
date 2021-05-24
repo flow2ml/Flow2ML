@@ -254,4 +254,12 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
   def calculateImageQuality(self):
     processed_data_folder = os.path.join(self.dataset_dir,'processedData')
     self.image_scores = {}
+    p = os.getcwd()
+    p = os.path.join(p,"GeneratedReports")
+    self.results_path = p
+    try:
+      os.mkdir(self.results_path)
+      print("here")
+    except:
+      raise Exception("Unable to create directory for results.")
     self.create_scores_doc(processed_data_folder)

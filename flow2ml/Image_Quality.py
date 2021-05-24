@@ -30,7 +30,7 @@ class Image_Quality:
 
 	def create_scores_doc(self, path):
 		''' 
-		Calculates image scores for the processedData folder and creates a document containing this information.
+		Calculates image scores for the processedData folder and creates a document containing this information in GeneratedReports
 		Args : 
 			path : (string) path to the processedData folder.
 		'''
@@ -41,6 +41,6 @@ class Image_Quality:
 			# loop over all images in dictionary and add their names and scores to the document.
 			for image in self.image_scores:
 				doc.add_paragraph(f"Image {image}: Quality Score {self.image_scores[image]}")
-			doc.save(os.path.join(path, "image_quality_report.docx"))
+			doc.save(os.path.join(self.results_path, "image_quality_report.docx"))
 		except Exception as e:
-			print("Unable to create image quality document due to {e}")
+			print(f"Unable to create image quality document due to {e}")

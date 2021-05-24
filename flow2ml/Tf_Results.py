@@ -17,7 +17,7 @@ class Tf_Results:
         self.validation_generator = validtion_generator  #stores the validation generator object   
         try:                        #try creating a Results directory and show excpetion if it already exists 
             p = os.getcwd()
-            p = os.path.join(p,"Results")
+            p = os.path.join(p,"GeneratedReports")
             self.results_path = p
             os.mkdir(self.results_path)
         except:
