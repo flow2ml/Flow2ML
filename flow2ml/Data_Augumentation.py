@@ -189,10 +189,9 @@ class Data_Augumentation:
             # convert image from BGR to GRAYSCALE.
             gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
             # applying histogram equalisation to the image.
-            equalised_img=cv2.equalizeHist(gray)
-            HistogramEqualised=np.hstack((img,equalised_img))
+            HistogramEqualised=cv2.equalizeHist(gray)
             # saving the image
-            plt.imsave(classPath+"/HistogramEqualisedImages/HistogramEqualised"+image, cv2.cvtColor(HistogramEqualised, cv2.COLOR_RGB2BGR))
+            plt.imsave(classPath+"/HistogramEqualisedImages/HistogramEqualised"+image,HistogramEqualised)
           except Exception as e:
             print(f"Histogram Equalisation operation failed due to {e}")
     
