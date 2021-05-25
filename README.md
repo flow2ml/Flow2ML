@@ -119,7 +119,7 @@ Flow2ML for Python can be installed from Source,Pypi and Docker container instal
     flow = Flow( 'dataset_dir' , 'data_dir' )
 
     # Define The Filters to be used
-    filters = ["median", "laplacian", "gaussian", "sobelx", "sobely", "bilateral"]
+    filters = ["median", "laplacian", "gaussian", "sobelx", "sobely", "bilateral","canny":{'threshold_1':100,'threshold_2':200}]
 
     # Apply The Filters
     flow.applyFilters( filters )

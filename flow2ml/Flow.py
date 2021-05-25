@@ -103,6 +103,9 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
           
           elif filter == "bilateral":
             self.applybilateral(path)
+
+          elif filter == "canny":
+            self.applycanny(path)
       
         time.sleep(0.1)
         self.update_progress( progress[progress_i]/100.0, f"Filtered all images in {folder}" )

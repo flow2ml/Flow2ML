@@ -43,6 +43,7 @@ Applies the following filters to the images in data directory<br>
     <li>sobel-x</li>
     <li>sobel-y</li>
     <li>bilateral</li>
+    <li>cannyEdgeDetector</li>
 </ol>
 
 <h3>Data_Augmentation.py</h3>
