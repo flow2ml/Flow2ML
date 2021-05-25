@@ -2,6 +2,8 @@ import os
 import sys ,time
 import tensorflowjs as tfjs
 import tensorflow as tf
+from docx import Document
+import matplotlib.pyplot as plt
 from .Data_Loader import Data_Loader
 from .Filters import Filters
 from .Data_Augumentation import Data_Augumentation
@@ -37,8 +39,64 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
       self.classes.remove('.ipynb_checkpoints') 
     except:
       pass
+    
+    self.results_path = os.path.join(os.getcwd(),"GeneratedReports")
+
+    try:
+      os.mkdir(self.results_path)
+    except:
+      raise Exception("Unable to create directory for results.")
 
     self.num_classes =  len(self.classes)
+    self.class_counts = {}
+    self.categoriesCountPlot()
+
+  def categoriesCountPlot(self):
+  
+    '''
+      Function used to create a countPlot of all categories of images
+      Args : None
+    '''
+
+    # loop through the folders of each class, store the class and number of images in dictionary
+    for folder in self.classes:
+      path = os.path.join(self.dataset_dir ,self.data_dir, folder)
+      count = len(os.listdir(path))
+      self.class_counts[folder] = count
+    
+    # display the count on the console
+    print("Counts per each category")
+    for key in self.class_counts.keys():
+      print(f"Category {key}: {self.class_counts[key]}")
+
+    # check for class imbalance
+    min_class = min(self.class_counts.values())
+    max_class = max(self.class_counts.values())
+    total_images = sum(self.class_counts.values())
+    if max_class - min_class >= 0.5 * total_images:
+      create_coutplot = input("Class imbalance present. Do you want to continue? (y/n): ")
+
+    if create_coutplot.upper() != "Y":
+      return
+
+    # create a countplot and temperorily save it as image
+    plt.bar(self.class_counts.keys(), self.class_counts.values())
+    plt.title('Countplot of categories')
+    plt.xlabel('Class')
+    plt.ylabel('Number of images')
+    plt.savefig(os.path.join(self.results_path, "categoriesCountPlot.png"))
+
+    # create a document in GeneratedReports folder and put the image in it
+    try:
+      doc = Document()
+      doc.add_heading('Categories Countplot')
+      doc.add_picture(os.path.join(self.results_path, "categoriesCountPlot.png"))
+      doc.save(os.path.join(self.results_path, "categories_countplot.docx"))
+    except Exception as e:
+      print(f"Unable to create categories countplot document due to {e}")
+
+    # remove the picture file after it has been added to the document
+    os.remove(os.path.join(self.results_path, "categoriesCountPlot.png"))
 
   def update_progress(self,progress,subStatus):
     
@@ -255,14 +313,11 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
       open(trained_models,"wb").write(tflite_model)
 
   def calculateImageQuality(self):
+
+    '''
+      Function used to calculate image quality for all images in processedData folder
+      Args : None
+    '''
     processed_data_folder = os.path.join(self.dataset_dir,'processedData')
     self.image_scores = {}
-    p = os.getcwd()
-    p = os.path.join(p,"GeneratedReports")
-    self.results_path = p
-    try:
-      os.mkdir(self.results_path)
-      print("here")
-    except:
-      raise Exception("Unable to create directory for results.")
     self.create_scores_doc(processed_data_folder)
