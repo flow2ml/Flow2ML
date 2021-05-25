@@ -76,6 +76,7 @@ It contains the following methods to connect various dots<br>
     <li>applyAugmentation. <br> It takes a dictionary of augmentation operations and applies all of them and stores inside the data directory.</li>
     <li>getDataset. <br> It moves all the processed images into a new folder located in the root folder and creates training and validating numpy datasets.</li>
     <li>deployTensorflowModels <br> It takes tensorflow model as input and converts into tensorflowjs or tensorflowlite model depending upon the user input.</li>
+    <li>categoriesCountPlot <br> It creates a document visualising the countplot of different categories in the dataset provided by the user.</li>
 </ol>
 <br><hr><br>
 
