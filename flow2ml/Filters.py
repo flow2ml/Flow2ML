@@ -207,8 +207,10 @@ class Filters:
           print(f"Canny Edge Detection filter operation failed due to {e}")
 
   def visualizeFilters(self):
-    ''' filtered_image
-      visualizes various filtered outputs 
+
+    ''' 
+      Visualises all given filters for a randomly picked images. 
+      Args : None.
     '''
 
     # get a list of paths of all images provided
