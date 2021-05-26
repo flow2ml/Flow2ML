@@ -172,6 +172,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
       self.update_progress( 100/100.0, f"Filtered all images in {folder}"  )
       progress_i = 0
     print()
+    self.visualizeFilters()
 
   def applyAugmentation(self,operations):
     

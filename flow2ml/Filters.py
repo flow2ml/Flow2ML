@@ -2,6 +2,8 @@ import cv2
 import os 
 import numpy as np
 import matplotlib.pyplot as plt
+import random
+import math
 
 class Filters:
   '''
@@ -40,7 +42,7 @@ class Filters:
           median = cv2.medianBlur(img, 5)
           
           # saving the image
-          plt.imsave(classPath+"/MedianImages/Median"+image, cv2.cvtColor(median, cv2.COLOR_RGB2BGR))
+          plt.imsave(classPath+"/MedianImages/median"+image, cv2.cvtColor(median, cv2.COLOR_RGB2BGR))
         except Exception as e:
           print(f"Median filter operation failed due to {e}")
   
@@ -177,16 +179,6 @@ class Filters:
         except Exception as e:
           print(f"Bilateral filter operation failed due to {e}")
 
-  def visualizeFilters(self):
-    ''' filtered_image
-      visualizes various filtered outputs 
-    '''
-
-    ####### Note #######
-    ''' To be completed '''
-    ####### Note #######
-    pass
-
   def applycanny(self,classPath):
     
     ''' 
@@ -213,3 +205,49 @@ class Filters:
           plt.imsave(classPath+"/CannyImages/cannyImage"+image, cannyImage)
         except Exception as e:
           print(f"Canny Edge Detection filter operation failed due to {e}")
+
+  def visualizeFilters(self):
+
+    ''' 
+      Visualises all given filters for a randomly picked image. 
+      Args : None.
+    '''
+
+    # get a list of paths of all images provided
+    all_image_paths = []
+    for folder in self.classes:
+      for i in os.listdir(os.path.join(self.dataset_dir, self.data_dir, folder)):
+        if i.find("Images") == -1:
+          all_image_paths.append(os.path.join(self.dataset_dir, self.data_dir, folder, i))
+
+    # pick a random image
+    random_image_path = random.choice(all_image_paths)
+    head, tail = os.path.split(random_image_path)
+
+    # get paths to all filtered images of the random image
+    filtered_image_paths = [random_image_path]
+    for filter in self.filters:
+      filter_folder = filter.title() + "Images"
+      filtered_image_paths.append(os.path.join(head, filter_folder, filter + tail))
+
+    # create an empty plot of the required shape
+    cols = 3
+    rows = math.ceil(len(filtered_image_paths) / cols)
+    axes = []
+    fig = plt.figure()
+
+    try:
+      # add images to plot one by one
+      for a in range(len(filtered_image_paths)):
+        b = plt.imread(filtered_image_paths[a])
+        axes.append(fig.add_subplot(rows, cols, a + 1) )
+        subplot_title = os.path.split(filtered_image_paths[a])[-1]
+        axes[-1].set_title(subplot_title)  
+        axes[-1].set_xticks([])
+        axes[-1].set_yticks([])
+        plt.imshow(b)
+      fig.tight_layout()    
+      plt.savefig(os.path.join(self.results_path, "visualise_filters.png"))
+    
+    except Exception as e:
+      print("Unable to create visualise_filters plot due to {e}")
