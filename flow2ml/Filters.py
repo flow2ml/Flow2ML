@@ -209,7 +209,7 @@ class Filters:
   def visualizeFilters(self):
 
     ''' 
-      Visualises all given filters for a randomly picked images. 
+      Visualises all given filters for a randomly picked image. 
       Args : None.
     '''
 
