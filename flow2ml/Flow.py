@@ -75,9 +75,8 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     total_images = sum(self.class_counts.values())
     if max_class - min_class >= 0.5 * total_images:
       create_coutplot = input("Class imbalance present. Do you want to continue? (y/n): ")
-
-    if create_coutplot.upper() != "Y":
-      return
+      if create_coutplot.upper() != "Y":
+        return
 
     # create a countplot and temperorily save it as image
     plt.bar(self.class_counts.keys(), self.class_counts.values())
