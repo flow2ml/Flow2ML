@@ -41,6 +41,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
       pass
     
     self.results_path = os.path.join(os.getcwd(),"GeneratedReports")
+    self.deployment_path = os.path.join(os.getcwd(), "DeployedModels")
 
     try:
       os.mkdir(self.results_path)
@@ -302,16 +303,23 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
 
     if(conversions['tfjs']==True):
       # Applying the conversion function to the input model and converted tfjs model will be stored in 'trained_models' folder.
-      tfjs.converters.save_keras_model(model, 'trained_models') 
+      try:
+        os.mkdir(os.path.join(self.deployment_path, "tfljsmodel"))
+      except Exception as e:
+        print(f"Failed to create tfjs_model directory due to {e}")
+      tfjs.converters.save_keras_model(model, os.path.join(self.deployment_path, "tfjs_model")) 
 
-    elif(conversions['tflite']==True):
+    if(conversions['tflite']==True):
       TF_LITE_MODEL_FILE_NAME='tf_lite_model.tflite'
       # Defining the convertor
       tf_lite_converter = tf.lite.TFLiteConverter.from_keras_model(model)
       # Applying the convert function
       tflite_model = tf_lite_converter.convert()
-      trained_models=TF_LITE_MODEL_FILE_NAME
-      open(trained_models,"wb").write(tflite_model)
+      try:
+        os.mkdir(os.path.join(self.deployment_path, "tflite_model"))
+      except Exception as e:
+        print(f"Failed to create tflite_model directory due to {e}")
+      open(os.path.join(self.deployment_path, "tflite_model", TF_LITE_MODEL_FILE_NAME),"wb").write(tflite_model)
 
   def calculateImageQuality(self):
 
