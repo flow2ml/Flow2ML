@@ -223,4 +223,4 @@ class Filters:
       plt.savefig(os.path.join(self.results_path, "visualise_filters.png"))
     
     except Exception as e:
-      print("Unable to create visualise_filters plot due to {e}")
+      print(f"Unable to create visualise_filters plot due to {e}")
