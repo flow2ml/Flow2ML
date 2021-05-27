@@ -551,3 +551,30 @@ class Data_Augumentation:
                 plt.imsave(classPath+"/ColorspaceImages/Colorspace"+image, changed)
               except Exception as e:
                 print(f"color-space operation failed due to {e}")
+    
+  def applyCanny(self,classPath):
+    
+    ''' 
+      Applies Canny Edge Detection to all the images in the given folder. 
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+
+    try:
+      os.mkdir(classPath+"/CannyImages")    
+    except:
+      raise Exception("Unable to create directory for Canny Edge Detected images.")
+
+    for image in list(os.listdir(classPath)):
+      # Read image in GRAYSCALE mode.
+      img = cv2.imread(classPath+"/"+image,0)
+
+      if img is not None:
+        try:
+          # applying canny edge detection
+          cannyImage = cv2.Canny(img,self.operations['canny']['threshold_1'],self.operations['canny']['threshold_2'])
+          
+          # saving the image
+          plt.imsave(classPath+"/CannyImages/CannyImage"+image, cv2.cvtColor(cannyImage, cv2.COLOR_GRAY2RGB))
+        except Exception as e:
+          print(f"Canny Edge Detection operation failed due to {e}")

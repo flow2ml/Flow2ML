@@ -43,28 +43,28 @@ Applies the following filters to the images in data directory<br>
     <li>sobel-x</li>
     <li>sobel-y</li>
     <li>bilateral</li>
-    <li>cannyEdgeDetector</li>
 </ol>
 
 <h3>Data_Augmentation.py</h3>
 Applies the following augmentation operations to the images in data directory<br>
 <ol>
-    <li>flipping</li>
-    <li>rotation</li>
-    <li>shearing</li>
-    <li>inverting</li>
-    <li>HistogramEqualisation</li>
+    <li>Flipping</li>
+    <li>Rotation</li>
+    <li>Shearing</li>
+    <li>Inverting</li>
+    <li>Histogram Equalisation</li>
     <li>CLAHE<li>
-    <li>cropping</li>
-    <li>scaling</li>
-    <li>zooming</li>
-    <li>greyscale</li>
+    <li>Cropping</li>
+    <li>Scaling</li>
+    <li>Zooming</li>
+    <li>Greyscale</li>
     <li>Erosion</li>
     <li>Dilation</li>
     <li>Opening</li>
     <li>Closing</li>
-    <li>thresholding</li>
-    <li>colorspace_Conversion</li>
+    <li>Thresholding</li>
+    <li>Colorspace Conversion</li>
+    <li>Canny Edge Detection</li>
 </ol>
 <br><hr><br>
 Flow.py contains Flow class which connects various other classes and maintains the work flow.
