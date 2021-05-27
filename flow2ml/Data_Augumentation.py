@@ -186,12 +186,13 @@ class Data_Augumentation:
       if(self.operations['histogramequalised']==True):
         if img is not None:
           try:
-            # convert image from BGR to GRAYSCALE.
-            gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-            # applying histogram equalisation to the image.
-            HistogramEqualised=cv2.equalizeHist(gray)
-            # saving the image
-            plt.imsave(classPath+"/HistogramEqualisedImages/HistogramEqualised"+image,HistogramEqualised)
+            # convert from RGB color-space to YCrCb
+            ycrcb_img = cv2.cvtColor(img, cv2.COLOR_BGR2YCrCb)
+            # equalize the histogram of the Y channel
+            ycrcb_img[:, :, 0] = cv2.equalizeHist(ycrcb_img[:, :, 0])
+            # convert back to RGB color-space from YCrCb
+            equalized_img = cv2.cvtColor(ycrcb_img, cv2.COLOR_YCrCb2BGR)
+            plt.imsave(classPath+"/HistogramEqualisedImages/HistogramEqualised"+image, cv2.cvtColor(equalized_img, cv2.COLOR_BGR2RGB))
           except Exception as e:
             print(f"Histogram Equalisation operation failed due to {e}")
     
@@ -455,48 +456,48 @@ class Data_Augumentation:
       
       # Read image
       img = cv2.imread(classPath+"/"+image)
-      
-      if ((img is None) or (self.operations['thresholded']['type'] not in ['simple', 'adaptive', 'OTSU'])):
-        raise Exception("Invalid threshold operation or Invalid image")
+      if self.operations['thresholded']['type'] not in ['simple', 'adaptive', 'OTSU']:
+        raise Exception("Invalid operation.")
       else:
+        if img is not None:
+          if self.operations['thresholded']['type'] == 'adaptive':
+            try:
+              #convert the image from BGR to GRAYSCALE
+              gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+              # applies adaptive thresholding augmentation to the image.
+              a_threshed=cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,199,5)  
+              # saving the image by
+              plt.imsave(classPath+"/ThresholdedImages/a_threshed"+image, cv2.cvtColor(a_threshed, cv2.COLOR_GRAY2BGR))
+            except Exception as e:
+              print(img)
+              print(f"Adaptive thresholding operation failed due to {e}")
 
-        if self.operations['thresholded']['type'] == 'adaptive':
-          try:
-            #convert the image from BGR to GRAYSCALE
-            gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-            # applies adaptive thresholding augmentation to the image.
-            a_threshed=cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,199,5)  
-            # saving the image by
-            plt.imsave(classPath+"/ThresholdedImages/a_threshed"+image,a_threshed)
-          except Exception as e:
-            print(f"adaptive thresholding operation failed due to {e}")
+          elif isinstance(self.operations['thresholded']['thresh_val'],str):
+            raise Exception("Threshold value can't be a string.")
+          else:
+            Threshold=self.operations['thresholded']['thresh_val']
 
-        elif isinstance(self.operations['thresholded']['thresh_val'],str):
-          raise Exception("threshold value can't be a string.")
-        else:
-          Threshold=self.operations['thresholded']['thresh_val']
+            if(self.operations['thresholded']['type']== 'OTSU'):
+                try:
+                  #convert the image from BGR to GRAYSCALE
+                  gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+                  # applies OTSU thresholding augmentation to the image.
+                  _,o_threshed=cv2.threshold(gray,Threshold,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU) 
+                  # saving the image by
+                  plt.imsave(classPath+"/ThresholdedImages/o_threshed"+image, cv2.cvtColor(o_threshed, cv2.COLOR_GRAY2BGR))
+                except Exception as e:
+                  print(f"OTSU thresholding operation failed due to {e}") 
 
-          if(self.operations['thresholded']['type']== 'OTSU'):
-              try:
-                #convert the image from BGR to GRAYSCALE
-                gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-                # applies OTSU thresholding augmentation to the image.
-                _,o_threshed=cv2.threshold(gray,Threshold,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU) 
-                # saving the image by
-                plt.imsave(classPath+"/ThresholdedImages/o_threshed"+image,o_threshed)
-              except Exception as e:
-                print(f"OTSU thresholding operation failed due to {e}") 
-
-          elif(self.operations['thresholded']['type']=='simple'):
-              try:
-                #convert the image from BGR to GRAYSCALE
-                gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-                # applies simple thresholding augmentation to the image.
-                _,s_threshed=cv2.threshold(gray,Threshold,255,cv2.THRESH_BINARY)  
-                # saving the image by
-                plt.imsave(classPath+"/ThresholdedImages/s_threshed"+image,s_threshed)
-              except Exception as e:
-                print(f"simple thresholding operation failed due to {e}")
+            elif(self.operations['thresholded']['type']=='simple'):
+                try:
+                  #convert the image from BGR to GRAYSCALE
+                  gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+                  # applies simple thresholding augmentation to the image.
+                  _,s_threshed=cv2.threshold(gray,Threshold,255,cv2.THRESH_BINARY)  
+                  # saving the image by
+                  plt.imsave(classPath+"/ThresholdedImages/s_threshed"+image, cv2.cvtColor(s_threshed, cv2.COLOR_GRAY2BGR))
+                except Exception as e:
+                  print(f"Simple thresholding operation failed due to {e}")
 
   def changeColorSpace(self,classPath):
     ''' 
@@ -550,3 +551,30 @@ class Data_Augumentation:
                 plt.imsave(classPath+"/ColorspaceImages/Colorspace"+image, changed)
               except Exception as e:
                 print(f"color-space operation failed due to {e}")
+    
+  def applyCanny(self,classPath):
+    
+    ''' 
+      Applies Canny Edge Detection to all the images in the given folder. 
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+
+    try:
+      os.mkdir(classPath+"/CannyImages")    
+    except:
+      raise Exception("Unable to create directory for Canny Edge Detected images.")
+
+    for image in list(os.listdir(classPath)):
+      # Read image in GRAYSCALE mode.
+      img = cv2.imread(classPath+"/"+image,0)
+
+      if img is not None:
+        try:
+          # applying canny edge detection
+          cannyImage = cv2.Canny(img,self.operations['canny']['threshold_1'],self.operations['canny']['threshold_2'])
+          
+          # saving the image
+          plt.imsave(classPath+"/CannyImages/CannyImage"+image, cv2.cvtColor(cannyImage, cv2.COLOR_GRAY2RGB))
+        except Exception as e:
+          print(f"Canny Edge Detection operation failed due to {e}")
