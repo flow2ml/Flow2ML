@@ -256,6 +256,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
       progress_i = 0
     
     print()
+    self.visualizeAugmentation()
     
   def getDataset(self,img_dimensions,train_val_split):
     

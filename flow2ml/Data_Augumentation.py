@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from skimage import transform as tf
 from matplotlib.transforms import Affine2D
 import random
+import math
 
 class Data_Augumentation:
   '''
@@ -467,7 +468,7 @@ class Data_Augumentation:
               # applies adaptive thresholding augmentation to the image.
               a_threshed=cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,199,5)  
               # saving the image by
-              plt.imsave(classPath+"/ThresholdedImages/a_threshed"+image, cv2.cvtColor(a_threshed, cv2.COLOR_GRAY2BGR))
+              plt.imsave(classPath+"/ThresholdedImages/thresholded"+image, cv2.cvtColor(a_threshed, cv2.COLOR_GRAY2BGR))
             except Exception as e:
               print(img)
               print(f"Adaptive thresholding operation failed due to {e}")
@@ -484,7 +485,7 @@ class Data_Augumentation:
                   # applies OTSU thresholding augmentation to the image.
                   _,o_threshed=cv2.threshold(gray,Threshold,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU) 
                   # saving the image by
-                  plt.imsave(classPath+"/ThresholdedImages/o_threshed"+image, cv2.cvtColor(o_threshed, cv2.COLOR_GRAY2BGR))
+                  plt.imsave(classPath+"/ThresholdedImages/thresholded"+image, cv2.cvtColor(o_threshed, cv2.COLOR_GRAY2BGR))
                 except Exception as e:
                   print(f"OTSU thresholding operation failed due to {e}") 
 
@@ -495,7 +496,7 @@ class Data_Augumentation:
                   # applies simple thresholding augmentation to the image.
                   _,s_threshed=cv2.threshold(gray,Threshold,255,cv2.THRESH_BINARY)  
                   # saving the image by
-                  plt.imsave(classPath+"/ThresholdedImages/s_threshed"+image, cv2.cvtColor(s_threshed, cv2.COLOR_GRAY2BGR))
+                  plt.imsave(classPath+"/ThresholdedImages/thresholded"+image, cv2.cvtColor(s_threshed, cv2.COLOR_GRAY2BGR))
                 except Exception as e:
                   print(f"Simple thresholding operation failed due to {e}")
 
@@ -575,6 +576,52 @@ class Data_Augumentation:
           cannyImage = cv2.Canny(img,self.operations['canny']['threshold_1'],self.operations['canny']['threshold_2'])
           
           # saving the image
-          plt.imsave(classPath+"/CannyImages/CannyImage"+image, cv2.cvtColor(cannyImage, cv2.COLOR_GRAY2RGB))
+          plt.imsave(classPath+"/CannyImages/Canny"+image, cv2.cvtColor(cannyImage, cv2.COLOR_GRAY2RGB))
         except Exception as e:
           print(f"Canny Edge Detection operation failed due to {e}")
+  
+  def visualizeAugmentation(self):
+
+    ''' 
+      Visualises all given augmentations for a randomly picked image. 
+      Args : None.
+    '''
+
+    # get a list of paths of all images provided
+    all_image_paths = []
+    for folder in self.classes:
+      for i in os.listdir(os.path.join(self.dataset_dir, self.data_dir, folder)):
+        if i.find("Images") == -1:
+          all_image_paths.append(os.path.join(self.dataset_dir, self.data_dir, folder, i))
+
+    # pick a random image
+    random_image_path = random.choice(all_image_paths)
+    head, tail = os.path.split(random_image_path)
+
+    # get paths to all augmentated images of the random image
+    augmented_image_paths = [random_image_path]
+    for operation in self.operations:
+      augmented_folder = operation.title() + "Images"
+      augmented_image_paths.append(os.path.join(head, augmented_folder, operation + tail))
+
+    # create an empty plot of the required shape
+    cols = 4
+    rows = math.ceil(len(augmented_image_paths) / cols)
+    axes = []
+    fig = plt.figure()
+
+    try:
+      # add images to plot one by one
+      for a in range(len(augmented_image_paths)):
+        b = plt.imread(augmented_image_paths[a])
+        axes.append(fig.add_subplot(rows, cols, a + 1) )
+        subplot_title = os.path.split(augmented_image_paths[a])[-1]
+        axes[-1].set_title(subplot_title, fontsize = 7.5)  
+        axes[-1].set_xticks([])
+        axes[-1].set_yticks([])
+        plt.imshow(b)
+      fig.tight_layout()    
+      plt.savefig(os.path.join(self.results_path, "visualise_augmentation.png"))
+    
+    except Exception as e:
+      print(f"Unable to create visualise_augmentation plot due to {e}")
