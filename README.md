@@ -150,7 +150,7 @@ Flow2ML for Python can be installed from Source,Pypi and Docker container instal
     flow.calculateImageQuality()
     
     # Define The conversions to be used
-    conversions = ['tfjs':True, 'tflite':False]
+    conversions = {'tfjs':True, 'tflite':False}
 
     # convert tensorflow model to tfjs/tflite
     flow.deployTensorflowModels( conversions ,model )
