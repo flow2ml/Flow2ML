@@ -321,12 +321,14 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
         print(f"Failed to create tflite_model directory due to {e}")
       open(os.path.join(self.deployment_path, "tflite_model", TF_LITE_MODEL_FILE_NAME),"wb").write(tflite_model)
 
-  def calculateImageQuality(self):
+  def calculateImageQuality(self,image_quality):
 
     '''
       Function used to calculate image quality for all images in processedData folder
-      Args : None
+      Args : 
+          image_quality : (string) used to calculate quality by BRISQUE or Entropy function
     '''
     processed_data_folder = os.path.join(self.dataset_dir,'processedData')
     self.image_scores = {}
+    self.image_quality = image_quality
     self.create_scores_doc(processed_data_folder)

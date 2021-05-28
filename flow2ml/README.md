@@ -103,7 +103,7 @@ It contains the following methods to get an automated analysis of a trained mode
 <h3>Image_Quality.py</h3>
 It contains the following methods to get an automated analysis of a trained model<br>
 <ol>
-    <li>__init__ <br> Initialises an empty dictionary to store images and their scores.</li>
-    <li>generate_img_scores <br> It takes the path to the processedData folder and fills the dictionary with BRISQUE scores for all images in it.</li>
+    <li>__init__ <br> Initialises an empty dictionary to store images and their scores along with the technique specified by user.</li>
+    <li>generate_img_scores <br> It takes the path to the processedData folder and fills the dictionary with scores for all images in it depending on technique.</li>
     <li>create_scores_doc <br> It saves the image quality report in the GeneratedReports directory.</li>
 </ol>
