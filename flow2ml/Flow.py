@@ -1,4 +1,5 @@
 import os
+import cv2
 import sys ,time
 import tensorflowjs as tfjs
 import tensorflow as tf
@@ -50,6 +51,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
 
     self.num_classes =  len(self.classes)
     self.class_counts = {}
+    self.detectBlurred()
     self.categoriesCountPlot()
 
   def categoriesCountPlot(self):
@@ -97,6 +99,27 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
 
     # remove the picture file after it has been added to the document
     os.remove(os.path.join(self.results_path, "categoriesCountPlot.png"))
+
+  def detectBlurred(self):
+  
+    '''
+      Function used to detect bluriness in all images provided by the user.
+      Args : None
+    '''
+
+    # loop over all images provided by the user
+    for folder in self.classes:
+      path = os.path.join(self.dataset_dir, self.data_dir, folder)
+      # get the specific image name to be read
+      for image_name in os.listdir(path):
+        image_path = os.path.join(path, image_name)
+        # read the image in greyscale mode
+        image = cv2.imread(image_path, 0)
+        # calculate the focus measure by getting the variance with Laplacian filter
+        focus_measure = cv2.Laplacian(image, cv2.CV_64F).var()
+        # if the focus is less than a certain threshold, then detect bluriness
+        if focus_measure < 500:
+          print(f"Blurriness detected in {image_name}")
 
   def update_progress(self,progress,subStatus):
     
