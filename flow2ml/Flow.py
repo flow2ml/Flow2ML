@@ -118,7 +118,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
         # calculate the focus measure by getting the variance with Laplacian filter
         focus_measure = cv2.Laplacian(image, cv2.CV_64F).var()
         # if the focus is less than a certain threshold, then detect bluriness
-        if focus_measure < 500:
+        if focus_measure < 100:
           print(f"Blurriness detected in {image_name}")
 
   def update_progress(self,progress,subStatus):
