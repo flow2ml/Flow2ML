@@ -156,18 +156,17 @@ Flow2ML for Python can be installed from Source,Pypi and Docker container instal
     # convert tensorflow model to tfjs/tflite
     flow.deployTensorflowModels( conversions ,model )
 
-
+    # For Pytorch and scikit-learn models
     from flow2ml import Auto_Results
-    
     # Set the Input Model by replacing None
     model = None
     x = Auto_Results(model,val_x,val_y)
     # Call the get_results_docx() function to get the results in a Results folder 
     x.get_results_docx()
 
-    #for tensorflow users 
+    # For Tensorflow models 
     from flow2ml import Tf_Results
-
+    # Set the Input Model by replacing None
     model = None
     x = Tf_Results(model,validation_generator)
     x.tf_get_results_docx() 

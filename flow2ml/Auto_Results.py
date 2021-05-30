@@ -15,16 +15,21 @@ class Auto_Results:
         '''
         Initialises the class variables.
         '''
-        self.model = model          #stores the model
-        self.x_test = X_test        #stores the X_test (test data) 
-        self.y_test = Y_test    #stores the Y_test (labels)
-        try:                        #try creating a Results directory and show excpetion if it already exists 
+        self.model = model          
+        # stores the model
+        self.x_test = X_test        
+        # stores the X_test (test data) 
+        self.y_test = Y_test    
+        # stores the Y_test (labels)
+        try:                        
+            #try creating a results directory
             p = os.getcwd()
             p = os.path.join(p,"GeneratedReports")
             self.results_path = p
-            os.mkdir(self.results_path)
-        except:
-            raise Exception("Unable to create directory for results.")
+            if not os.path.exists(self.results_path):
+                os.mkdir(self.results_path)
+        except Exception as e:
+            print(f"Unable to create directory for results due to {e}.")
 
     def roc_curve(self,figure_name="roc.jpeg"):
         '''
@@ -34,11 +39,11 @@ class Auto_Results:
             plt.figure(figsize=(50, 20))
             plot_roc_curve(self.model, self.x_test, self.y_test) 
             plt.title('ROC Curve')
-            plt.savefig(self.results_path+'/'+figure_name)
+            plt.savefig(os.path.join(self.results_path, figure_name))
         except Exception as e:
-            print("Unable to plot roc curve due to {e}")
+            print(f"Unable to plot roc curve due to {e}")
     
-    def confusion_matrix(self):
+    def confusion_matrix(self,figure_name='confusion_matrix.jpeg'):
         '''
         Plotting the confusion matrix
         '''
@@ -46,9 +51,9 @@ class Auto_Results:
             plt.figure(figsize=(50,20))
             plot_confusion_matrix(self.model,self.x_test,self.y_test)
             plt.title('Confusion Matrix', size = 35)
-            plt.savefig(self.results_path+'/confusion_matrix.jpeg')
+            plt.savefig(os.path.join(self.results_path, figure_name))
         except Exception as e:
-            print("Unable to plot confusion matrix due to {e}")
+            print(f"Unable to plot confusion matrix due to {e}")
     
     def precision_recall_curve(self,figure_name="prc.jpeg"):
         '''
@@ -58,9 +63,9 @@ class Auto_Results:
             plt.figure(figsize=(50,20))
             plot_precision_recall_curve(self.model,self.x_test,self.y_test)
             plt.title('Precision Recall Curve', size = 35)
-            plt.savefig(self.results_path+'/'+figure_name)
+            plt.savefig(os.path.join(self.results_path, figure_name))
         except Exception as e:
-            print("Unable to plot precision recall curve due to {e}")
+            print(f"Unable to plot precision recall curve due to {e}")
 
     def get_results_docx(self,file_name="report.docx"):
         '''
@@ -82,7 +87,7 @@ class Auto_Results:
                 An ROC curve plots TPR vs. FPR at different classification thresholds. Lowering the classification threshold classifies more items as positive, thus increasing both False Positives and True Positives.
                 The ROC curve for the Input Model is As Follows.
             ''')
-            doc.add_picture(self.results_path+'/roc.jpeg',width=Inches(6.0))
+            doc.add_picture(os.path.join(self.results_path, 'roc.jpeg'),width=Inches(6.0))
             doc.add_paragraph('''  ''')
             doc.add_heading('Confusion Matrix', level=2)
             doc.add_paragraph('''
@@ -93,7 +98,7 @@ class Auto_Results:
                 It is a special kind of contingency table, with two dimensions ("actual" and "predicted"), and identical sets of "classes" in both dimensions (each combination of dimension and class is a variable in the contingency table).
                 The Confusion Matrix for the Input Model is As shown:       
             ''')
-            doc.add_picture(self.results_path+'/confusion_matrix.jpeg',width=Inches(5.0))
+            doc.add_picture(os.path.join(self.results_path, 'confusion_matrix.jpeg'),width=Inches(5.0))
             doc.add_paragraph('''  ''')
             doc.add_heading("Precision Recall Curve")
             doc.add_paragraph('''
@@ -102,7 +107,7 @@ class Auto_Results:
                 A precision-recall curve is a plot of the precision (y-axis) and the recall (x-axis) for different thresholds, much like the ROC curve.
                 The Precision Recall Curve for the Input Model is a s shown:
             ''')
-            doc.add_picture(self.results_path+'/prc.jpeg',width=Inches(5.0))
-            doc.save(self.results_path+"/"+file_name)
+            doc.add_picture(os.path.join(self.results_path, 'prc.jpeg'),width=Inches(5.0))
+            doc.save(os.path.join(self.results_path, file_name))
         except Exception as e:
-            print("Unable to create results document due to {e}")
+            print(f"Unable to create results document due to {e}")
