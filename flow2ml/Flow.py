@@ -41,6 +41,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
       pass
     
     self.results_path = os.path.join(os.getcwd(),"GeneratedReports")
+    self.deployment_path = os.path.join(os.getcwd(), "DeployedModels")
 
     try:
       os.mkdir(self.results_path)
@@ -160,9 +161,6 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
           
           elif filter == "bilateral":
             self.applybilateral(path)
-
-          elif filter == "canny":
-            self.applycanny(path)
       
         time.sleep(0.1)
         self.update_progress( progress[progress_i]/100.0, f"Filtered all images in {folder}" )
@@ -246,6 +244,9 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
 
           if operation == "colorspace":
             self.changeColorSpace(path)
+            
+          if operation == "canny":
+            self.applyCanny(path)
 
         time.sleep(0.1)
         self.update_progress( progress[progress_i]/100.0, f"Augmented all images in {folder}" )
@@ -256,6 +257,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
       progress_i = 0
     
     print()
+    self.visualizeAugmentation()
     
   def getDataset(self,img_dimensions,train_val_split):
     
@@ -301,23 +303,32 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
 
     if(conversions['tfjs']==True):
       # Applying the conversion function to the input model and converted tfjs model will be stored in 'trained_models' folder.
-      tfjs.converters.save_keras_model(model, 'trained_models') 
+      try:
+        os.mkdir(os.path.join(self.deployment_path, "tfljsmodel"))
+      except Exception as e:
+        print(f"Failed to create tfjs_model directory due to {e}")
+      tfjs.converters.save_keras_model(model, os.path.join(self.deployment_path, "tfjs_model")) 
 
-    elif(conversions['tflite']==True):
+    if(conversions['tflite']==True):
       TF_LITE_MODEL_FILE_NAME='tf_lite_model.tflite'
       # Defining the convertor
       tf_lite_converter = tf.lite.TFLiteConverter.from_keras_model(model)
       # Applying the convert function
       tflite_model = tf_lite_converter.convert()
-      trained_models=TF_LITE_MODEL_FILE_NAME
-      open(trained_models,"wb").write(tflite_model)
+      try:
+        os.mkdir(os.path.join(self.deployment_path, "tflite_model"))
+      except Exception as e:
+        print(f"Failed to create tflite_model directory due to {e}")
+      open(os.path.join(self.deployment_path, "tflite_model", TF_LITE_MODEL_FILE_NAME),"wb").write(tflite_model)
 
-  def calculateImageQuality(self):
+  def calculateImageQuality(self,image_quality):
 
     '''
       Function used to calculate image quality for all images in processedData folder
-      Args : None
+      Args : 
+          image_quality : (string) used to calculate quality by BRISQUE or Entropy function
     '''
     processed_data_folder = os.path.join(self.dataset_dir,'processedData')
     self.image_scores = {}
+    self.image_quality = image_quality
     self.create_scores_doc(processed_data_folder)

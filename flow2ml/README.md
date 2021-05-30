@@ -43,28 +43,28 @@ Applies the following filters to the images in data directory<br>
     <li>sobel-x</li>
     <li>sobel-y</li>
     <li>bilateral</li>
-    <li>cannyEdgeDetector</li>
 </ol>
 
 <h3>Data_Augmentation.py</h3>
 Applies the following augmentation operations to the images in data directory<br>
 <ol>
-    <li>flipping</li>
-    <li>rotation</li>
-    <li>shearing</li>
-    <li>inverting</li>
-    <li>HistogramEqualisation</li>
+    <li>Flipping</li>
+    <li>Rotation</li>
+    <li>Shearing</li>
+    <li>Inverting</li>
+    <li>Histogram Equalisation</li>
     <li>CLAHE<li>
-    <li>cropping</li>
-    <li>scaling</li>
-    <li>zooming</li>
-    <li>greyscale</li>
+    <li>Cropping</li>
+    <li>Scaling</li>
+    <li>Zooming</li>
+    <li>Greyscale</li>
     <li>Erosion</li>
     <li>Dilation</li>
     <li>Opening</li>
     <li>Closing</li>
-    <li>thresholding</li>
-    <li>colorspace_Conversion</li>
+    <li>Thresholding</li>
+    <li>Colorspace Conversion</li>
+    <li>Canny Edge Detection</li>
 </ol>
 <br><hr><br>
 Flow.py contains Flow class which connects various other classes and maintains the work flow.
@@ -103,7 +103,7 @@ It contains the following methods to get an automated analysis of a trained mode
 <h3>Image_Quality.py</h3>
 It contains the following methods to get an automated analysis of a trained model<br>
 <ol>
-    <li>__init__ <br> Initialises an empty dictionary to store images and their scores.</li>
-    <li>generate_img_scores <br> It takes the path to the processedData folder and fills the dictionary with BRISQUE scores for all images in it.</li>
+    <li>__init__ <br> Initialises an empty dictionary to store images and their scores along with the technique specified by user.</li>
+    <li>generate_img_scores <br> It takes the path to the processedData folder and fills the dictionary with scores for all images in it depending on technique.</li>
     <li>create_scores_doc <br> It saves the image quality report in the GeneratedReports directory.</li>
 </ol>

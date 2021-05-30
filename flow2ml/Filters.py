@@ -179,33 +179,6 @@ class Filters:
         except Exception as e:
           print(f"Bilateral filter operation failed due to {e}")
 
-  def applycanny(self,classPath):
-    
-    ''' 
-      Applies Canny Edge Detection Filter to all the images in the given folder. 
-      Args : 
-        classPath : (string) directory containing images for a particular class.
-    '''
-
-    try:
-      os.mkdir(classPath+"/CannyImages")    
-    except:
-      raise Exception("Unable to create directory for Canny Edge Detected images.")
-
-    for image in list(os.listdir(classPath)):
-      # Read image in GRAYSCALE mode.
-      img = cv2.imread(classPath+"/"+image,0)
-
-      if img is not None:
-        try:
-          # applying canny edge detection filter
-          cannyImage = cv2.Canny(img,self.filters['canny']['threshold_1'],self.filters['canny']['threshold_2'])
-          
-          # saving the image
-          plt.imsave(classPath+"/CannyImages/cannyImage"+image, cannyImage)
-        except Exception as e:
-          print(f"Canny Edge Detection filter operation failed due to {e}")
-
   def visualizeFilters(self):
 
     ''' 
@@ -250,4 +223,4 @@ class Filters:
       plt.savefig(os.path.join(self.results_path, "visualise_filters.png"))
     
     except Exception as e:
-      print("Unable to create visualise_filters plot due to {e}")
+      print(f"Unable to create visualise_filters plot due to {e}")

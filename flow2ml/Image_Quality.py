@@ -1,20 +1,22 @@
 import imquality.brisque as brisque
-import PIL.Image
+import cv2
 from docx import Document
 import os
+import numpy as np
 
 class Image_Quality:
 	'''
 		Class to calculate image quality score for all images that are stored in ProcessedData folder
 	'''
 
-	def __init__(self):
+	def __init__(self, image_quality):
 		'''
 		Initializes various attributes regarding to the object.
 		Args : 
-			None.
+			image_quality : (string) used to calculate quality by BRISQUE or Entropy function
 		'''
 		self.image_scores = {}
+		self.image_quality = image_quality
 
 	def generate_img_scores(self, path):
 		''' 
@@ -22,11 +24,35 @@ class Image_Quality:
 		Args : 
 			path : (string) path to the processedData folder.
 		'''
+		
 		for i in os.listdir(path):
 			img_path = os.path.join(path, i)
-			img = PIL.Image.open(img_path)
-			img_score = round(brisque.score(img), 2)
-			self.image_scores[i] = img_score
+			img = cv2.imread(img_path, 0)
+			
+			if self.image_quality == "brisque":
+				try:
+					img_score = brisque.score(img)
+				except Exception as e:
+					print(f"Unable to calculate BRISQUE socre due to {e}")
+			
+			elif self.image_quality == "entropy":
+				try:
+					entropy = []
+					hist = cv2.calcHist([img], [0], None, [256], [0, 255])
+					total_pixel = img.shape[0] * img.shape[1]
+					for item in hist:
+						probability = item / total_pixel
+						if probability == 0:
+							en = 0
+						else:
+							en = -1 * probability * (np.log(probability) / np.log(2))
+						entropy.append(en)
+					img_score = np.sum(entropy)[0]
+				except Exception as e:
+					print(f"Unable to calculate Entropy socre due to {e}")
+			
+			# add score and image name to dictionary after rounding it off
+			self.image_scores[i] = format(img_score, '.2f')
 
 	def create_scores_doc(self, path):
 		''' 
