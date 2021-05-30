@@ -77,8 +77,8 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     max_class = max(self.class_counts.values())
     total_images = sum(self.class_counts.values())
     if max_class - min_class >= 0.5 * total_images:
-      create_coutplot = input("Class imbalance present. Do you want to continue? (y/n): ")
-      if create_coutplot.upper() != "Y":
+      create_countplot = input("Class imbalance present. Do you want to continue? (y/n): ")
+      if create_countplot.upper() != "Y":
         return
 
     # create a countplot and temperorily save it as image
@@ -107,6 +107,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
       Args : None
     '''
 
+    blurred = []
     # loop over all images provided by the user
     for folder in self.classes:
       path = os.path.join(self.dataset_dir, self.data_dir, folder)
@@ -118,8 +119,15 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
         # calculate the focus measure by getting the variance with Laplacian filter
         focus_measure = cv2.Laplacian(image, cv2.CV_64F).var()
         # if the focus is less than a certain threshold, then detect bluriness
-        if focus_measure < 100:
-          print(f"Blurriness detected in {image_name}")
+        if focus_measure < 500:
+          blurred.append(image_path)
+    if len(blurred) > 0:
+      print(f"Blur detected in the following images: {[os.path.split(i)[1] for i in blurred]}")
+      print([os.path.split(i)[1] for i in blurred])
+      remove_blurred = input("Do you want to remove those images? (y/n): ")
+      if remove_blurred.upper() == "Y":
+        for image in blurred:
+          os.remove(image)
 
   def update_progress(self,progress,subStatus):
     
@@ -327,7 +335,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     if(conversions['tfjs']==True):
       # Applying the conversion function to the input model and converted tfjs model will be stored in 'trained_models' folder.
       try:
-        os.mkdir(os.path.join(self.deployment_path, "tfljsmodel"))
+        os.mkdir(os.path.join(self.deployment_path, "tfjs_model"))
       except Exception as e:
         print(f"Failed to create tfjs_model directory due to {e}")
       tfjs.converters.save_keras_model(model, os.path.join(self.deployment_path, "tfjs_model")) 
