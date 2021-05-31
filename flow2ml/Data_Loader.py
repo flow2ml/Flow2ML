@@ -124,7 +124,7 @@ class Data_Loader:
     # return resized image
     return img
 
-  def prepare_dataset(self,img_resize_shape,train_val_split,img_label_dict):
+  def prepare_dataset(self,img_resize_shape,train_val_split,img_label_dict,random_state,encoding):
     '''
       Resizes the dataset and Prepares train, validation sets.
       Args :
@@ -144,9 +144,8 @@ class Data_Loader:
                                                                     list(self.img_label.keys()),
                                                                     list(self.img_label.values()),
                                                                     test_size=train_val_split,
-                                                                    random_state=0)
+                                                                    random_state=random_state)
     
-
 
     # Creating Numpy Dataset
     ( Height, Width, channels ) = img_resize_shape
@@ -182,4 +181,12 @@ class Data_Loader:
       val_labels[i] = np.asarray(output_label_val[i])
       i += 1
 
-      return (train_images,train_labels,val_images,val_labels)
+    # default encoding is one hot encoding
+    if encoding == 'one-hot':
+      pass
+    elif encoding == 'label':
+      train_labels = np.array([np.argmax(i) for i in train_labels])
+      val_labels = np.array([np.argmax(i) for i in val_labels])
+    else:
+      raise Exception(f"Not a valid option for encoding.")
+    return (train_images,train_labels,val_images,val_labels)
