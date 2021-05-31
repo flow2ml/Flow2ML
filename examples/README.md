@@ -1,4 +1,6 @@
-## Sample Code
+# Sample Code
+
+## Image Datasets:
 
 ### Filters and augmentation:
 ```py
@@ -100,3 +102,17 @@ dataset_dir
 └────Other Files
 ```
 
+## Non image datasets:
+
+### Working with .csv files:
+```py
+# Import the required module
+from flow2ml import Process_Csv
+import pandas as pd
+
+# Read a csv file
+df = pd.read_csv('./Tips.csv')
+
+# Pass the dataframe to the module to generate analysis reports
+x = Process_Csv(df)
+```
