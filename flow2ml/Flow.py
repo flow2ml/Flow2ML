@@ -327,8 +327,8 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     
     self.update_progress( 50/100.0, "Created Datasets" )
 
-    # Prepare Numpy dataset
-    self.dataset = self.prepare_dataset(img_dimensions,train_val_split,self.img_label,random_state)
+    # Prepare dataset
+    self.dataset = self.prepare_dataset(img_dimensions,train_val_split,self.img_label,random_state,encoding)
 
     self.update_progress( 100/100.0,"Created Datasets" ) 
 
