@@ -115,4 +115,6 @@ df = pd.read_csv('./Tips.csv')
 
 # Pass the dataframe to the module to generate analysis reports
 x = Process_Csv(df)
+x.create_analysis_docx()
+x.create_visualisation_docx()
 ```

@@ -5,6 +5,7 @@ from docx import Document
 from docx.shared import Inches
 import os
 import pandas as pd
+import seaborn as sns
 import io
 
 class Process_Csv:
@@ -27,7 +28,6 @@ class Process_Csv:
 				os.mkdir(self.results_path)
 		except Exception as e:
 			print(f"Unable to create directory for results due to {e}.")
-		self.create_analysis_docx()
 	
 	def add_table_to_doc(self, table, doc):
 		'''
@@ -88,3 +88,48 @@ class Process_Csv:
 		data.columns = ['Column', 'Number of missing values values']
 		self.add_table_to_doc(data, document)
 		document.save(os.path.join(self.results_path, 'csv_analysis.docx'))
+
+	def create_visualisation_docx(self):
+		'''
+		Creates the visualisation report.
+		Args : 
+        	None
+		'''
+		document =  Document()
+		document.add_heading('Visualisation Report')
+
+		# add correlation matrix 
+		document.add_heading('Correlation matrix', level = 2)
+		data = self.df.corr()
+		sns_plot = sns.heatmap(data, annot = True)
+		fig = sns_plot.get_figure()
+		fig.savefig(os.path.join(self.results_path, "correlation_matrix.jpeg"))	
+		document.add_picture(os.path.join(self.results_path, "correlation_matrix.jpeg"), width = Inches(6.0))
+		# remove the image from folder after it is added to the document
+		os.remove(os.path.join(self.results_path, "correlation_matrix.jpeg"))
+		
+		# add pairplot 
+		document.add_heading('Pairplot', level = 2)
+		sns_plot = sns.pairplot(self.df)
+		sns_plot.savefig(os.path.join(self.results_path, "pairplot.jpeg"))	
+		document.add_picture(os.path.join(self.results_path, "pairplot.jpeg"), width = Inches(6.0))
+		# remove the image from folder after it is added to the document
+		os.remove(os.path.join(self.results_path, "pairplot.jpeg"))
+
+		# add density plots for numeric attributes
+		document.add_heading('Density plots', level = 2)
+		attributes = list(self.df.describe().columns)
+		for attribute in attributes:
+			plt.clf()
+			self.df[attribute].plot.density()
+			plt.title(f'Density Plot for {attribute}')
+			plt.tight_layout()
+			plt.savefig(os.path.join(self.results_path, f"{attribute}_density_plot.jpeg"))
+			document.add_heading(attribute, level = 3)
+			document.add_picture(os.path.join(self.results_path, f"{attribute}_density_plot.jpeg"), width = Inches(6.0))
+			# remove the image from folder after it is added to the document
+			os.remove(os.path.join(self.results_path, f"{attribute}_density_plot.jpeg"))
+		
+		document.save(os.path.join(self.results_path, 'csv_visualisation.docx'))
+
+	
