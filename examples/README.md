@@ -55,15 +55,6 @@ flow.calculateImageQuality( image_quality )
 
 ### Model conversions:
 ```py
-# Define The conversions to be used
-conversions = {'tfjs':True, 'tflite':True}
-
-# convert tensorflow model to tfjs/tflite
-flow.deployTensorflowModels( conversions, model )
-```
-
-### Evaluating models:
-```py
 # For Pytorch and scikit-learn models
 from flow2ml import Auto_Results
 
@@ -84,6 +75,15 @@ x = Tf_Results(model, validation_generator)
 x.tf_get_results_docx() 
 ```
 
+### Evaluating models:
+```py
+# Define The conversions to be used
+conversions = {'tfjs':True, 'tflite':True}
+
+# convert tensorflow model to tfjs/tflite
+flow.deployTensorflowModels( conversions, model )
+```
+
 Please try to maintain the dataset in the following manner in order to run the code easily.
 
 ```text
@@ -99,3 +99,4 @@ dataset_dir
 | 
 └────Other Files
 ```
+
