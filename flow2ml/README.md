@@ -117,4 +117,5 @@ It contains the following methods to get an automated analysis of a non image da
     <li>__init__ <br> Initialises an empty dictionary to store reports and initialises the dataframe as class variable.</li>
     <li>add_table_to_doc <br> A helper function to add tables with formatting to document.</li>
     <li>create_analysis_docx <br> Creates the analysis report and saves it to the GeneratedResults directory.</li>
+    <li>create_visualisation_docx <br> Creates the visualisation report and saves it to the GeneratedResults directory.</li>
 </ol>
