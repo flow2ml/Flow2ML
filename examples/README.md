@@ -53,7 +53,7 @@ image_quality = "entropy"
 flow.calculateImageQuality( image_quality )
 ```
 
-### Model conversions:
+### Evaluating models:
 ```py
 # For Pytorch and scikit-learn models
 from flow2ml import Auto_Results
@@ -75,7 +75,7 @@ x = Tf_Results(model, validation_generator)
 x.tf_get_results_docx() 
 ```
 
-### Evaluating models:
+### Model conversions:
 ```py
 # Define The conversions to be used
 conversions = {'tfjs':True, 'tflite':True}
