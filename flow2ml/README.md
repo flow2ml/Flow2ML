@@ -18,6 +18,7 @@ Flow2Ml
         ├──Flow.py 
         ├──Image_Quality.py
         ├──setup.cfg
+        |──Process_Csv.py
         ├──README.md
         └──license.txt
 ```
@@ -102,9 +103,17 @@ It contains the following methods to get an automated analysis of a trained mode
 </ol>
 
 <h3>Image_Quality.py</h3>
-It contains the following methods to get an automated analysis of a trained model<br>
+It contains the following methods assess the quality of processed images.<br>
 <ol>
     <li>__init__ <br> Initialises an empty dictionary to store images and their scores along with the technique specified by user.</li>
     <li>generate_img_scores <br> It takes the path to the processedData folder and fills the dictionary with scores for all images in it depending on technique.</li>
     <li>create_scores_doc <br> It saves the image quality report in the GeneratedReports directory.</li>
+</ol>
+
+<h3>Process_Csv.py</h3>
+It contains the following methods to get an automated analysis of a non image dataset.<br>
+<ol>
+    <li>__init__ <br> Initialises an empty dictionary to store reports and initialises the dataframe as class variable.</li>
+    <li>add_table_to_doc <br> A helper function to add tables with formatting to document.</li>
+    <li>create_analysis_docx <br> Creates the analysis report and saves it to the GeneratedResults directory.</li>
 </ol>
