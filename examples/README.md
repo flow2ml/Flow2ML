@@ -18,7 +18,7 @@ flow.applyFilters( filters )
 
 # Define The augmentation operations to be used
    
-operations = {'flipped': 'horizontal', 'rotated': 90, 'sheared': {'x_axis': 5, 'y_axis': 15}, 'cropped': [50, 100, 50, 100], 'scaled': 0.1, 'zoomed': 2, 'histogramequalised':True, 'greyscale': True, 'CLAHE':True, 'inverted':True, 'eroded':True, 'dilated':True, 'opened':True, 'closed':True,'thresholded':{'type':'adaptive','thresh_val':0}, 'colorspace':{'input':'BGR','output':'BGR'}, 'canny':{'threshold_1':100,'threshold_2':200}}
+operations = {'flipped': 'horizontal', 'rotated': 90, 'sheared': {'x_axis': 5, 'y_axis': 15}, 'cropped': [50, 100, 50, 100], 'scaled': 0.1, 'zoomed': 2, 'histogramequalised':True, 'greyscale': True, 'CLAHE':True, 'inverted':True, 'eroded':True, 'dilated':True, 'opened':True, 'closed':True,'thresholded':{'type':'adaptive','thresh_val':0}, 'colorspace':{'input':'BGR','output':'BGR'}, 'canny':{'threshold_1':100,'threshold_2':200}, 'brightnessenhanced':True}
 
 # Apply The Augmentation
 flow.applyAugmentation( operations )

@@ -552,7 +552,7 @@ class Data_Augumentation:
                 plt.imsave(classPath+"/ColorspaceImages/Colorspace"+image, changed)
               except Exception as e:
                 print(f"color-space operation failed due to {e}")
-    
+
   def applyCanny(self,classPath):
     
     ''' 
@@ -579,7 +579,36 @@ class Data_Augumentation:
           plt.imsave(classPath+"/CannyImages/Canny"+image, cv2.cvtColor(cannyImage, cv2.COLOR_GRAY2RGB))
         except Exception as e:
           print(f"Canny Edge Detection operation failed due to {e}")
-  
+
+  def applyEnhanceBrightness(self,classPath):
+    
+    ''' 
+      Applies log transformation to enhance brightness in all the images in the given folder. 
+      Args : 
+        classPath : (string) directory containing images for a particular class.
+    '''
+
+    try:
+      os.mkdir(classPath+"/BrightnessEnhancedImages")    
+    except:
+      raise Exception("Unable to create directory for brightness enhanced images.")
+
+    for image in list(os.listdir(classPath)):
+
+      img = cv2.imread(classPath+"/"+image)
+
+      if img is not None:
+        try:
+          # calculate and apply log transform
+          c = 255 / np.log(1 + np.max(img))
+          brightnessEnhancedImage = c * (np.log(img + 1e-7))
+          brightnessEnhancedImage = np.array(brightnessEnhancedImage, dtype = np.uint8)
+
+          # saving the image
+          plt.imsave(classPath+"/BrightnessEnhancedImages/BrightnessEnhanced"+image, cv2.cvtColor(brightnessEnhancedImage, cv2.COLOR_BGR2RGB))
+        except Exception as e:
+          print(f"Brightness enhancement operation failed due to {e}")
+
   def visualizeAugmentation(self):
 
     ''' 
