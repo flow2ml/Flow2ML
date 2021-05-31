@@ -44,8 +44,14 @@ img_dimensions = (150, 150, 3)
 # If working with greyscale image, change the number of channels from 3 to 1.
 test_val_split = 0.25
 
+# Select a random seed for splitting the data
+random_state = 22
+
+# Select one-hot or label encoding technique
+encoding = 'label'
+
 # Obtain Train, Validation data splits
-(train_x, train_y, val_x, val_y) = flow.getDataset( img_dimensions, test_val_split )
+(train_x, train_y, val_x, val_y) = flow.getDataset( img_dimensions, test_val_split, random_state, encoding )
 ```
 
 ### Assesing image quality:
