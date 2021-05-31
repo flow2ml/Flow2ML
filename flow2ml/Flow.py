@@ -3,6 +3,7 @@ import cv2
 import sys ,time
 import tensorflowjs as tfjs
 import tensorflow as tf
+import numpy as np
 from docx import Document
 import matplotlib.pyplot as plt
 from .Data_Loader import Data_Loader
@@ -290,7 +291,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     print()
     self.visualizeAugmentation()
     
-  def getDataset(self,img_dimensions,train_val_split):
+  def getDataset(self,img_dimensions, train_val_split, label_as_integers = False):
     
     '''
       Generates the dataset.
@@ -299,7 +300,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
       Args:
         img_dimensions: (tuple) holds dimensions of the image after resizing.
         train_val_split: (float) holds train validation split value.
-      
+        label_as_integers:(bool)if true, train and val labels will be returned as integers
       Returns:
         train_val_dataset: (tuple) contains the numpy ndarrays.
                             (trainData, trainLabels, valData, valLabels).
@@ -321,12 +322,10 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
       self.img_label = self.create_dataset(path)
     
     self.update_progress( 50/100.0, "Created Datasets" )
-
     # Prepare Numpy dataset
-    self.dataset = self.prepare_dataset(img_dimensions,train_val_split,self.img_label)
-
+    self.dataset = self.prepare_dataset(img_dimensions,train_val_split,self.img_label, label_as_integers)
     self.update_progress( 100/100.0,"Created Datasets" ) 
-
+    
     return self.dataset
 
   def deployTensorflowModels(self,conversions,model):
