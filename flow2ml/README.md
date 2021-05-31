@@ -66,6 +66,7 @@ Applies the following augmentation operations to the images in data directory<br
     <li>Thresholding</li>
     <li>Colorspace Conversion</li>
     <li>Canny Edge Detection</li>
+    <li>Brightness Enhancement</li>
 </ol>
 <br><hr><br>
 Flow.py contains Flow class which connects various other classes and maintains the work flow.

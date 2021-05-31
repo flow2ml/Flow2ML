@@ -147,7 +147,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     text = "\rPercent: [{0}] {1}% {2}".format( "#"*block + "-"*(barLength-block), progress*100, status)
     sys.stdout.write(text)
     sys.stdout.flush()
-    
+
   def applyFilters(self,filters):
     ''' 
       Applies given filters 
@@ -278,6 +278,10 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
             
           if operation == "canny":
             self.applyCanny(path)
+          
+          if operation == "brightnessenhanced":
+            self.applyEnhanceBrightness(path)
+
 
         time.sleep(0.1)
         self.update_progress( progress[progress_i]/100.0, f"Augmented all images in {folder}" )
@@ -289,7 +293,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     
     print()
     self.visualizeAugmentation()
-    
+
   def getDataset(self,img_dimensions,train_val_split):
     
     '''
