@@ -295,7 +295,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     print()
     self.visualizeAugmentation()
     
-  def getDataset(self,img_dimensions, train_val_split, label_as_integers = False):
+  def getDataset(self,img_dimensions, train_val_split, random_state, encoding):
     
     '''
       Generates the dataset.
@@ -329,7 +329,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     self.update_progress( 50/100.0, "Created Datasets" )
 
     # Prepare dataset
-    self.dataset = self.prepare_dataset(img_dimensions,train_val_split,self.img_label,random_state,encoding)
+    self.dataset = self.prepare_dataset(img_dimensions, train_val_split, self.img_label, random_state, encoding)
 
     self.update_progress( 100/100.0,"Created Datasets" ) 
     
