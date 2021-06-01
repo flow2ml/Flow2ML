@@ -1,4 +1,6 @@
-## Sample Code
+# Sample Code
+
+## Image Datasets:
 
 ### Filters and augmentation:
 ```py
@@ -16,7 +18,7 @@ flow.applyFilters( filters )
 
 # Define The augmentation operations to be used
    
-operations = {'flipped': 'horizontal', 'rotated': 90, 'sheared': {'x_axis': 5, 'y_axis': 15}, 'cropped': [50, 100, 50, 100], 'scaled': 0.1, 'zoomed': 2, 'histogramequalised':True, 'greyscale': True, 'CLAHE':True, 'inverted':True, 'eroded':True, 'dilated':True, 'opened':True, 'closed':True,'thresholded':{'type':'adaptive','thresh_val':0}, 'colorspace':{'input':'BGR','output':'BGR'}, 'canny':{'threshold_1':100,'threshold_2':200}}
+operations = {'flipped': 'horizontal', 'rotated': 90, 'sheared': {'x_axis': 5, 'y_axis': 15}, 'cropped': [50, 100, 50, 100], 'scaled': 0.1, 'zoomed': 2, 'histogramequalised':True, 'greyscale': True, 'CLAHE':True, 'inverted':True, 'eroded':True, 'dilated':True, 'opened':True, 'closed':True,'thresholded':{'type':'adaptive','thresh_val':0}, 'colorspace':{'input':'BGR','output':'BGR'}, 'canny':{'threshold_1':100,'threshold_2':200}, 'brightnessenhanced':True}
 
 # Apply The Augmentation
 flow.applyAugmentation( operations )
@@ -42,8 +44,14 @@ img_dimensions = (150, 150, 3)
 # If working with greyscale image, change the number of channels from 3 to 1.
 test_val_split = 0.25
 
+# Select a random seed for splitting the data
+random_state = 22
+
+# Select one-hot or label encoding technique
+encoding = 'label'
+
 # Obtain Train, Validation data splits
-(train_x, train_y, val_x, val_y) = flow.getDataset( img_dimensions, test_val_split )
+(train_x, train_y, val_x, val_y) = flow.getDataset( img_dimensions, test_val_split, random_state, encoding )
 ```
 
 ### Assesing image quality:
@@ -51,15 +59,6 @@ test_val_split = 0.25
 # Create an image quality report using Entropy or BRISQUE for all images
 image_quality = "entropy"
 flow.calculateImageQuality( image_quality )
-```
-
-### Model conversions:
-```py
-# Define The conversions to be used
-conversions = {'tfjs':True, 'tflite':True}
-
-# convert tensorflow model to tfjs/tflite
-flow.deployTensorflowModels( conversions, model )
 ```
 
 ### Evaluating models:
@@ -84,6 +83,15 @@ x = Tf_Results(model, validation_generator)
 x.tf_get_results_docx() 
 ```
 
+### Model conversions:
+```py
+# Define The conversions to be used
+conversions = {'tfjs':True, 'tflite':True}
+
+# convert tensorflow model to tfjs/tflite
+flow.deployTensorflowModels( conversions, model )
+```
+
 Please try to maintain the dataset in the following manner in order to run the code easily.
 
 ```text
@@ -98,4 +106,21 @@ dataset_dir
 |       └──Label n Folder 
 | 
 └────Other Files
+```
+
+## Non image datasets:
+
+### Working with .csv files:
+```py
+# Import the required module
+from flow2ml import Process_Csv
+import pandas as pd
+
+# Read a csv file
+df = pd.read_csv('./Tips.csv')
+
+# Pass the dataframe to the module to generate analysis reports
+x = Process_Csv(df)
+x.create_analysis_docx()
+x.create_visualisation_docx()
 ```

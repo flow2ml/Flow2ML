@@ -145,9 +145,8 @@ class Data_Loader:
                                                                     list(self.img_label.keys()),
                                                                     list(self.img_label.values()),
                                                                     test_size=train_val_split,
-                                                                    random_state=0)
+                                                                    random_state=random_state)
     
-
 
     # Creating Numpy Dataset
     ( Height, Width, channels ) = img_resize_shape
@@ -189,4 +188,3 @@ class Data_Loader:
      val_labels=np.argmax(val_labels, axis=1)
 
     return (train_images,train_labels,val_images,val_labels)
-
