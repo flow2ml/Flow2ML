@@ -67,7 +67,7 @@ class Auto_Results:
         except Exception as e:
             print(f"Unable to plot precision recall curve due to {e}")
 
-    def get_results_docx(self,file_name="report.docx"):
+    def get_results_docx(self,file_name="model_report.docx"):
         '''
         Saves all the plots with their default name and 
         creates a report.docx file in the Results Folder
@@ -108,5 +108,9 @@ The Precision Recall Curve for the Input Model is a s shown:
             ''')
             doc.add_picture(os.path.join(self.results_path, 'prc.jpeg'),width=Inches(5.0))
             doc.save(os.path.join(self.results_path, file_name))
+            # remove the saved pictures after they are added to the document
+            os.remove(os.path.join(self.results_path, 'roc.jpeg'))
+            os.remove(os.path.join(self.results_path, 'confusion_matrix.jpeg'))
+            os.remove(os.path.join(self.results_path, 'prc.jpeg'))
         except Exception as e:
             print(f"Unable to create results document due to {e}")
