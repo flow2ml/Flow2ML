@@ -124,7 +124,7 @@ class Data_Loader:
     # return resized image
     return img
 
-  def prepare_dataset(self,img_resize_shape,train_val_split,img_label_dict,random_state):
+  def prepare_dataset(self,img_resize_shape,train_val_split,img_label_dict, label_as_integers):
     '''
       Resizes the dataset and Prepares train, validation sets.
       Args :
@@ -132,10 +132,11 @@ class Data_Loader:
 
          train_val_split: (float). value used to split the entire dataset
                                    to train and validation sets.
+         label_as_integers:(bool) if its true, the train and val labels will be returned as integers not 
+                                   as one hot encoded vectors
 
          img_label_dict: (dictonary). contains image name as key and its 
                                       label as value  
-
     '''
 
     self.img_label = img_label_dict
@@ -144,7 +145,7 @@ class Data_Loader:
                                                                     list(self.img_label.keys()),
                                                                     list(self.img_label.values()),
                                                                     test_size=train_val_split,
-                                                                    random_state=random_state)
+                                                                    random_state=0)
     
 
     # Creating Numpy Dataset
@@ -180,4 +181,10 @@ class Data_Loader:
       val_images[i] = temp
       val_labels[i] = np.asarray(output_label_val[i])
       i += 1
+
+      #converting train and val labels as integers
+    if label_as_integers == True:
+     train_labels=np.argmax(train_labels, axis=1)
+     val_labels=np.argmax(val_labels, axis=1)
+
     return (train_images,train_labels,val_images,val_labels)
