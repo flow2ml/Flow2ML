@@ -67,7 +67,7 @@ class Auto_Results:
         except Exception as e:
             print(f"Unable to plot precision recall curve due to {e}")
 
-    def get_results_docx(self,file_name="report.docx"):
+    def get_results_docx(self,file_name="model_report.docx"):
         '''
         Saves all the plots with their default name and 
         creates a report.docx file in the Results Folder
@@ -80,34 +80,37 @@ class Auto_Results:
             doc.add_heading('Model Report')
             doc.add_heading('ROC Curve',level = 2)
             doc.add_paragraph('''
-                An ROC curve (receiver operating characteristic curve) is a graph showing the performance of a classification model at all classification thresholds.
-                This curve plots two parameters:
-                    True Positive Rate
-                    False Positive Rate
-                An ROC curve plots TPR vs. FPR at different classification thresholds. Lowering the classification threshold classifies more items as positive, thus increasing both False Positives and True Positives.
-                The ROC curve for the Input Model is As Follows.
+An ROC curve (receiver operating characteristic curve) is a graph showing the performance of a classification model at all classification thresholds.
+This curve plots two parameters:
+    True Positive Rate
+    False Positive Rate
+An ROC curve plots TPR vs. FPR at different classification thresholds. Lowering theclassification threshold classifies more items as positive, thus increasing both False Positives and TrPositives.
+The ROC curve for the Input Model is As Follows.
             ''')
             doc.add_picture(os.path.join(self.results_path, 'roc.jpeg'),width=Inches(6.0))
             doc.add_paragraph('''  ''')
             doc.add_heading('Confusion Matrix', level=2)
             doc.add_paragraph('''
-                A confusion matrix is a table that is often used to describe the performance of a classification model (or "classifier") on a set of test data for which the true values are known.
-                In the field of machine learning and specifically the problem of statistical classification, a confusion matrix, also known as an error matrix, is a specific table layout that allows visualization of the performance of an algorithm,
-                typically a supervised learning one (in unsupervised learning it is usually called a matching matrix). Each row of the matrix represents the instances in a predicted class, while each column represents the instances in an actual class (or vice versa).
-                The name stems from the fact that it makes it easy to see whether the system is confusing two classes (i.e. commonly mislabeling one as another).
-                It is a special kind of contingency table, with two dimensions ("actual" and "predicted"), and identical sets of "classes" in both dimensions (each combination of dimension and class is a variable in the contingency table).
-                The Confusion Matrix for the Input Model is As shown:       
+A confusion matrix is a table that is often used to describe the performance of a classification model (or "classifier") on a set of test data for which the true values are known.
+In the field of machine learning and specifically the problem of statistical classification, a confusion matrix, also known as an error matrix, is a specific table layout that allows visualization of the performance of an algorithm, typically a supervised learning one (in unsupervised learning it is usually called a matching matrix). Each row of the matrix represents the instances in a predicted class, while each column represents the instances in an actual class (or vice versa).
+The name stems from the fact that it makes it easy to see whether the system is confusing two classes (i.e. commonly mislabeling one as another).
+It is a special kind of contingency table, with two dimensions ("actual" and "predicted"), and identical sets of "classes" in both dimensions (each combination of dimension and class is a variable in the contingency table).
+The Confusion Matrix for the Input Model is As shown:       
             ''')
             doc.add_picture(os.path.join(self.results_path, 'confusion_matrix.jpeg'),width=Inches(5.0))
             doc.add_paragraph('''  ''')
             doc.add_heading("Precision Recall Curve")
             doc.add_paragraph('''
-                Precision-Recall curves summarize the trade-off between the true positive rate and the positive predictive value for a predictive model using different probability thresholds.
-                Precision is a ratio of the number of true positives divided by the sum of the true positives and false positives. It describes how good a model is at predicting the positive class. Precision is referred to as the positive predictive value.
-                A precision-recall curve is a plot of the precision (y-axis) and the recall (x-axis) for different thresholds, much like the ROC curve.
-                The Precision Recall Curve for the Input Model is a s shown:
+Precision-Recall curves summarize the trade-off between the true positive rate and the positive predictive value for a predictive model using different probability thresholds.
+Precision is a ratio of the number of true positives divided by the sum of the true positives and false positives. It describes how good a model is at predicting the positive claPrecision is referred to as the positive predictive value.
+A precision-recall curve is a plot of the precision (y-axis) and the recall (x-axis) for different thresholds, much like the ROC curve.
+The Precision Recall Curve for the Input Model is a s shown:
             ''')
             doc.add_picture(os.path.join(self.results_path, 'prc.jpeg'),width=Inches(5.0))
             doc.save(os.path.join(self.results_path, file_name))
+            # remove the saved pictures after they are added to the document
+            os.remove(os.path.join(self.results_path, 'roc.jpeg'))
+            os.remove(os.path.join(self.results_path, 'confusion_matrix.jpeg'))
+            os.remove(os.path.join(self.results_path, 'prc.jpeg'))
         except Exception as e:
             print(f"Unable to create results document due to {e}")
