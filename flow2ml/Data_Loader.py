@@ -145,7 +145,7 @@ class Data_Loader:
                                                                     list(self.img_label.keys()),
                                                                     list(self.img_label.values()),
                                                                     test_size=train_val_split,
-                                                                    random_state=random_state)
+                                                                    random_state=0)
     
 
     # Creating Numpy Dataset
