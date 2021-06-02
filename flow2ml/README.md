@@ -18,6 +18,7 @@ Flow2Ml
         ├──Flow.py 
         ├──Image_Quality.py
         ├──setup.cfg
+        |──Process_Csv.py
         ├──README.md
         └──license.txt
 ```
@@ -65,6 +66,7 @@ Applies the following augmentation operations to the images in data directory<br
     <li>Thresholding</li>
     <li>Colorspace Conversion</li>
     <li>Canny Edge Detection</li>
+    <li>Brightness Enhancement</li>
 </ol>
 <br><hr><br>
 Flow.py contains Flow class which connects various other classes and maintains the work flow.
@@ -75,8 +77,9 @@ It contains the following methods to connect various dots<br>
     <li>applyFilters. <br> It takes a list of filters and applies all of them and stores inside the data directory.</li>
     <li>applyAugmentation. <br> It takes a dictionary of augmentation operations and applies all of them and stores inside the data directory.</li>
     <li>getDataset. <br> It moves all the processed images into a new folder located in the root folder and creates training and validating numpy datasets.</li>
-    <li>deployTensorflowModels <br> It takes tensorflow model as input and converts into tensorflowjs or tensorflowlite model depending upon the user input.</li>
-    <li>categoriesCountPlot <br> It creates a document visualising the countplot of different categories in the dataset provided by the user.</li>
+    <li>deployTensorflowModels. <br> It takes tensorflow model as input and converts into tensorflowjs or tensorflowlite model depending upon the user input.</li>
+    <li>detectBlurred. <br> It calculates the focus measure of all images provided by user to detect bluriness under a certain threshold.</li>
+    <li>categoriesCountPlot. <br> It creates a document visualising the countplot of different categories in the dataset provided by the user.</li>
 </ol>
 <br><hr><br>
 
@@ -101,9 +104,18 @@ It contains the following methods to get an automated analysis of a trained mode
 </ol>
 
 <h3>Image_Quality.py</h3>
-It contains the following methods to get an automated analysis of a trained model<br>
+It contains the following methods assess the quality of processed images.<br>
 <ol>
     <li>__init__ <br> Initialises an empty dictionary to store images and their scores along with the technique specified by user.</li>
     <li>generate_img_scores <br> It takes the path to the processedData folder and fills the dictionary with scores for all images in it depending on technique.</li>
     <li>create_scores_doc <br> It saves the image quality report in the GeneratedReports directory.</li>
+</ol>
+
+<h3>Process_Csv.py</h3>
+It contains the following methods to get an automated analysis of a non image dataset.<br>
+<ol>
+    <li>__init__ <br> Initialises an empty dictionary to store reports and initialises the dataframe as class variable.</li>
+    <li>add_table_to_doc <br> A helper function to add tables with formatting to document.</li>
+    <li>create_analysis_docx <br> Creates the analysis report and saves it to the GeneratedResults directory.</li>
+    <li>create_visualisation_docx <br> Creates the visualisation report and saves it to the GeneratedResults directory.</li>
 </ol>

@@ -1,7 +1,9 @@
 import os
+import cv2
 import sys ,time
 import tensorflowjs as tfjs
 import tensorflow as tf
+import numpy as np
 from docx import Document
 import matplotlib.pyplot as plt
 from .Data_Loader import Data_Loader
@@ -50,6 +52,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
 
     self.num_classes =  len(self.classes)
     self.class_counts = {}
+    self.detectBlurred()
     self.categoriesCountPlot()
 
   def categoriesCountPlot(self):
@@ -75,8 +78,8 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     max_class = max(self.class_counts.values())
     total_images = sum(self.class_counts.values())
     if max_class - min_class >= 0.5 * total_images:
-      create_coutplot = input("Class imbalance present. Do you want to continue? (y/n): ")
-      if create_coutplot.upper() != "Y":
+      create_countplot = input("Class imbalance present. Do you want to continue? (y/n): ")
+      if create_countplot.upper() != "Y":
         return
 
     # create a countplot and temperorily save it as image
@@ -98,6 +101,35 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     # remove the picture file after it has been added to the document
     os.remove(os.path.join(self.results_path, "categoriesCountPlot.png"))
 
+  def detectBlurred(self):
+  
+    '''
+      Function used to detect bluriness in all images provided by the user.
+      Args : None
+    '''
+
+    blurred = []
+    # loop over all images provided by the user
+    for folder in self.classes:
+      path = os.path.join(self.dataset_dir, self.data_dir, folder)
+      # get the specific image name to be read
+      for image_name in os.listdir(path):
+        image_path = os.path.join(path, image_name)
+        # read the image in greyscale mode
+        image = cv2.imread(image_path, 0)
+        # calculate the focus measure by getting the variance with Laplacian filter
+        focus_measure = cv2.Laplacian(image, cv2.CV_64F).var()
+        # if the focus is less than a certain threshold, then detect bluriness
+        if focus_measure < 100:
+          blurred.append(image_path)
+    if len(blurred) > 0:
+      print(f"Blur detected in the following images: {[os.path.split(i)[1] for i in blurred]}")
+      print([os.path.split(i)[1] for i in blurred])
+      remove_blurred = input("Do you want to remove those images? (y/n): ")
+      if remove_blurred.upper() == "Y":
+        for image in blurred:
+          os.remove(image)
+
   def update_progress(self,progress,subStatus):
     
     '''
@@ -116,7 +148,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     text = "\rPercent: [{0}] {1}% {2}".format( "#"*block + "-"*(barLength-block), progress*100, status)
     sys.stdout.write(text)
     sys.stdout.flush()
-    
+
   def applyFilters(self,filters):
     ''' 
       Applies given filters 
@@ -247,6 +279,10 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
             
           if operation == "canny":
             self.applyCanny(path)
+          
+          if operation == "brightnessenhanced":
+            self.applyEnhanceBrightness(path)
+
 
         time.sleep(0.1)
         self.update_progress( progress[progress_i]/100.0, f"Augmented all images in {folder}" )
@@ -259,7 +295,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     print()
     self.visualizeAugmentation()
     
-  def getDataset(self,img_dimensions,train_val_split):
+  def getDataset(self,img_dimensions, train_val_split, random_state, encoding):
     
     '''
       Generates the dataset.
@@ -268,7 +304,8 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
       Args:
         img_dimensions: (tuple) holds dimensions of the image after resizing.
         train_val_split: (float) holds train validation split value.
-      
+        label_as_integers:(bool)if true, train and val labels will be returned as integers
+        
       Returns:
         train_val_dataset: (tuple) contains the numpy ndarrays.
                             (trainData, trainLabels, valData, valLabels).
@@ -291,11 +328,11 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     
     self.update_progress( 50/100.0, "Created Datasets" )
 
-    # Prepare Numpy dataset
-    self.dataset = self.prepare_dataset(img_dimensions,train_val_split,self.img_label)
+    # Prepare dataset
+    self.dataset = self.prepare_dataset(img_dimensions, train_val_split, self.img_label, random_state, encoding)
 
     self.update_progress( 100/100.0,"Created Datasets" ) 
-
+    
     return self.dataset
 
   def deployTensorflowModels(self,conversions,model):
@@ -304,7 +341,7 @@ class Flow(Data_Loader,Filters,Data_Augumentation,Image_Quality):
     if(conversions['tfjs']==True):
       # Applying the conversion function to the input model and converted tfjs model will be stored in 'trained_models' folder.
       try:
-        os.mkdir(os.path.join(self.deployment_path, "tfljsmodel"))
+        os.mkdir(os.path.join(self.deployment_path, "tfjs_model"))
       except Exception as e:
         print(f"Failed to create tfjs_model directory due to {e}")
       tfjs.converters.save_keras_model(model, os.path.join(self.deployment_path, "tfjs_model")) 
