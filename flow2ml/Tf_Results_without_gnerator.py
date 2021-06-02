@@ -21,7 +21,7 @@ class Tf_Results_without_generator:
         try:                        
             #try creating a results directory
             p = os.getcwd()
-            p = os.path.join(p,"GeneratedReports")
+            p = os.path.join(p,"GeneratedReports(Trained without Generators)")
             self.results_path = p
             if not os.path.exists(self.results_path):
                 os.mkdir(self.results_path)
