@@ -5,6 +5,9 @@ flow2ml/Data_Augumentation.py
 flow2ml/Data_Loader.py
 flow2ml/Filters.py
 flow2ml/Flow.py
+flow2ml/Image_Quality.py
+flow2ml/Process_Csv.py
+flow2ml/Tf_Results.py
 flow2ml/__init__.py
 flow2ml.egg-info/PKG-INFO
 flow2ml.egg-info/SOURCES.txt
