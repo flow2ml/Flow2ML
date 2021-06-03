@@ -103,6 +103,17 @@ It contains the following methods to get an automated analysis of a trained mode
     <li>get_results_docx <br> It calls all of the above functions with their deafult filenames and stores the figures along with a results.docx inside the Results directory.</li>
 </ol>
 
+<h3>Tf_Results_without_generator.py</h3>
+It contains the following methods to get an automated analysis of a trained model<br>
+<ol>
+    <li>__init__ <br> It takes a trained model, X_test and Y_test( where X_test and Y_test are numpy arrays and shape of Y_test is same as that of the return value of model.predict()) and creates a Results directory.</li>
+    <li>roc_curve <br> It takes a filename and stores the roc curve plot inside the Results directory.</li>
+    <li>confusion_matrix <br> Plots and saves the confusion matrix figure in the Results directory</li>
+    <li>precision_recall_curve <br> It takes a filename and stores the precision recall curve plot inside the Results directory.</li>
+    <li>get_results_docx <br> It calls all of the above functions with their deafult filenames and stores the figures along with a results.docx inside the Results directory.</li>
+</ol>
+
+
 <h3>Image_Quality.py</h3>
 It contains the following methods assess the quality of processed images.<br>
 <ol>
